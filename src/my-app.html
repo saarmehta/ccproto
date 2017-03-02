@@ -72,9 +72,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .flex{
         @apply(--layout-flex);
       }
+      #pages {
+        height: 100%;
+      }
     </style>
 
-    <app-location route="{{route}}"></app-location>
+    <app-location use-hash-as-path route="{{route}}"></app-location>
     <app-route
         route="{{route}}"
         pattern="/:page"
@@ -87,8 +90,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <app-toolbar class="menu-header-toolbar">
           <img src="../images/Logo.png" alt="">
         </app-toolbar>
-        <side-menu selected="[[page]]" role="navigation">
-          <paper-item>
+        <side-menu selected="[[page]]" attr-for-selected="name" role="navigation">
+          <paper-item name="view1" on-click="_routeToView1">
             <span class="flex">LOB ECOSYSTEM</span>
             <iron-icon icon="my-icons:chevron-right"></iron-icon>
           </paper-item>
@@ -114,6 +117,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </app-header>
 
         <iron-pages
+            id="pages"
             selected="[[page]]"
             attr-for-selected="name"
             fallback-selection="view404"
@@ -156,7 +160,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var resolvedPageUrl = this.resolveUrl('my-' + page + '.html');
         this.importHref(resolvedPageUrl, null, this._showPage404, true);
       },
-
+      _routeToView1: function(){
+          this.set('route.path','/view1')
+      },
       _showPage404: function() {
         this.page = 'view404';
       },
