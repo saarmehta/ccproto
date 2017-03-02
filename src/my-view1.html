@@ -11,17 +11,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style include="shared-styles">
       :host {
         display: block;
-
-        padding: 10px;
+        height: 100%;
+        padding: 20px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        @apply(--layout-vertical)
+      }
+      .banner {
+        margin-top: 10px;
+        background: url('../images/ecosystem.png') no-repeat center center #000;
+        -webkit-background-size: contain;
+        background-size: contain;    
+        @apply(--layout-flex);
+      }
+      h1 {
+        margin: 0;
+        padding: 0;
       }
     </style>
 
-    <div class="card">
-      <div class="circle">1</div>
-      <h1>View One</h1>
-      <p>Ut labores minimum atomorum pro. Laudem tibique ut has.</p>
-      <p>Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Cu mei vide viris gloriatur, at populo eripuit sit.</p>
-    </div>
+      <h1>LOB Ecosystem</h1>
+      <div class="banner">
+        
+      </div>
   </template>
 
   <script>
