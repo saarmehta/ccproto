@@ -37,7 +37,7 @@
 /* eslint-disable indent, no-unused-vars, no-multiple-empty-lines, max-nested-callbacks, space-before-function-paren, quotes, comma-spacing */
 'use strict';
 
-var precacheConfig = [["/bower_components/webcomponentsjs/webcomponents-lite.min.js","32b5a9b7ada86304bec6b43d3f2194f0"],["/index.html","87083f070dca6f5f2e52b255a340517e"],["/manifest.json","2eefc15db4b58758cddc0d666e27d399"],["/src/my-app.html","b463180de6bddc9e9265445d2e4195a2"],["/src/my-view1.html","f905aa38362d77308c2b1d1343d6c85b"],["/src/my-view2.html","d0c0e2f88c073b62c56e5f2d8ecefbbc"],["/src/my-view3.html","272a09861fe6fa521c27ca8813961db0"],["/src/my-view404.html","33fb3ee63f4f59dcdd624c96b9de3db2"]];
+var precacheConfig = [["/bower_components/webcomponentsjs/webcomponents-lite.min.js","32b5a9b7ada86304bec6b43d3f2194f0"],["/index.html","385c7e1afb9b04a2335c0bca37694def"],["/manifest.json","2eefc15db4b58758cddc0d666e27d399"],["/src/my-app.html","b463180de6bddc9e9265445d2e4195a2"],["/src/my-view1.html","f905aa38362d77308c2b1d1343d6c85b"],["/src/my-view2.html","d0c0e2f88c073b62c56e5f2d8ecefbbc"],["/src/my-view3.html","272a09861fe6fa521c27ca8813961db0"],["/src/my-view404.html","33fb3ee63f4f59dcdd624c96b9de3db2"]];
 var cacheName = 'sw-precache-v2--' + (self.registration ? self.registration.scope : '');
 
 
