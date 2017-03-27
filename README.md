@@ -1,4 +1,6 @@
-# Polymer App Toolbox - Starter Kit
+
+# ccproto
+A working draft of the Concept Curation prototype.
 
 [![Build Status](https://travis-ci.org/PolymerElements/polymer-starter-kit.svg?branch=master)](https://travis-ci.org/PolymerElements/polymer-starter-kit)
 
@@ -78,3 +80,4 @@ application. Each new demand-loaded fragment should be added to the list of
 `fragments` in the included `polymer.json` file. This will ensure those
 components and their dependencies are added to the list of pre-cached components
 and will be included in the `bundled` build.
+=======
