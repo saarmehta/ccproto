@@ -7,44 +7,31 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
-
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="shared-styles.html">
-
+<link rel="import" href="page-layout.html">
 <dom-module id="my-view1">
-  <template>
-    <style include="shared-styles">
-      :host {
-        display: block;
-        height: 100%;
-        padding: 20px;
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-        @apply(--layout-vertical)
-      }
-      .banner {
-        margin-top: 10px;
-        background: url('../images/ecosystem.png') no-repeat center center #000;
-        -webkit-background-size: contain;
-        background-size: contain;    
-        @apply(--layout-flex);
-      }
-      h1 {
-        margin: 0;
-        padding: 0;
-      }
-    </style>
-
-      <h1>LOB Ecosystem</h1>
-      <div class="banner">
+    <template>
+        <style include="shared-styles">
+        :host ,
+        .banner {
+            height: 100%;
+        }
         
-      </div>
-  </template>
-
-  <script>
+        .banner {
+            background: url('../images/ecosystem.png') no-repeat center center #000;
+            -webkit-background-size: contain;
+            background-size: contain;
+        }
+        </style>
+        <page-layout heading="LOB Ecosystem">
+            <div class="banner" slot="body">
+            </div>
+        </page-layout>
+    </template>
+    <script>
     Polymer({
-      is: 'my-view1',
+        is: 'my-view1',
     });
-  </script>
+    </script>
 </dom-module>
