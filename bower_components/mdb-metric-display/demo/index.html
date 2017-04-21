@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+  <title>stats-component-v1 demo</title>
+  <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="../mdb-metric-display-container.html">
+  <link rel="import" href="../mdb-metric-display.html">
+
+  <style is="custom-style">
+  </style>
+</head>
+
+<body>
+  <mdb-metric-display-container>
+    <mdb-metric-display stat-value="0.2%" stat-description="Coverage across 1 application"></mdb-metric-display>
+    <mdb-metric-display stat-value="279 days" stat-description="ETA(based on yesterday)"></mdb-metric-display>
+    <mdb-metric-display stat-value="25" stat-description="Concepts significantly impacted"></mdb-metric-display>
+  </mdb-metric-display-container>
+</body>
+
+</html>
