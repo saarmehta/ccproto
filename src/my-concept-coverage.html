@@ -17,6 +17,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
 <link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/mdb-help-text/mdb-help-text.html">
 
 <dom-module id="concept-coverage">
   <template>
@@ -52,8 +53,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       /*Styles for concepts paper-listbox*/
       
       paper-listbox.concept-list paper-item {
-        min-height: 15px;        
-        font-weight: 100;        
+        min-height: 15px;
+        font-weight: 100;
         margin-top: 0.7em;
         margin-bottom: 0.7em;
         margin-left: var(--standard-padding, 20px);
@@ -70,7 +71,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --paper-item-selected: {
           border-radius: 25px;
           color: #fff;
-          background: #5caadb;
+          background-color: #5caadb;
         }
       }
       
@@ -128,7 +129,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <paper-item>Agency-Name</paper-item>
               <paper-item>Asset-ID</paper-item>
               <paper-item>Asset-Type</paper-item>
-            </paper-listbox>
+            </paper-listbox>            
           </iron-page>
           <iron-page></iron-page>
           <iron-page></iron-page>
