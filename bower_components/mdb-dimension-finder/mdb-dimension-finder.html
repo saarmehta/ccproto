@@ -1,0 +1,157 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-listbox/paper-listbox.html">
+<link rel="import" href="../paper-item/paper-item.html">
+<link rel="import" href="../paper-item/paper-icon-item.html">
+<link rel="import" href="../mdb-radio-list/mdb-radio-list.html">
+<link rel="import" href="../mdb-title/mdb-title.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../mdb-simple-list/mdb-simple-list.html">
+<link rel="import" href="../font-roboto/font-roboto.html">
+
+<!--
+`mdb-dimension-finder`
+
+
+@demo demo/index.html 
+-->
+
+<dom-module id="mdb-dimension-finder">
+  <template>
+    <style>
+       :host {
+        display: inline-block;
+        --paper-input-container-color: #bbb;
+        --paper-input-container-focus-color: #bbb;
+        --paper-input-container-underline: {
+          color: transparent;
+          height: 0;
+          border: 0;
+        }
+        --paper-input-container-underline-focus: {
+          color: transparent;
+          height: 0;
+          border: 0;
+        }
+        --paper-input-container-underline-disabled: {
+          color: transparent;
+          height: 0;
+          border: 0;
+        }
+        --paper-input-container: {
+          padding-top: 0;
+          padding-bottom: 0;
+          padding-left: var(--standard-padding, 20px);
+          padding-right: var(--standard-padding, 20px);
+          border: 0;
+        }
+        --paper-input-container-input: {
+          border: 1px solid #e8edf1;
+          padding: 5px;
+          width: 95%;
+        }
+        --mdb-title: {
+          font-family: Roboto;
+          color: #9a9a9a;
+          font-weight: 400;
+        }
+      }
+      
+       :host .dimension-finder {
+        border: 1px solid #dee7ec;
+        border-top: 0;
+      }
+    </style>
+
+    <mdb-title title-text="{{dimension}}" help-text="{{help-text}}"></mdb-title>
+    <mdb-radio-list size="small" selected="{{sort}}">
+      <paper-radio-button name="alphabetically">ALPHABETICALLY</paper-radio-button>
+      <paper-radio-button name="recommendation">BY RECOMMENDATION</paper-radio-button>
+    </mdb-radio-list>
+    <div class="dimension-finder">
+      <paper-input placeholder="Search for {{_lowercaseDimension}} name" value="{{filter}}"></paper-input>
+      <mdb-simple-list items="{{items}}" height="{{height}}">
+        <content select="template"></content>
+      </mdb-simple-list>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'mdb-dimension-finder',
+
+      properties: {
+        name: {
+          type: String,
+          value: 'mdb-dimension-finder',
+        },
+
+        dimension: {
+          type: String
+        },
+
+        _lowercaseDimension: {
+          type: String,
+          computed: '_lowerCase(dimension)'
+        },
+
+        helpText: {
+          type: String
+        },
+
+        height: {
+          type: Number,
+          value: 320
+        },
+
+        _items: {
+          type: Array
+        },
+
+        items: {
+          type: Array
+        },
+
+        searchProperty: {
+          type: String,
+          value: 'name'
+        },
+
+        filter: {
+          type: String,
+          observer: '_searchDimension'
+        },
+
+        sort: {
+          type: String,
+          value: 'recommendation',
+          observer: '_sortDimension'
+        }
+      },
+
+      ready: function () {
+        this._items = this.items.slice();
+        this._isReady = true;
+      },
+
+      _lowerCase: function (str) {
+        return str.toLowerCase();
+      },
+
+      _searchDimension: function () {
+        var that = this;
+        if (this._isReady) {
+          this.items = this._items
+            .filter(function (e) {
+              return (typeof e === typeof {} ? e[that.searchProperty] : e).toLowerCase().indexOf(that.filter.toLowerCase()) > -1;
+            });
+        }
+      },
+
+      _sortDimension: function () {
+        //TODO: change sorting logic
+        return this.items;
+      }
+    });
+  </script>
+</dom-module>

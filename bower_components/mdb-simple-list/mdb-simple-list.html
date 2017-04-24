@@ -1,0 +1,149 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-listbox/paper-listbox.html">
+<link rel="import" href="../paper-item/paper-item.html">
+<link rel="import" href="../iron-scroll-target-behavior/iron-scroll-target-behavior.html">
+
+<!--
+`mdb-simple-list`
+list component
+
+@demo demo/index.html 
+-->
+
+<dom-module id="mdb-simple-list">
+  <template>
+    <style>
+       :host {
+        display: block;
+        --paper-item: {
+          min-height: auto;
+          height: 30px;
+          padding-top: 5px;
+          padding-bottom: 5px;
+        }
+        --paper-item-selected: {
+          color: #fff;
+          background-color: #5caadb;
+        }
+        @apply(--paper-item)
+        @apply(--paper-item-focused-before)
+        @apply(--paper-item-focused)
+        @apply(--paper-item-selected-before)
+        @apply(--paper-item-selected)
+        @apply(--paper-item-body-secondary)
+        @apply(--paper-item-icon)
+        @apply(--paper-icon-item)         
+        @apply(--paper-item-selected)
+        @apply(--paper-item-disabled)     
+        @apply(--paper-item-focused)     
+        @apply(--paper-item-focused-before)
+      }
+      
+       :host paper-listbox {
+        outline: 0;
+        padding: 0;
+        color: #a1a2a4;
+        @apply(--mdb-simple-list)
+      }
+    </style>
+    <div id="scrollable-element" style="display:block;height:{{height}}px;overflow-y: auto;">
+      <x-element scroll-target="scrollable-element">
+        <paper-listbox>
+        </paper-listbox>
+      </x-element>
+    </div>
+
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'mdb-simple-list',
+
+      properties: {
+        name: {
+          type: String,
+          value: 'mdb-simple-list',
+        },
+
+        items: {
+          type: Array,
+          value: [],
+          notify: true,
+          observer: '_renderList'
+        },
+
+        selectedItem: {
+          type: Object
+        },
+
+        selectedItems: {
+          type: Array
+        },
+
+        height: {
+          type: String,
+          value: '400'
+        }
+      },
+
+      behaviors: [Polymer.Templatizer],
+
+      _renderList: function () {
+        var template = this.queryEffectiveChildren('template');
+        if (template) {
+          var list = Polymer.dom(this.$$('paper-listbox'));
+          
+          this.dataHost = this;
+          this.templatize(template);
+          this._emptyList();
+
+          var items = this.items;
+          for (var i = 0; i < items.length; i++) {
+            var item = items[i];
+            var clone = this.stamp({});
+
+            if (typeof item === typeof '') {
+              clone['this'] = item;
+            } else {
+              for (var k in item) {
+                clone[k] = item[k];
+              }
+            }
+
+            list.appendChild(clone.root);
+          }
+        }
+      },
+
+      _emptyList: function () {
+        var list = Polymer.dom(this.$$('paper-listbox'));
+        var children = list.children;
+        //Clear the list before rendering
+        for (var i = 0; i < children.length; i++) {
+          list.removeChild(children[i]);
+        }
+        list.flush();
+      },
+
+      attached: function () {
+        this._bindListboxEvents();
+      },
+
+      _bindListboxEvents: function () {
+        var that = this;
+        var listbox = this.querySelector('paper-listbox');
+        if (listbox) {
+          listbox.addEventListener('selected-item-changed', function () {
+            that.selectedItem = that.items[this.selected];
+          });
+          listbox.addEventListener('selected-items-changed', function () {
+            that.selectedItems = this.selectedValues && this.selectedValues.map(function (e) {
+              return that.items[e];
+            });
+          });
+        }
+      }
+    });
+  </script>
+</dom-module>

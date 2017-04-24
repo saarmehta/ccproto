@@ -17,7 +17,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
 <link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
-<link rel="import" href="../bower_components/mdb-help-text/mdb-help-text.html">
+<link rel="import" href="../bower_components/mdb-dimension-finder/mdb-dimension-finder.html">
 
 <dom-module id="concept-coverage">
   <template>
@@ -50,15 +50,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       paper-tabs {
         --paper-tabs-selection-bar-color: #5da9dd
       }
-      /*Styles for concepts paper-listbox*/
+      /*Styling for concept list*/
       
-      paper-listbox.concept-list paper-item {
-        min-height: 15px;
-        font-weight: 100;
-        margin-top: 0.7em;
-        margin-bottom: 0.7em;
-        margin-left: var(--standard-padding, 20px);
-        margin-right: auto;
+       :host .concept-list {
+        --mdb-simple-list: {
+          display: flex;
+          flex-direction: column;
+          flex-wrap: wrap;
+          border: 1px solid #e1e6ed;
+          background: #fcfdff;
+          height: 288px;
+          padding-top: 20px;
+          padding-bottom: 0px;
+        }
+        --paper-item: {
+          min-height: 15px;
+          font-weight: 100;
+          margin-top: 0.7em;
+          margin-bottom: 0.7em;
+          margin-left: var(--standard-padding, 20px);
+          margin-right: auto;
+        }
         --paper-item-focused-before: {
           border-radius: 25px;
         }
@@ -73,17 +85,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           color: #fff;
           background-color: #5caadb;
         }
-      }
-      
-      paper-listbox.concept-list {
-        display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
-        border: 1px solid #e1e6ed;
-        background: #fcfdff;
-        height: 288px;
-        padding-top: 20px;
-        padding-bottom: 0px;
       }
     </style>
 
@@ -106,30 +107,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <iron-pages selected="{{tab}}">
           <iron-page></iron-page>
           <iron-page>
-            <paper-listbox class="concept-list">
-              <paper-item>FICO-Score</paper-item>
-              <paper-item>Account-Number</paper-item>
-              <paper-item>Customer-Code</paper-item>
-              <paper-item>Customer-Type</paper-item>
-              <paper-item>Product-Code</paper-item>
-              <paper-item>Product-Name</paper-item>
-              <paper-item>Market-Segment</paper-item>
-              <paper-item>CUSIP</paper-item>
-              <paper-item>Instrument-ID</paper-item>
-              <paper-item>Holding-ID</paper-item>
-              <paper-item>Published-Price</paper-item>
-              <paper-item>Agreement-ID</paper-item>
-              <paper-item>Contract-ID</paper-item>
-              <paper-item>Organization-ID</paper-item>
-              <paper-item>Date of Birth</paper-item>
-              <paper-item>Organization-Name</paper-item>
-              <paper-item>Activity-ID</paper-item>
-              <paper-item>Notional-ID</paper-item>
-              <paper-item>Agent-ID</paper-item>
-              <paper-item>Agency-Name</paper-item>
-              <paper-item>Asset-ID</paper-item>
-              <paper-item>Asset-Type</paper-item>
-            </paper-listbox>            
+            <mdb-simple-list class="concept-list" items='["FICO-Score","Account-Number","Customer-Code","Customer-Type","Product-Code","Product-Name","Market-Segment","CUSIP","Instrument-ID","Holding-ID","Published-Price","Agreement-ID","Contract-ID","Organization-ID","Date of Birth","Organization-Name","Activity-ID","Notional-ID","Agent-ID","Agency-Name","Asset-ID","Asset-Type"]'>
+              <template>
+                <paper-item>{{this}}</paper-item>
+              </template>
+            </mdb-simple-list>
+
+            <div>
+              <mdb-dimension-finder dimension="Application" items='["FICO-Score","Account-Number","Customer-Code","Customer-Type","Product-Code","Product-Name","Market-Segment","CUSIP","Instrument-ID","Holding-ID","Published-Price","Agreement-ID","Contract-ID","Organization-ID","Date of Birth","Organization-Name","Activity-ID","Notional-ID","Agent-ID","Agency-Name","Asset-ID","Asset-Type"]'>
+                <template>
+                  <paper-item>{{this}}</paper-item>
+                </template>
+              </mdb-dimension-finder>
+              <mdb-dimension-finder dimension="Databse"></mdb-dimension-finder>
+              <mdb-dimension-finder dimension="Schema"></mdb-dimension-finder>
+              <mdb-dimension-finder dimension="Table"></mdb-dimension-finder>
+            </div>
+
           </iron-page>
           <iron-page></iron-page>
           <iron-page></iron-page>

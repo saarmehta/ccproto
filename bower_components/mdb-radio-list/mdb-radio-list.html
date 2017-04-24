@@ -1,7 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-radio-button/paper-radio-button.html">
 <link rel="import" href="../paper-radio-group/paper-radio-group.html">
-<link rel="import" href="mdb-radio-list-styles.html">
 
 <!--
 `mdb-radio-list`
@@ -77,6 +76,15 @@ pill box selection component
       },
 
       attached: function () {
+        var customStyles = {
+          '--paper-radio-button-checked-color': 'transparent',
+          '--paper-radio-button-unchecked-color': 'transparent',
+          '--paper-radio-button-checked-ink-color': 'transparent',
+          '--paper-radio-button-unchecked-ink-color': 'transparent',
+          '--paper-radio-button-label-color': '#bbb',
+          '--paper-radio-button-size': '0',
+          '--paper-radio-button-label-spacing': '0'
+        };
         var buttons = this.querySelectorAll('paper-radio-button');
         for (i = 0; i < buttons.length; i++) {
           var button = buttons[i];
@@ -87,10 +95,16 @@ pill box selection component
               if (this.checked) {
                 this.customStyle['--paper-radio-button-label-color'] = '#464646'
               } else {
-                delete this.customStyle['--paper-radio-button-label-color'];
+                this.customStyle['--paper-radio-button-label-color'] = customStyles['--paper-radio-button-label-color'];
               }
               this.updateStyles();
             });
+
+            //paper-radio-button style customizations
+            for (var i in customStyles) {
+              e.customStyle[i] = customStyles[i];
+            }
+            e.updateStyles();
           })(button);
         }
       }

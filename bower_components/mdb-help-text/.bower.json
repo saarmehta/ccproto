@@ -15,11 +15,11 @@
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
   "homepage": "https://github.com/skamble89/mdb-help-text",
-  "_release": "98c94dce2a",
+  "_release": "44557417a8",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "98c94dce2ab6a48b07a9f6423a572d25dc317a50"
+    "commit": "44557417a877d9eb5d27953c2b7dce2519a999db"
   },
   "_source": "git://github.com/skamble89/mdb-help-text.git",
   "_target": "*",

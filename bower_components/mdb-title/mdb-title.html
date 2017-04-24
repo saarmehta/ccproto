@@ -1,0 +1,52 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../mdb-help-text/mdb-help-text.html">
+
+<!--
+`mdb-title`
+Title component
+
+@demo demo/index.html 
+-->
+
+<dom-module id="mdb-title">
+  <template>
+    <style>
+       :host {
+        display: block;
+      }
+      
+       :host h3 {        
+        @apply(--mdb-title);
+      }
+    </style>
+    <h3>
+      {{title-text}}
+      <template is="dom-if" if="{{help-text}}">
+        <mdb-help-text help-text="{{help-text}}"></mdb-help-text>
+      </template>
+    </h3>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'mdb-title',
+
+      properties: {
+        name: {
+          type: String,
+          value: 'mdb-title',
+        },
+
+        titleText: {
+          type: String
+        },
+
+        helpText: {
+          type: String,
+          value: ''
+        }
+      },
+    });
+  </script>
+</dom-module>

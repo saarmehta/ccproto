@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+  <title>mdb-dimension-finder demo</title>
+
+  <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="../mdb-dimension-finder.html">
+
+  <style is="custom-style">
+
+  </style>
+</head>
+
+<body>
+  <div class="vertical-section-container centered">
+    <h3>Basic mdb-dimension-finder demo</h3>
+    <mdb-dimension-finder dimension="Application" help-text="List of applications of LOB" items='[{"name":"Hello","icon":"","percentage":"20"},{"name":"Saurabh","icon":"","percentage":"20"},{"name":"World","icon":"","percentage":"10"}]'>
+      <template>
+        <paper-item>
+          <iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon>{{name}}
+          <iron-icon icon="icons:chevron-right"></iron-icon>
+        </paper-item>
+      </template>
+    </mdb-dimension-finder>
+  </div>
+</body>
+
+</html>
