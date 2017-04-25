@@ -20,7 +20,7 @@ Title component
       }
     </style>
     <h3>
-      {{title-text}}
+      <content></content>
       <template is="dom-if" if="{{help-text}}">
         <mdb-help-text help-text="{{help-text}}"></mdb-help-text>
       </template>
@@ -36,10 +36,6 @@ Title component
         name: {
           type: String,
           value: 'mdb-title',
-        },
-
-        titleText: {
-          type: String
         },
 
         helpText: {

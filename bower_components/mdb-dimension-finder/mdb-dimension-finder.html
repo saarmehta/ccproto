@@ -5,6 +5,7 @@
 <link rel="import" href="../mdb-radio-list/mdb-radio-list.html">
 <link rel="import" href="../mdb-title/mdb-title.html">
 <link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-checkbox/paper-checkbox.html">
 <link rel="import" href="../mdb-simple-list/mdb-simple-list.html">
 <link rel="import" href="../font-roboto/font-roboto.html">
 
@@ -60,9 +61,14 @@
         border: 1px solid #dee7ec;
         border-top: 0;
       }
+      
+       :host mdb-title {
+        display: inline-block;..
+      }
     </style>
 
-    <mdb-title title-text="{{dimension}}" help-text="{{help-text}}"></mdb-title>
+    <mdb-title help-text="{{help-text}}">{{dimension}}</mdb-title>
+    <paper-checkbox>ALL</paper-checkbox>
     <mdb-radio-list size="small" selected="{{sort}}">
       <paper-radio-button name="alphabetically">ALPHABETICALLY</paper-radio-button>
       <paper-radio-button name="recommendation">BY RECOMMENDATION</paper-radio-button>

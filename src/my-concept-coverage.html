@@ -86,6 +86,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           background-color: #5caadb;
         }
       }
+      
+       :host paper-item iron-icon.arrow {
+        display: none;
+      }
+      
+       :host paper-item[aria-selected="true"] iron-icon.arrow {
+        display: initial;
+        position: absolute;
+        right: 0;
+      }
     </style>
 
     <page-layout heading="Concept Coverage">
@@ -114,14 +124,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </mdb-simple-list>
 
             <div>
-              <mdb-dimension-finder dimension="Application" items='["FICO-Score","Account-Number","Customer-Code","Customer-Type","Product-Code","Product-Name","Market-Segment","CUSIP","Instrument-ID","Holding-ID","Published-Price","Agreement-ID","Contract-ID","Organization-ID","Date of Birth","Organization-Name","Activity-ID","Notional-ID","Agent-ID","Agency-Name","Asset-ID","Asset-Type"]'>
+              <mdb-dimension-finder 
+                    dimension="Application" 
+                    items='["FICO-Score","Account-Number","Customer-Code","Customer-Type","Product-Code","Product-Name","Market-Segment","CUSIP","Instrument-ID","Holding-ID","Published-Price","Agreement-ID","Contract-ID","Organization-ID","Date of Birth","Organization-Name","Activity-ID","Notional-ID","Agent-ID","Agency-Name","Asset-ID","Asset-Type"]'
+                    help-text="List of Applications">
                 <template>
-                  <paper-item>{{this}}</paper-item>
+                  <paper-item>
+                    <iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon>{{this}}
+                    <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
+                  </paper-item>
                 </template>
               </mdb-dimension-finder>
-              <mdb-dimension-finder dimension="Databse"></mdb-dimension-finder>
-              <mdb-dimension-finder dimension="Schema"></mdb-dimension-finder>
-              <mdb-dimension-finder dimension="Table"></mdb-dimension-finder>
+              <mdb-dimension-finder 
+                    dimension="Database"
+                    help-text="List of Databases">
+              </mdb-dimension-finder>
+              <mdb-dimension-finder 
+                    dimension="Schema"
+                    help-text="List of Schemas">
+              </mdb-dimension-finder>
+              <mdb-dimension-finder 
+                    dimension="Table"
+                    help-text="List of Tables">
+              </mdb-dimension-finder>
             </div>
 
           </iron-page>

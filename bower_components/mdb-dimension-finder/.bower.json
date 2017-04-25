@@ -8,7 +8,8 @@
     "mdb-radio-list": "git://github.com/skamble89/mdb-radio-list.git",
     "mdb-title": "git://github.com/skamble89/mdb-title.git",
     "mdb-simple-list": "git://github.com/skamble89/mdb-simple-list.git",
-    "paper-input": "PolymerElements/paper-input#^1.1.24"
+    "paper-input": "PolymerElements/paper-input#^1.1.24",
+    "paper-checkbox": "PolymerElements/paper-checkbox#^1.4.2"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
@@ -17,11 +18,11 @@
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
   "homepage": "https://github.com/skamble89/mdb-dimension-finder",
-  "_release": "cef543820c",
+  "_release": "b2412256bb",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "cef543820c8214459e6da8b68c1dfca667393b13"
+    "commit": "b2412256bb20d069005480f815af7770e4989bb8"
   },
   "_source": "git://github.com/skamble89/mdb-dimension-finder.git",
   "_target": "*",
