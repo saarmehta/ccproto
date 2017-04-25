@@ -1,5 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../mdb-help-text/mdb-help-text.html">
+<link rel="import" href="../paper-styles/typography.html">
 
 <!--
 `mdb-title`
@@ -13,18 +14,67 @@ Title component
     <style>
        :host {
         display: block;
+        @apply(--paper-font-common-base);
       }
       
-       :host h3 {        
+       :host h1,
+       :host h2,
+       :host h3,
+       :host h4,
+       :host h5,
+       :host h6 {
+         font-weight: normal;
         @apply(--mdb-title);
       }
     </style>
-    <h3>
-      <content></content>
-      <template is="dom-if" if="{{help-text}}">
-        <mdb-help-text help-text="{{help-text}}"></mdb-help-text>
-      </template>
-    </h3>
+    <template is="dom-if" if="{{_isLevel(level,1)}}">
+      <h1>
+        <content></content>
+        <template is="dom-if" if="{{help-text}}">
+          <mdb-help-text help-text="{{help-text}}"></mdb-help-text>
+        </template>
+      </h1>
+    </template>
+    <template is="dom-if" if="{{_isLevel(level,2)}}">
+      <h2>
+        <content></content>
+        <template is="dom-if" if="{{help-text}}">
+          <mdb-help-text help-text="{{help-text}}"></mdb-help-text>
+        </template>
+      </h2>
+    </template>
+    <template is="dom-if" if="{{_isLevel(level,3)}}">
+      <h3>
+        <content></content>
+        <template is="dom-if" if="{{help-text}}">
+          <mdb-help-text help-text="{{help-text}}"></mdb-help-text>
+        </template>
+      </h3>
+    </template>
+    <template is="dom-if" if="{{_isLevel(level,4)}}">
+      <h4>
+        <content></content>
+        <template is="dom-if" if="{{help-text}}">
+          <mdb-help-text help-text="{{help-text}}"></mdb-help-text>
+        </template>
+      </h4>
+    </template>
+    <template is="dom-if" if="{{_isLevel(level,5)}}">
+      <h5>
+        <content></content>
+        <template is="dom-if" if="{{help-text}}">
+          <mdb-help-text help-text="{{help-text}}"></mdb-help-text>
+        </template>
+      </h5>
+    </template>
+    <template is="dom-if" if="{{_isLevel(level,6)}}">
+      <h6>
+        <content></content>
+        <template is="dom-if" if="{{help-text}}">
+          <mdb-help-text help-text="{{help-text}}"></mdb-help-text>
+        </template>
+      </h6>
+    </template>
   </template>
 
   <script>
@@ -38,11 +88,30 @@ Title component
           value: 'mdb-title',
         },
 
+        level: {
+          type: Number,
+          value: 1,
+          observer: '_validateLevel'
+        },
+
         helpText: {
           type: String,
           value: ''
         }
       },
+
+      _isLevel: function (prop, compare) {
+        return prop === compare;
+      },
+
+      _validateLevel: function (newValue, oldValue) {
+        //This is done since there are only six levels of heading in html
+        if (newValue <= 6 && newValue >= 1) {
+          this.level = newValue;
+        } else {
+          this.level = oldValue;
+        }
+      }
     });
   </script>
 </dom-module>

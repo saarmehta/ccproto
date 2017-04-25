@@ -1,5 +1,5 @@
-<link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-listbox/paper-listbox.html">
+<link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-item/paper-item.html">
 <link rel="import" href="../paper-item/paper-icon-item.html">
 <link rel="import" href="../mdb-radio-list/mdb-radio-list.html">
@@ -54,6 +54,7 @@
           font-family: Roboto;
           color: #9a9a9a;
           font-weight: 400;
+          margin-top: 0;
         }
       }
       
@@ -62,13 +63,17 @@
         border-top: 0;
       }
       
-       :host mdb-title {
-        display: inline-block;..
+       :host .header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
       }
     </style>
 
-    <mdb-title help-text="{{help-text}}">{{dimension}}</mdb-title>
-    <paper-checkbox>ALL</paper-checkbox>
+    <div class="header">
+      <mdb-title help-text="{{help-text}}" level="3">{{dimension}}</mdb-title>
+      <paper-checkbox>ALL</paper-checkbox>
+    </div>
     <mdb-radio-list size="small" selected="{{sort}}">
       <paper-radio-button name="alphabetically">ALPHABETICALLY</paper-radio-button>
       <paper-radio-button name="recommendation">BY RECOMMENDATION</paper-radio-button>

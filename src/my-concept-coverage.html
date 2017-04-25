@@ -92,13 +92,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       
        :host paper-item[aria-selected="true"] iron-icon.arrow {
-        display: initial;
+        display: inline-block;
         position: absolute;
         right: 0;
       }
+      
+       :host .db-entities {
+        border: 1px solid #e3eaee;
+        padding-top: 20px;
+        padding-bottom: 40px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        flex-wrap: wrap;
+      }       
+
+      :host mdb-dimension-finder{
+        margin-top: 20px;
+      }
     </style>
 
-    <page-layout heading="Concept Coverage">
+    <page-layout heading="Concept Coverage" help-text="Concept Coverage">
       <div slot="body">
         <mdb-metric-display-container>
           <mdb-metric-display stat-value="0.2%" stat-description="Coverage across 1 application"></mdb-metric-display>
@@ -123,29 +137,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </template>
             </mdb-simple-list>
 
-            <div>
-              <mdb-dimension-finder 
-                    dimension="Application" 
-                    items='["FICO-Score","Account-Number","Customer-Code","Customer-Type","Product-Code","Product-Name","Market-Segment","CUSIP","Instrument-ID","Holding-ID","Published-Price","Agreement-ID","Contract-ID","Organization-ID","Date of Birth","Organization-Name","Activity-ID","Notional-ID","Agent-ID","Agency-Name","Asset-ID","Asset-Type"]'
-                    help-text="List of Applications">
+            <div class="db-entities">
+              <mdb-dimension-finder dimension="Application" items='["FICO-Score","Account-Number","Customer-Code","Customer-Type","Product-Code","Product-Name","Market-Segment","CUSIP","Instrument-ID","Holding-ID","Published-Price","Agreement-ID","Contract-ID","Organization-ID","Date of Birth","Organization-Name","Activity-ID","Notional-ID","Agent-ID","Agency-Name","Asset-ID","Asset-Type"]'
+                help-text="List of Applications">
                 <template>
                   <paper-item>
-                    <iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon>{{this}}
+                    <span>{{this}}</span>
                     <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
                   </paper-item>
                 </template>
               </mdb-dimension-finder>
-              <mdb-dimension-finder 
-                    dimension="Database"
-                    help-text="List of Databases">
+              <mdb-dimension-finder dimension="Database" items='["FICO-Score","Account-Number","Customer-Code","Customer-Type","Product-Code","Product-Name","Market-Segment","CUSIP","Instrument-ID","Holding-ID","Published-Price","Agreement-ID","Contract-ID","Organization-ID","Date of Birth","Organization-Name","Activity-ID","Notional-ID","Agent-ID","Agency-Name","Asset-ID","Asset-Type"]'
+                help-text="List of Databases">
+                <template>
+                  <paper-item>
+                    <span><iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon>{{this}}</span>
+                    <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
+                  </paper-item>
+                </template>
               </mdb-dimension-finder>
-              <mdb-dimension-finder 
-                    dimension="Schema"
-                    help-text="List of Schemas">
+              <mdb-dimension-finder dimension="Schema" items='["FICO-Score","Account-Number","Customer-Code","Customer-Type","Product-Code","Product-Name","Market-Segment","CUSIP","Instrument-ID","Holding-ID","Published-Price","Agreement-ID","Contract-ID","Organization-ID","Date of Birth","Organization-Name","Activity-ID","Notional-ID","Agent-ID","Agency-Name","Asset-ID","Asset-Type"]'
+                help-text="List of Schemas">
+                <template>
+                  <paper-item>
+                    <span><iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon>{{this}}</span>
+                    <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
+                  </paper-item>
+                </template>
               </mdb-dimension-finder>
-              <mdb-dimension-finder 
-                    dimension="Table"
-                    help-text="List of Tables">
+              <mdb-dimension-finder dimension="Table" items='["FICO-Score","Account-Number","Customer-Code","Customer-Type","Product-Code","Product-Name","Market-Segment","CUSIP","Instrument-ID","Holding-ID","Published-Price","Agreement-ID","Contract-ID","Organization-ID","Date of Birth","Organization-Name","Activity-ID","Notional-ID","Agent-ID","Agency-Name","Asset-ID","Asset-Type"]'
+                help-text="List of Tables">
+                <template>
+                  <paper-item>
+                    <span><iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon>{{this}}</span>
+                    <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
+                  </paper-item>
+                </template>
               </mdb-dimension-finder>
             </div>
 
