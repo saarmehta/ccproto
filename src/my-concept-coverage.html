@@ -91,6 +91,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: none;
       }
       
+      :host paper-item .recommendation{
+        display: inline-block;
+        position: absolute;
+        right: 30px;
+      }
+
        :host paper-item[aria-selected="true"] iron-icon.arrow {
         display: inline-block;
         position: absolute;
@@ -151,8 +157,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 help-text="List of Databases">
                 <template>
                   <paper-item>
-                    <span><iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon>{{this}}</span>
-                    <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
+                    <span><iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon><iron-icon icon="icons:face"></iron-icon>{{this}}</span>
+                    <span class="recommendation">23%</span><iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
                   </paper-item>
                 </template>
               </mdb-dimension-finder>
