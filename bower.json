@@ -24,7 +24,9 @@
     "mdb-radio-list": "git://github.com/skamble89/mdb-radio-list.git",
     "mdb-metric-display": "git://github.com/skamble89/mdb-metric-display.git",
     "mdb-help-text": "git://github.com/skamble89/mdb-help-text.git",
-    "mdb-dimension-finder": "git://github.com/skamble89/mdb-dimension-finder.git"
+    "mdb-dimension-finder": "git://github.com/skamble89/mdb-dimension-finder.git",
+    "mdb-coverage-table": "git://github.com/skamble89/mdb-coverage-table.git",
+    "mdb-recommended-concepts": "git://github.com/skamble89/mdb-recommended-concepts.git"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"

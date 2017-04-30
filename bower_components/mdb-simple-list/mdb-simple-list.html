@@ -25,18 +25,7 @@ list component
           color: #fff;
           background-color: #5caadb;
         }
-        @apply(--paper-item)
-        @apply(--paper-item-focused-before)
-        @apply(--paper-item-focused)
-        @apply(--paper-item-selected-before)
-        @apply(--paper-item-selected)
-        @apply(--paper-item-body-secondary)
-        @apply(--paper-item-icon)
-        @apply(--paper-icon-item)         
-        @apply(--paper-item-selected)
-        @apply(--paper-item-disabled)     
-        @apply(--paper-item-focused)     
-        @apply(--paper-item-focused-before)
+        @apply(--paper-item) @apply(--paper-item-focused-before) @apply(--paper-item-focused) @apply(--paper-item-selected-before) @apply(--paper-item-selected) @apply(--paper-item-body-secondary) @apply(--paper-item-icon) @apply(--paper-icon-item) @apply(--paper-item-selected) @apply(--paper-item-disabled) @apply(--paper-item-focused) @apply(--paper-item-focused-before)
       }
       
        :host paper-listbox {
@@ -64,6 +53,7 @@ list component
         name: {
           type: String,
           value: 'mdb-simple-list',
+          readOnly: true
         },
 
         items: {
@@ -93,7 +83,7 @@ list component
         var template = this.queryEffectiveChildren('template');
         if (template) {
           var list = Polymer.dom(this.$$('paper-listbox'));
-          
+
           this.dataHost = this;
           this.templatize(template);
           this._emptyList();

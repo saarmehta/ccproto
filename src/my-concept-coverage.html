@@ -18,6 +18,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../bower_components/mdb-dimension-finder/mdb-dimension-finder.html">
+<link rel="import" href="../bower_components/mdb-simple-list/mdb-simple-list.html">
+<link rel="import" href="../bower_components/mdb-recommended-concepts/mdb-concept-recommendation.html">
+<link rel="import" href="../bower_components/mdb-recommended-concepts/mdb-recommended-concepts.html">
+
 
 <dom-module id="concept-coverage">
   <template>
@@ -91,12 +95,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: none;
       }
       
-      :host paper-item .recommendation{
+       :host paper-item .recommendation {
         display: inline-block;
         position: absolute;
         right: 30px;
       }
-
+      
        :host paper-item[aria-selected="true"] iron-icon.arrow {
         display: inline-block;
         position: absolute;
@@ -105,16 +109,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       
        :host .db-entities {
         border: 1px solid #e3eaee;
+        margin-top: 20px;
         padding-top: 20px;
         padding-bottom: 40px;
         display: flex;
         flex-direction: row;
         justify-content: space-around;
         flex-wrap: wrap;
-      }       
-
-      :host mdb-dimension-finder{
+      }
+      
+       :host mdb-dimension-finder {
         margin-top: 20px;
+      }
+      
+       :host mdb-concept-recommendation {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #e5edee;
+        background-color: #fcfdff;
       }
     </style>
 
@@ -158,7 +172,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <template>
                   <paper-item>
                     <span><iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon><iron-icon icon="icons:face"></iron-icon>{{this}}</span>
-                    <span class="recommendation">23%</span><iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
+                    <span class="recommendation">23%</span>
+                    <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
                   </paper-item>
                 </template>
               </mdb-dimension-finder>
@@ -182,6 +197,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </mdb-dimension-finder>
             </div>
 
+            <mdb-concept-recommendation property="Date of Birth" recommendation-factor="0"></mdb-concept-recommendation>
+            <mdb-recommended-concepts recommendations='[{"property":"Person Age", "recommendationFactor":80,"recommended":"maybe"},{"property":"Anniversary", "recommendationFactor":65,"recommended":"maybe"},{"property":"Due Date", "recommendationFactor":0,"recommended":"no"},{"property":"Issue Date", "recommendationFactor":0,"recommended":"no"},{"property":"Net Credit Service Date", "recommendationFactor":0,"recommended":"no"},{"property":"Order Date", "recommendationFactor":0,"recommended":"no"},{"property":"Tracking Date", "recommendationFactor":0,"recommended":"no"}]'></mdb-recommended-concepts>
+
           </iron-page>
           <iron-page></iron-page>
           <iron-page></iron-page>
@@ -202,6 +220,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           value: 0,
         },
       },
+
+      attached: function () {
+        var concept_recommendation = this.querySelector('mdb-concept-recommendation');
+        concept_recommendation.addEventListener('recommended-changed', function () {
+          console.log('CHANGED');
+        });
+      }
     });
   </script>
 </dom-module>

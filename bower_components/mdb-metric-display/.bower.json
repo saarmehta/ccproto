@@ -12,11 +12,12 @@
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
   "homepage": "https://github.com/skamble89/mdb-metric-display",
-  "_release": "ea128682cd",
+  "version": "0.0.2",
+  "_release": "0.0.2",
   "_resolution": {
-    "type": "branch",
-    "branch": "master",
-    "commit": "ea128682cd7fd7522d04d55e653bf4767d9f7236"
+    "type": "version",
+    "tag": "v0.0.2",
+    "commit": "530248ca127c34c69b6a4c09554b7de2819afc5b"
   },
   "_source": "git://github.com/skamble89/mdb-metric-display.git",
   "_target": "*",

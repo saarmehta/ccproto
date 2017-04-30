@@ -7,10 +7,12 @@
 
   <title>mdb-simple-list demo</title>
 
-  <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
-  <link rel="import" href="../bower_components/iron-demo-helpers/demo-pages-shared-styles.html">
-  <link rel="import" href="../bower_components/iron-demo-helpers/demo-snippet.html">
+  <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+  <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+  <link rel="import" href="../../paper-item/paper-icon-item.html">
+  <link rel="import" href="../../iron-icon/iron-icon.html">
   <link rel="import" href="../mdb-simple-list.html">
 
   <style is="custom-style" include="demo-pages-shared-styles">
@@ -21,11 +23,67 @@
 <body>
   <div class="vertical-section-container centered">
     <h3>Basic mdb-simple-list demo</h3>
-    <mdb-simple-list items='[{"name":"HELLO"},{"name":"WORLD"},{"name":"WORLD"},{"name":"WORLD"},{"name":"WORLD"},{"name":"WORLD"},{"name":"WORLD"},{"name":"WORLD"},{"name":"WORLD"},{"name":"WORLD"},{"name":"WORLD"}]'>
+    <demo-snippet>
       <template>
-        <paper-item>{{name}}</paper-item>
+        <mdb-simple-list items='[{"name":"HELLO"},{"name":"WORLD"},{"name":"WORLD"},{"name":"WORLD"},{"name":"WORLD"},{"name":"WORLD"},{"name":"WORLD"},{"name":"WORLD"},{"name":"WORLD"},{"name":"WORLD"},{"name":"WORLD"}]'>
+          <template>
+            <paper-icon-item>
+              <iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon>{{name}}
+            </paper-icon-item>
+          </template>
+        </mdb-simple-list>
       </template>
-    </mdb-simple-list>
+    </demo-snippet>
+  </div>
+  <div class="vertical-section-container centered">
+    <h3>Custom Styled mdb-simple-list demo</h3>
+    <demo-snippet>
+      <template>
+        <style is="custom-style">
+           :root .custom-styled {
+            --mdb-simple-list: {
+              display: flex;
+              flex-direction: column;
+              flex-wrap: wrap;
+              border: 1px solid #e1e6ed;
+              background: #fcfdff;
+              height: 288px;
+              padding-top: 20px;
+              padding-bottom: 0px;
+            }
+            --paper-item: {
+              min-height: 15px;
+              font-weight: 100;
+              margin-top: 0.7em;
+              margin-bottom: 0.7em;
+              margin-left: var(--standard-padding, 20px);
+              margin-right: auto;
+            }
+            --paper-item-focused-before: {
+              border-radius: 25px;
+            }
+            --paper-item-focused: {
+              border-radius: 25px;
+            }
+            --paper-item-selected-before: {
+              border-radius: 25px;
+            }
+            --paper-item-selected: {
+              border-radius: 25px;
+              color: #fff;
+              background-color: #5caadb;
+            }
+          }
+        </style>
+        <mdb-simple-list class="custom-styled" items='[{"name":"One"},{"name":"Two"},{"name":"Three"},{"name":"Four"},{"name":"Five"},{"name":"Six"},{"name":"Seven"},{"name":"Eight"},{"name":"Nine"},{"name":"Ten"},{"name":"Eleven"}]'>
+          <template>
+            <paper-item>
+              {{name}}
+            </paper-item>
+          </template>
+        </mdb-simple-list>
+      </template>
+    </demo-snippet>
   </div>
 </body>
 

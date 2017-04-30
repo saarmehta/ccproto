@@ -1,0 +1,109 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../mdb-title/mdb-title.html">
+<link rel="import" href="../mdb-radio-list/mdb-radio-list.html">
+<link rel="import" href="../paper-radio-button/paper-radio-button.html">
+<link rel="import" href="../vaadin-grid/vaadin-grid.html">
+<link rel="import" href="../vaadin-grid/vaadin-grid-sorter.html">
+
+<!--
+`mdb-coverage-table`
+
+
+@demo demo/index.html 
+-->
+
+<dom-module id="mdb-coverage-table">
+  <template>
+    <style>
+       :host {
+        display: block;
+        --vaadin-grid-body-cell: {
+          background-color: #fcfdff;
+        }
+        --vaadin-grid-body-row-odd-cell: {
+          background-color: #fff;
+        }
+      }
+      
+       :host mdb-radio-list {
+        display: inline-block;
+      }
+      
+       :host vaadin-grid {
+        border: 0;
+      }
+      
+       :host .table-options {
+        border-top: 1px solid #ebeff4;
+        border-bottom: 1px solid #ebeff4;
+        padding-top: var(--standard-padding, 20px);
+        padding-bottom: var(--standard-padding, 20px);
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    </style>
+    <mdb-title help-text="{{help-text}}" level="2">{{title-text}}</mdb-title>
+    <div class="table-options">
+      <div class="column-options">
+        Show Columns
+        <mdb-radio-list size="small" selected="all">
+          <paper-radio-button name="all">ALL</paper-radio-button>
+          <paper-radio-button name="recommended">RECOMMENDED</paper-radio-button>
+        </mdb-radio-list>
+      </div>
+      <div class="sorting-options">
+        Sorted By
+        <mdb-radio-list size="small" selected="relevance">
+          <paper-radio-button name="relevance">RELEVANCE</paper-radio-button>
+          <paper-radio-button name="recency">RECENCY</paper-radio-button>
+          <paper-radio-button name="alphabetically">ALPHABETICALLY</paper-radio-button>
+          <paper-radio-button name="none">NONE</paper-radio-button>
+        </mdb-radio-list>
+      </div>
+    </div>
+    <vaadin-grid items="{{items}}">
+      <template is="dom-repeat" items="{{columns}}" as="column">
+        <vaadin-grid-column>
+          <template class="header">
+            <vaadin-grid-sorter path="[[column.property]]" direction="asc">[[column.name]]</vaadin-grid-sorter>
+          </template>
+          <template>[[_getPropertyValue(item, column.property)]]</template>
+        </vaadin-grid-column>
+      </template>
+    </vaadin-grid>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'mdb-coverage-table',
+
+      properties: {
+        name: {
+          type: String,
+          value: 'mdb-coverage-table',
+        },
+
+        titleText: String,
+
+        helpText: String,
+
+        columns: {
+          type: Array,
+          value: []
+        },
+
+        items: {
+          type: Array,
+          value: []
+        }
+      },
+
+      _getPropertyValue: function (item, prop) {
+        return item ? item[prop] : '';
+      },
+    });
+  </script>
+</dom-module>

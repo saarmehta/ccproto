@@ -43,8 +43,8 @@ Stats component
       }
     </style>
     <section class="stat">
-      <span class="stat-value">[[statValue]]</span>
-      <p class="stat-description">[[statDescription]]</p>
+      <span class="stat-value">[[stat-value]]</span>
+      <p class="stat-description">[[stat-description]]</p>
     </section>
   </template>
 
@@ -57,7 +57,12 @@ Stats component
         name: {
           type: String,
           value: 'mdb-metric-display',
+          readOnly: true
         },
+
+        statValue: String,
+
+        statDescription: String
       },
 
     });
@@ -88,6 +93,7 @@ Stats component
         name: {
           type: String,
           value: 'mdb-metric-display-container',
+          readOnly: true
         },
       },
 

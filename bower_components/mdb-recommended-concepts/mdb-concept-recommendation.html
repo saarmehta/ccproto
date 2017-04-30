@@ -1,0 +1,88 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../mdb-radio-list/mdb-radio-list.html">
+<link rel="import" href="../paper-radio-button/paper-radio-button.html">
+
+<!--
+`mdb-concept-recommendation`
+
+
+@demo demo/index.html 
+-->
+
+<dom-module id="mdb-concept-recommendation">
+    <template>
+        <style>
+             :host {
+                display: block;
+                padding-left: var(--standard-padding, 20px);
+                padding-right: var(--standard-padding, 20px);
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+            
+             :host mdb-radio-list {
+                display: inline-block;
+                margin-right: var(--standard-padding, 20px);
+            }
+            
+             :host paper-radio-button {
+                width: 50px;
+                text-align: center;
+            }
+            
+             :host #recommendation-container {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                justify-content: space-between;
+            }
+            
+             :host #recommendation-factor {
+                display: inline-block;
+                width: 30px;
+            }
+        </style>
+        <div id="recommendation-container">
+            <span id="property-name">[[property]]</span>
+            <div>
+                <mdb-radio-list size="small" selected="{{recommended}}">
+                    <paper-radio-button name="yes">YES</paper-radio-button>
+                    <paper-radio-button name="no">NO</paper-radio-button>
+                    <paper-radio-button name="maybe">MAYBE</paper-radio-button>
+                </mdb-radio-list>
+                <span id="recommendation-factor">[[recommendation-factor]]%</span>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+
+            is: 'mdb-concept-recommendation',
+
+            properties: {
+                name: {
+                    type: String,
+                    value: 'mdb-concept-recommendation',
+                },
+
+                property: {
+                    type: String
+                },
+
+                recommendationFactor: {
+                    type: Number,
+                    value: 0,
+                    readOnly: true
+                },
+
+                recommended: {
+                    type: String,
+                    value: 'no',
+                    notify: true
+                }
+            },
+
+        });
+    </script>
+</dom-module>

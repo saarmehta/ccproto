@@ -13,11 +13,12 @@
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
   "homepage": "https://github.com/skamble89/mdb-radio-list",
-  "_release": "116ae0d979",
+  "version": "0.0.2",
+  "_release": "0.0.2",
   "_resolution": {
-    "type": "branch",
-    "branch": "master",
-    "commit": "116ae0d97946e580a140d0967704bbd937c87995"
+    "type": "version",
+    "tag": "v0.0.2",
+    "commit": "36c27400f2dadb761ddaa34fd5e5d3bee1e5836a"
   },
   "_source": "git://github.com/skamble89/mdb-radio-list.git",
   "_target": "*",
