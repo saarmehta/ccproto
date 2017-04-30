@@ -40,7 +40,7 @@
     <div id="recommendation-list">
       <mdb-title help-text="Recommended Concepts" level="2">Recommended Concepts</mdb-title>
       <template is="dom-repeat" items="{{recommendations}}">
-        <mdb-concept-recommendation property="{{item.property}}" recommendation-factor="{{item.recommendationFactor}}"></mdb-concept-recommendation>
+        <mdb-concept-recommendation property="{{item.property}}" recommendation-factor="{{item.recommendationFactor}}" recommended="{{item.recommended}}"></mdb-concept-recommendation>
       </template>
     </div>
     <div id="search-box">
