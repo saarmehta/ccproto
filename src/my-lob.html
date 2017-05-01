@@ -1,0 +1,176 @@
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/mdb-dimension-finder/mdb-dimension-finder.html">
+<link rel="import" href="../bower_components/mdb-simple-list/mdb-simple-list.html">
+<link rel="import" href="../bower_components/mdb-recommended-concepts/mdb-concept-recommendation.html">
+<link rel="import" href="../bower_components/mdb-recommended-concepts/mdb-recommended-concepts.html">
+<link rel="import" href="../bower_components/mdb-coverage-table/mdb-coverage-table.html">
+
+<dom-module id="concept-lob">
+    <template>
+
+        <style include="shared-styles">
+            /*Styling for concept list*/
+            
+             :host .concept-list {
+                --mdb-simple-list: {
+                    display: flex;
+                    flex-direction: column;
+                    flex-wrap: wrap;
+                    border: 1px solid #e1e6ed;
+                    background: #fcfdff;
+                    height: 288px;
+                    padding-top: 20px;
+                    padding-bottom: 0px;
+                }
+                --paper-item: {
+                    min-height: 15px;
+                    font-weight: 100;
+                    margin-top: 0.7em;
+                    margin-bottom: 0.7em;
+                    margin-left: var(--standard-padding, 20px);
+                    margin-right: auto;
+                }
+                --paper-item-focused-before: {
+                    border-radius: 25px;
+                }
+                --paper-item-focused: {
+                    border-radius: 25px;
+                }
+                --paper-item-selected-before: {
+                    border-radius: 25px;
+                }
+                --paper-item-selected: {
+                    border-radius: 25px;
+                    color: #fff;
+                    background-color: #5caadb;
+                }
+            }
+            
+             :host paper-item iron-icon.arrow {
+                display: none;
+            }
+            
+             :host paper-item .recommendation {
+                display: inline-block;
+                position: absolute;
+                right: 30px;
+            }
+            
+             :host paper-item[aria-selected="true"] iron-icon.arrow {
+                display: inline-block;
+                position: absolute;
+                right: 0;
+            }
+            
+             :host .db-entities {
+                border: 1px solid #e3eaee;
+                margin-top: 20px;
+                padding-top: 20px;
+                padding-bottom: 40px;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                flex-wrap: wrap;
+            }
+            
+             :host mdb-dimension-finder {
+                margin-top: 20px;
+            }
+            
+             :host mdb-concept-recommendation {
+                padding-top: 20px;
+                padding-bottom: 20px;
+                margin-top: 20px;
+                margin-bottom: 20px;
+                border: 1px solid #e5edee;
+                background-color: #fcfdff;
+            }
+            
+             :host mdb-coverage-table {
+                max-width: 750px;
+                width: 100%;                
+            }
+            
+             :host .concept-identification {
+                display: flex;
+                justify-content: space-between;
+            }
+            
+             :host .recommended-concepts {
+                padding-top: 45px;
+            }
+        </style>
+        <mdb-simple-list class="concept-list" items='["FICO-Score","Account-Number","Customer-Code","Customer-Type","Product-Code","Product-Name","Market-Segment","CUSIP","Instrument-ID","Holding-ID","Published-Price","Agreement-ID","Contract-ID","Organization-ID","Date of Birth","Organization-Name","Activity-ID","Notional-ID","Agent-ID","Agency-Name","Asset-ID","Asset-Type"]'>
+            <template>
+                <paper-item>{{this}}</paper-item>
+            </template>
+        </mdb-simple-list>
+
+        <div class="db-entities">
+            <mdb-dimension-finder dimension="Application" items='["FICO-Score","Market-Segment","Agreement-ID","Contract-ID","Organization-ID","Date of Birth","Organization-Name","Activity-ID"]'
+                help-text="List of Applications">
+                <template>
+                    <paper-item>
+                        <span>{{this}}</span>
+                        <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
+                    </paper-item>
+                </template>
+            </mdb-dimension-finder>
+            <mdb-dimension-finder dimension="Database" items='["CUSIP","Instrument-ID","Holding-ID","Published-Price","Agreement-ID","Contract-ID","Organization-ID","Date of Birth","Organization-Name","Activity-ID","Notional-ID","Agent-ID","Agency-Name","Asset-ID","Asset-Type"]'
+                help-text="List of Databases">
+                <template>
+                    <paper-item>
+                        <span><iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon><iron-icon icon="icons:face"></iron-icon>{{this}}</span>
+                        <span class="recommendation">23%</span>
+                        <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
+                    </paper-item>
+                </template>
+            </mdb-dimension-finder>
+            <mdb-dimension-finder dimension="Schema" items='["Product-Code","Product-Name","Market-Segment","CUSIP","Instrument-ID","Holding-ID","Agreement-ID"]'
+                help-text="List of Schemas">
+                <template>
+                    <paper-item>
+                        <span><iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon>{{this}}</span>
+                        <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
+                    </paper-item>
+                </template>
+            </mdb-dimension-finder>
+            <mdb-dimension-finder dimension="Table" items='["FICO-Score","Account-Number","Customer-Code","Customer-Type","Product-Code","Product-Name","Market-Segment","CUSIP","Instrument-ID","Holding-ID","Published-Price","Agreement-ID","Contract-ID","Organization-ID","Date of Birth","Organization-Name","Activity-ID","Notional-ID","Agent-ID","Agency-Name","Asset-ID","Asset-Type"]'
+                help-text="List of Tables">
+                <template>
+                    <paper-item>
+                        <span><iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon>{{this}}</span>
+                        <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
+                    </paper-item>
+                </template>
+            </mdb-dimension-finder>
+        </div>
+
+        <div class="concept-identification">
+            <mdb-coverage-table title-text="PARTY_SALES" help-text="Coverage table" columns='[{"name":"Name (Job title)","property":"name","width":"300"},{"name":"New Age","property":"age","width":"150"},{"name":"Nickname","property":"nickname","width":"150"},{"name":"Employee","property":"employee","width":"150"},{"name":"Col1","property":"col1","width":"100"},{"name":"Col2","property":"col2","width":"100"},{"name":"Col3","property":"col3","width":"100"},{"name":"Col4","property":"col4","width":"100"},{"name":"Col5","property":"col5","width":"100"},{"name":"Col6","property":"col6","width":"100"}]'
+                items='[{"name": "Lorem ipsum dolor sit amet", "age":25,"nickname":"Rprehenderit"}, {"name": "Consequuentur magni", "age":26,"nickname":"Ipsam"},{"name": "Quis autem vel", "age":28,"nickname":"Tempora"},{"name": "Gignissimos dusimus", "age":28,"nickname":"Voluptate"},{"name": "Cumque nihil impedit", "age":29,"nickname":"Avoids"},{"name": "Capienti delectus", "age":30,"nickname":"Corrupti"},{"name": "Bmnis Voluptas", "age":32,"nickname":"Mollitia"},{"name": "Tfficiis debitis", "age":34,"nickname":"Consequatur"},{"name": "Occaecati Cupiditate", "age":38,"nickname":"Rpudiated"}]'></mdb-coverage-table>
+
+            <div class="recommended-concepts">
+                <mdb-concept-recommendation property="Date of Birth" recommendation-factor="0"></mdb-concept-recommendation>
+                <mdb-recommended-concepts recommendations='[{"property":"Person Age", "recommendationFactor":80,"recommended":"maybe"},{"property":"Anniversary", "recommendationFactor":65,"recommended":"maybe"},{"property":"Due Date", "recommendationFactor":0,"recommended":"no"},{"property":"Issue Date", "recommendationFactor":0,"recommended":"no"},{"property":"Net Credit Service Date", "recommendationFactor":0,"recommended":"no"},{"property":"Order Date", "recommendationFactor":0,"recommended":"no"},{"property":"Tracking Date", "recommendationFactor":0,"recommended":"no"}]'></mdb-recommended-concepts>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'concept-lob',
+
+            properties: {
+            },
+
+            // attached: function () {
+            //   var concept_recommendation = this.querySelector('mdb-concept-recommendation');
+            //   concept_recommendation.addEventListener('recommended-changed', function () {
+            //     console.log('CHANGED');
+            //   });
+            // }
+        });
+    </script>
+</dom-module>

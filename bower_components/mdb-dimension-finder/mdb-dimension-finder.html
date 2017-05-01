@@ -7,7 +7,6 @@
 <link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../paper-checkbox/paper-checkbox.html">
 <link rel="import" href="../mdb-simple-list/mdb-simple-list.html">
-<link rel="import" href="../font-roboto/font-roboto.html">
 
 <!--
 `mdb-dimension-finder`
@@ -61,6 +60,11 @@
        :host .dimension-finder {
         border: 1px solid #dee7ec;
         border-top: 0;
+      }
+      
+       :host .dimension-finder mdb-simple-list {
+        height: 288px;
+        overflow-y: auto;
       }
       
        :host .header {

@@ -14,12 +14,12 @@
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
   "homepage": "https://github.com/skamble89/mdb-coverage-table",
-  "version": "0.0.1",
-  "_release": "0.0.1",
+  "version": "0.0.2",
+  "_release": "0.0.2",
   "_resolution": {
     "type": "version",
-    "tag": "v0.0.1",
-    "commit": "0f244b0d0494c926479e9f2c0c7f3c33c77df120"
+    "tag": "v0.0.2",
+    "commit": "c78e54bfe2696f2707f71daa724c9876d28385a8"
   },
   "_source": "git://github.com/skamble89/mdb-coverage-table.git",
   "_target": "*",

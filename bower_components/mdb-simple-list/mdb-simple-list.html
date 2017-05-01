@@ -1,7 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-listbox/paper-listbox.html">
 <link rel="import" href="../paper-item/paper-item.html">
-<link rel="import" href="../iron-scroll-target-behavior/iron-scroll-target-behavior.html">
 
 <!--
 `mdb-simple-list`
@@ -35,13 +34,8 @@ list component
         @apply(--mdb-simple-list)
       }
     </style>
-    <div id="scrollable-element" style="display:block;height:{{height}}px;overflow-y: auto;">
-      <x-element scroll-target="scrollable-element">
-        <paper-listbox>
-        </paper-listbox>
-      </x-element>
-    </div>
-
+    <paper-listbox>
+    </paper-listbox>
   </template>
 
   <script>

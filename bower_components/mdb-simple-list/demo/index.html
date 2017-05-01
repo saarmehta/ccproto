@@ -24,12 +24,12 @@
   <div class="vertical-section-container centered">
     <h3>Basic mdb-simple-list demo</h3>
     <demo-snippet>
-      <template>
-        <mdb-simple-list items='[{"name":"HELLO"},{"name":"WORLD"},{"name":"WORLD"},{"name":"WORLD"},{"name":"WORLD"},{"name":"WORLD"},{"name":"WORLD"},{"name":"WORLD"},{"name":"WORLD"},{"name":"WORLD"},{"name":"WORLD"}]'>
+      <template>        
+        <mdb-simple-list items='[{"name":"One"},{"name":"Two"},{"name":"Three"},{"name":"Four"},{"name":"Five"},{"name":"Six"},{"name":"Seven"},{"name":"Eight"},{"name":"Nine"},{"name":"Ten"},{"name":"Eleven"}]'>
           <template>
-            <paper-icon-item>
-              <iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon>{{name}}
-            </paper-icon-item>
+            <paper-item>
+              {{name}}
+            </paper-item>
           </template>
         </mdb-simple-list>
       </template>

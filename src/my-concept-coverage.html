@@ -15,12 +15,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/mdb-metric-display/mdb-metric-display.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
-<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<!--<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../bower_components/mdb-dimension-finder/mdb-dimension-finder.html">
 <link rel="import" href="../bower_components/mdb-simple-list/mdb-simple-list.html">
 <link rel="import" href="../bower_components/mdb-recommended-concepts/mdb-concept-recommendation.html">
 <link rel="import" href="../bower_components/mdb-recommended-concepts/mdb-recommended-concepts.html">
+<link rel="import" href="../bower_components/mdb-coverage-table/mdb-coverage-table.html">-->
+<link rel="import" href="./my-lob.html">
 
 
 <dom-module id="concept-coverage">
@@ -29,6 +31,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style include="shared-styles">
        :host {
         display: block;
+        font-size: 14px;
         height: 100%;
       }
       
@@ -54,7 +57,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       paper-tabs {
         --paper-tabs-selection-bar-color: #5da9dd
       }
-      /*Styling for concept list*/
+      /*Styling for concept list
       
        :host .concept-list {
         --mdb-simple-list: {
@@ -130,6 +133,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         border: 1px solid #e5edee;
         background-color: #fcfdff;
       }
+      
+       :host mdb-coverage-table {
+        max-width: 850px;
+      }
+      
+       :host .concept-identification {
+        display: flex;
+        justify-content: space-between;
+      }
+      
+       :host .recommended-concepts {
+        padding-top: 45px;
+      }*/
     </style>
 
     <page-layout heading="Concept Coverage" help-text="Concept Coverage">
@@ -149,61 +165,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </paper-tabs>
 
         <iron-pages selected="{{tab}}">
-          <iron-page></iron-page>
           <iron-page>
-            <mdb-simple-list class="concept-list" items='["FICO-Score","Account-Number","Customer-Code","Customer-Type","Product-Code","Product-Name","Market-Segment","CUSIP","Instrument-ID","Holding-ID","Published-Price","Agreement-ID","Contract-ID","Organization-ID","Date of Birth","Organization-Name","Activity-ID","Notional-ID","Agent-ID","Agency-Name","Asset-ID","Asset-Type"]'>
-              <template>
-                <paper-item>{{this}}</paper-item>
-              </template>
-            </mdb-simple-list>
-
-            <div class="db-entities">
-              <mdb-dimension-finder dimension="Application" items='["FICO-Score","Account-Number","Customer-Code","Customer-Type","Product-Code","Product-Name","Market-Segment","CUSIP","Instrument-ID","Holding-ID","Published-Price","Agreement-ID","Contract-ID","Organization-ID","Date of Birth","Organization-Name","Activity-ID","Notional-ID","Agent-ID","Agency-Name","Asset-ID","Asset-Type"]'
-                help-text="List of Applications">
-                <template>
-                  <paper-item>
-                    <span>{{this}}</span>
-                    <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
-                  </paper-item>
-                </template>
-              </mdb-dimension-finder>
-              <mdb-dimension-finder dimension="Database" items='["FICO-Score","Account-Number","Customer-Code","Customer-Type","Product-Code","Product-Name","Market-Segment","CUSIP","Instrument-ID","Holding-ID","Published-Price","Agreement-ID","Contract-ID","Organization-ID","Date of Birth","Organization-Name","Activity-ID","Notional-ID","Agent-ID","Agency-Name","Asset-ID","Asset-Type"]'
-                help-text="List of Databases">
-                <template>
-                  <paper-item>
-                    <span><iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon><iron-icon icon="icons:face"></iron-icon>{{this}}</span>
-                    <span class="recommendation">23%</span>
-                    <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
-                  </paper-item>
-                </template>
-              </mdb-dimension-finder>
-              <mdb-dimension-finder dimension="Schema" items='["FICO-Score","Account-Number","Customer-Code","Customer-Type","Product-Code","Product-Name","Market-Segment","CUSIP","Instrument-ID","Holding-ID","Published-Price","Agreement-ID","Contract-ID","Organization-ID","Date of Birth","Organization-Name","Activity-ID","Notional-ID","Agent-ID","Agency-Name","Asset-ID","Asset-Type"]'
-                help-text="List of Schemas">
-                <template>
-                  <paper-item>
-                    <span><iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon>{{this}}</span>
-                    <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
-                  </paper-item>
-                </template>
-              </mdb-dimension-finder>
-              <mdb-dimension-finder dimension="Table" items='["FICO-Score","Account-Number","Customer-Code","Customer-Type","Product-Code","Product-Name","Market-Segment","CUSIP","Instrument-ID","Holding-ID","Published-Price","Agreement-ID","Contract-ID","Organization-ID","Date of Birth","Organization-Name","Activity-ID","Notional-ID","Agent-ID","Agency-Name","Asset-ID","Asset-Type"]'
-                help-text="List of Tables">
-                <template>
-                  <paper-item>
-                    <span><iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon>{{this}}</span>
-                    <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
-                  </paper-item>
-                </template>
-              </mdb-dimension-finder>
-            </div>
-
-            <mdb-concept-recommendation property="Date of Birth" recommendation-factor="0"></mdb-concept-recommendation>
-            <mdb-recommended-concepts recommendations='[{"property":"Person Age", "recommendationFactor":80,"recommended":"maybe"},{"property":"Anniversary", "recommendationFactor":65,"recommended":"maybe"},{"property":"Due Date", "recommendationFactor":0,"recommended":"no"},{"property":"Issue Date", "recommendationFactor":0,"recommended":"no"},{"property":"Net Credit Service Date", "recommendationFactor":0,"recommended":"no"},{"property":"Order Date", "recommendationFactor":0,"recommended":"no"},{"property":"Tracking Date", "recommendationFactor":0,"recommended":"no"}]'></mdb-recommended-concepts>
-
+            <concept-lob></concept-lob>
           </iron-page>
-          <iron-page></iron-page>
-          <iron-page></iron-page>
-          <iron-page></iron-page>
+          <iron-page>
+            <concept-lob></concept-lob>
+          </iron-page>
+          <iron-page>
+            <concept-lob></concept-lob>
+          </iron-page>
+          <iron-page>
+            <concept-lob></concept-lob>
+          </iron-page>
+          <iron-page>
+            <concept-lob></concept-lob>
+          </iron-page>
         </iron-pages>
       </div>
     </page-layout>
@@ -219,13 +195,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: Number,
           value: 0,
         },
-      },
-
-      attached: function () {
-        var concept_recommendation = this.querySelector('mdb-concept-recommendation');
-        concept_recommendation.addEventListener('recommended-changed', function () {
-          console.log('CHANGED');
-        });
       }
     });
   </script>

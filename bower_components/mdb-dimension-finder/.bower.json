@@ -18,12 +18,12 @@
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
   "homepage": "https://github.com/skamble89/mdb-dimension-finder",
-  "version": "0.0.3",
-  "_release": "0.0.3",
+  "version": "0.0.5",
+  "_release": "0.0.5",
   "_resolution": {
     "type": "version",
-    "tag": "v0.0.3",
-    "commit": "3e790b5559d42e075c886012c742605e6e79bf62"
+    "tag": "0.0.5",
+    "commit": "689c0c0717d525d707f11d5971229050f60f6e3b"
   },
   "_source": "git://github.com/skamble89/mdb-dimension-finder.git",
   "_target": "*",
