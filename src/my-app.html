@@ -62,23 +62,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         background-color: var(--app-header-bg, #fff);
         color: var(--app-header-color, #ddd);
         height: var(--app-header-height, 80px);
-      }
-      
-      @media screen and (min-device-width: 1024px) and (max-device-width: 1366px) {
-        app-drawer {
-          display: none;
-        }
-      }
-      
-      @media screen and (min-device-width: 1366px) {
-        app-drawer {
-          --app-drawer-width: 260px;
-          --app-drawer-content-container: {
-            background-color: var(--menu-bg-color, #1a1c24);
-            overflow: auto;
-          }
-        }
-      }
+      }      
       
       .flex {
         @apply(--layout-flex);
@@ -92,7 +76,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <app-location use-hash-as-path route="{{route}}"></app-location>
     <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
 
-    <app-drawer-layout fullbleed>
+    <app-drawer-layout fullbleed responsive-width="1366px">
       <!-- Drawer content -->
       <app-drawer id="drawer">
         <app-toolbar class="menu-header-toolbar">
