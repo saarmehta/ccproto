@@ -64,11 +64,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         height: var(--app-header-height, 80px);
       }
       
-      app-drawer {
-        --app-drawer-width: 260px;
-        --app-drawer-content-container: {
-          background-color: var(--menu-bg-color, #1a1c24);
-          overflow: auto;
+      @media screen and (min-device-width: 1024px) and (max-device-width: 1366px) {
+        app-drawer {
+          display: none;
+        }
+      }
+      
+      @media screen and (min-device-width: 1366px) {
+        app-drawer {
+          --app-drawer-width: 260px;
+          --app-drawer-content-container: {
+            background-color: var(--menu-bg-color, #1a1c24);
+            overflow: auto;
+          }
         }
       }
       

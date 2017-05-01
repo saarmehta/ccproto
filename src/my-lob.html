@@ -65,9 +65,9 @@
             
              :host .db-entities {
                 border: 1px solid #e3eaee;
-                margin-top: 20px;
-                padding-top: 20px;
-                padding-bottom: 40px;
+                margin-top: var(--standard-padding, 20px);
+                padding-top: var(--standard-padding, 20px);
+                padding-bottom: var(--standard-padding, 20px);
                 display: flex;
                 flex-direction: row;
                 justify-content: space-around;
@@ -75,21 +75,27 @@
             }
             
              :host mdb-dimension-finder {
-                margin-top: 20px;
+                margin-top: var(--standard-padding, 20px);
             }
             
              :host mdb-concept-recommendation {
-                padding-top: 20px;
-                padding-bottom: 20px;
+                padding-top: var(--standard-padding, 20px);
+                padding-bottom: var(--standard-padding, 20px);
                 margin-top: 20px;
-                margin-bottom: 20px;
+                margin-bottom: var(--standard-padding, 20px);
                 border: 1px solid #e5edee;
                 background-color: #fcfdff;
             }
             
              :host mdb-coverage-table {
-                max-width: 750px;
-                width: 100%;
+                width: 60%;
+                margin-right: 30px;
+            }
+            
+             :host .recommended-concepts {
+                padding-top: 45px;
+                display: inline-block;
+                width: 40%;
             }
             
              :host .concept-identification {
@@ -97,17 +103,14 @@
                 justify-content: space-between;
             }
             
-             :host .recommended-concepts {
-                padding-top: 45px;
-            }
-            
              :host .concept-identified {
                 text-align: center;
+                font-size: 16px;
             }
             
              :host .concept-identified {
                 --iron-icon-width: 40px;
-                --iron-icon-height: 40px;                
+                --iron-icon-height: 40px;
             }
             
              :host .concept-identified iron-icon {
