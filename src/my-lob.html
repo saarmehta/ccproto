@@ -89,7 +89,7 @@
             
              :host mdb-coverage-table {
                 max-width: 750px;
-                width: 100%;                
+                width: 100%;
             }
             
              :host .concept-identification {
@@ -99,6 +99,24 @@
             
              :host .recommended-concepts {
                 padding-top: 45px;
+            }
+            
+             :host .concept-identified {
+                text-align: center;
+            }
+            
+             :host .concept-identified {
+                --iron-icon-width: 40px;
+                --iron-icon-height: 40px;                
+            }
+            
+             :host .concept-identified iron-icon {
+                font-size: 20px;
+                background-color: #5bca52;
+                color: #fff;
+                border-radius: 50%;
+                --iron-icon-width: 40px;
+                --iron-icon-height: 40px;
             }
         </style>
         <mdb-simple-list class="concept-list" items='["FICO-Score","Account-Number","Customer-Code","Customer-Type","Product-Code","Product-Name","Market-Segment","CUSIP","Instrument-ID","Holding-ID","Published-Price","Agreement-ID","Contract-ID","Organization-ID","Date of Birth","Organization-Name","Activity-ID","Notional-ID","Agent-ID","Agency-Name","Asset-ID","Asset-Type"]'>
@@ -153,7 +171,16 @@
 
             <div class="recommended-concepts">
                 <mdb-concept-recommendation property="Date of Birth" recommendation-factor="0"></mdb-concept-recommendation>
-                <mdb-recommended-concepts recommendations='[{"property":"Person Age", "recommendationFactor":80,"recommended":"maybe"},{"property":"Anniversary", "recommendationFactor":65,"recommended":"maybe"},{"property":"Due Date", "recommendationFactor":0,"recommended":"no"},{"property":"Issue Date", "recommendationFactor":0,"recommended":"no"},{"property":"Net Credit Service Date", "recommendationFactor":0,"recommended":"no"},{"property":"Order Date", "recommendationFactor":0,"recommended":"no"},{"property":"Tracking Date", "recommendationFactor":0,"recommended":"no"}]'></mdb-recommended-concepts>
+                <template is="dom-if" if="{{conceptIdentified}}">
+                    <div class="concept-identified">
+                        <iron-icon class="arrow" icon="icons:done"></iron-icon>
+                        <mdb-title>Hurray!</mdb-title>
+                        Thanks for identifying New Age as Date of Birth. You've helped make data better.
+                    </div>
+                </template>
+                <template is="dom-if" if="{{!conceptIdentified}}">
+                    <mdb-recommended-concepts recommendations='[{"property":"Person Age", "recommendationFactor":80,"recommended":"maybe"},{"property":"Anniversary", "recommendationFactor":65,"recommended":"maybe"},{"property":"Due Date", "recommendationFactor":0,"recommended":"no"},{"property":"Issue Date", "recommendationFactor":0,"recommended":"no"},{"property":"Net Credit Service Date", "recommendationFactor":0,"recommended":"no"},{"property":"Order Date", "recommendationFactor":0,"recommended":"no"},{"property":"Tracking Date", "recommendationFactor":0,"recommended":"no"}]'></mdb-recommended-concepts>
+                </template>
             </div>
         </div>
     </template>
@@ -163,14 +190,28 @@
             is: 'concept-lob',
 
             properties: {
+                conceptIdentified: {
+                    type: Boolean,
+                    value: false,
+                    notify: true
+                },
+
+                identifiedConcept: String
             },
 
-            // attached: function () {
-            //   var concept_recommendation = this.querySelector('mdb-concept-recommendation');
-            //   concept_recommendation.addEventListener('recommended-changed', function () {
-            //     console.log('CHANGED');
-            //   });
-            // }
+            attached: function () {
+                var that = this;
+                var concept_recommendation = this.querySelector('mdb-concept-recommendation');
+                concept_recommendation.addEventListener('recommended-changed', function () {
+                    if (this.recommended === 'yes') {
+                        that.conceptIdentified = true;
+                        that.identifiedConcept = this.property;
+                    } else {
+                        that.conceptIdentified = false;
+                        that.identifiedConcept = undefined;
+                    }
+                });
+            }
         });
     </script>
 </dom-module>

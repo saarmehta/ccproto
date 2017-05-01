@@ -29,60 +29,60 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="my-app">
   <template>
     <style include="iron-flex">
-      :host {
+       :host {
         --app-primary-color: #5da9dd;
         --app-secondary-color: black;
         --app-border-color: #e1e6ed;
         display: block;
-
-      --paper-item-min-height: 62px;
+        --paper-item-min-height: 62px;
+        --paper-item: {
+          font-size: 14px;
+        }
       }
-
+      
       app-header {
         color: #fff;
         /*background-color: var(--app-primary-color);*/
       }
+      
       app-header paper-icon-button {
         --paper-icon-button-ink-color: white;
       }
-
-        .menu-header-toolbar {
-            @apply(--layout-center-justified);
+      
+      .menu-header-toolbar {
+        @apply(--layout-center-justified);
+      }
+      
+      app-drawer-layout {
+        min-height: 100%;
+        background: var(--app-bg-color, #f0f4f9);
+      }
+      
+      app-toolbar {
+        background-color: var(--app-header-bg, #fff);
+        color: var(--app-header-color, #ddd);
+        height: var(--app-header-height, 80px);
+      }
+      
+      app-drawer {
+        --app-drawer-width: 260px;
+        --app-drawer-content-container: {
+          background-color: var(--menu-bg-color, #1a1c24);
+          overflow: auto;
         }
-
-        app-drawer-layout {
-            min-height: 100%;
-            background: var(--app-bg-color, #f0f4f9);
-        }
-        
-        app-toolbar {
-            background-color: var(--app-header-bg, #fff);
-            color: var(--app-header-color, #ddd);
-            height: var(--app-header-height, 80px);
-        }
-        
-        app-drawer {
-            --app-drawer-width: 330px;
-            --app-drawer-content-container: {
-                background-color: var(--menu-bg-color, #1a1c24);
-                overflow: auto;
-            }
-        }
-        
-      .flex{
+      }
+      
+      .flex {
         @apply(--layout-flex);
       }
+      
       #pages {
         height: 100%;
       }
     </style>
 
     <app-location use-hash-as-path route="{{route}}"></app-location>
-    <app-route
-        route="{{route}}"
-        pattern="/:page"
-        data="{{routeData}}"
-        tail="{{subroute}}"></app-route>
+    <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
 
     <app-drawer-layout fullbleed>
       <!-- Drawer content -->
@@ -95,11 +95,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <span class="flex">LOB ECOSYSTEM</span>
             <iron-icon icon="my-icons:chevron-right"></iron-icon>
           </paper-item>
-          <paper-item  on-click="_routeToPage"  name="concept-coverage">
+          <paper-item on-click="_routeToPage" name="concept-coverage">
             <span class="flex">Concept Coverage</span>
             <iron-icon icon="my-icons:chevron-right"></iron-icon>
           </paper-item>
-          <paper-item  on-click="_routeToPage" name="view3">
+          <paper-item on-click="_routeToPage" name="view3">
             <span class="flex">REVIEW & CLASSIFY</span>
             <iron-icon icon="my-icons:chevron-right"></iron-icon>
           </paper-item>
@@ -116,12 +116,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </app-toolbar>
         </app-header>
 
-        <iron-pages
-            id="pages"
-            selected="[[page]]"
-            attr-for-selected="name"
-            fallback-selection="view404"
-            role="main">
+        <iron-pages id="pages" selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
           <my-view1 name="view1"></my-view1>
           <concept-coverage name="concept-coverage" tab="1"></concept-coverage>
           <my-view3 name="view3"></my-view3>
@@ -147,7 +142,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         '_routePageChanged(routeData.page)',
       ],
 
-      _routePageChanged: function(page) {
+      _routePageChanged: function (page) {
         this.page = page || 'view1';
 
         if (!this.$.drawer.persistent) {
@@ -155,16 +150,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
 
-      _pageChanged: function(page) {
+      _pageChanged: function (page) {
         // Load page import on demand. Show 404 page if fails
         var resolvedPageUrl = this.resolveUrl('my-' + page + '.html');
         this.importHref(resolvedPageUrl, null, this._showPage404, true);
       },
-      _routeToPage: function(e){
-          var pg = e.currentTarget.getAttribute('name');
-          this.set('route.path','/'+pg);
+      _routeToPage: function (e) {
+        var pg = e.currentTarget.getAttribute('name');
+        this.set('route.path', '/' + pg);
       },
-      _showPage404: function() {
+      _showPage404: function () {
         this.page = 'view404';
       },
     });
