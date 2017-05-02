@@ -19,12 +19,21 @@ list component
           height: 30px;
           padding-top: 5px;
           padding-bottom: 5px;
+          padding-left: var(--standard-padding, 20px);
+          padding-right: var(--standard-padding, 20px);
+        }
+        --paper-icon-item: {
+          min-height: auto;
+          height: 30px;
+          padding-top: 5px;
+          padding-bottom: 5px;
+          padding-left: var(--standard-padding, 20px);
+          padding-right: var(--standard-padding, 20px);
         }
         --paper-item-selected: {
           color: #fff;
           background-color: #5caadb;
         }
-        @apply(--paper-item) @apply(--paper-item-focused-before) @apply(--paper-item-focused) @apply(--paper-item-selected-before) @apply(--paper-item-selected) @apply(--paper-item-body-secondary) @apply(--paper-item-icon) @apply(--paper-icon-item) @apply(--paper-item-selected) @apply(--paper-item-disabled) @apply(--paper-item-focused) @apply(--paper-item-focused-before)
       }
       
        :host paper-listbox {

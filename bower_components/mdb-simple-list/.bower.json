@@ -15,12 +15,12 @@
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
   "homepage": "https://github.com/skamble89/mdb-simple-list",
-  "version": "0.0.4",
-  "_release": "0.0.4",
+  "version": "0.0.5",
+  "_release": "0.0.5",
   "_resolution": {
     "type": "version",
-    "tag": "0.0.4",
-    "commit": "9066e46aaf514509c6c88c2d7381ec67a4af001b"
+    "tag": "v0.0.5",
+    "commit": "da225719d1bbafaeae51e3b41539593f6c26d2a9"
   },
   "_source": "git://github.com/skamble89/mdb-simple-list.git",
   "_target": "*",

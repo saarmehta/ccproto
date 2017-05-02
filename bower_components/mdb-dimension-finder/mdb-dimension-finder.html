@@ -37,9 +37,9 @@
           height: 0;
           border: 0;
         }
-        --paper-input-container: {
-          padding-top: 0;
+        --paper-input-container: {          
           padding-bottom: 0;
+          padding-top: var(--standard-padding, 20px);
           padding-left: var(--standard-padding, 20px);
           padding-right: var(--standard-padding, 20px);
           border: 0;
@@ -48,6 +48,9 @@
           border: 1px solid #e8edf1;
           padding: 5px;
           width: 95%;
+        }
+        --paper-font-caption: {
+          display: none;
         }
         --mdb-title: {
           font-family: Roboto;
