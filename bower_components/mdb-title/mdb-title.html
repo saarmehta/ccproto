@@ -6,6 +6,10 @@
 `mdb-title`
 Title component
 
+Custom property | Description | Default
+----------------|-------------|----------
+`--mdb-title` | Mixin applied to the heading | `{}`
+
 @demo demo/index.html 
 -->
 
@@ -23,59 +27,49 @@ Title component
        :host h4,
        :host h5,
        :host h6 {
-         font-weight: normal;
+        font-weight: normal;
+        display: inline-block;
         @apply(--mdb-title);
+      }
+      
+       :host mdb-help-text {
+        display: inline-block;
       }
     </style>
     <template is="dom-if" if="{{_isLevel(level,1)}}">
       <h1>
         <content></content>
-        <template is="dom-if" if="{{help-text}}">
-          <mdb-help-text help-text="{{help-text}}"></mdb-help-text>
-        </template>
       </h1>
     </template>
     <template is="dom-if" if="{{_isLevel(level,2)}}">
       <h2>
         <content></content>
-        <template is="dom-if" if="{{help-text}}">
-          <mdb-help-text help-text="{{help-text}}"></mdb-help-text>
-        </template>
       </h2>
     </template>
     <template is="dom-if" if="{{_isLevel(level,3)}}">
       <h3>
         <content></content>
-        <template is="dom-if" if="{{help-text}}">
-          <mdb-help-text help-text="{{help-text}}"></mdb-help-text>
-        </template>
       </h3>
     </template>
     <template is="dom-if" if="{{_isLevel(level,4)}}">
       <h4>
         <content></content>
-        <template is="dom-if" if="{{help-text}}">
-          <mdb-help-text help-text="{{help-text}}"></mdb-help-text>
-        </template>
       </h4>
     </template>
     <template is="dom-if" if="{{_isLevel(level,5)}}">
       <h5>
         <content></content>
-        <template is="dom-if" if="{{help-text}}">
-          <mdb-help-text help-text="{{help-text}}"></mdb-help-text>
-        </template>
       </h5>
     </template>
     <template is="dom-if" if="{{_isLevel(level,6)}}">
       <h6>
         <content></content>
-        <template is="dom-if" if="{{help-text}}">
-          <mdb-help-text help-text="{{help-text}}"></mdb-help-text>
-        </template>
       </h6>
     </template>
-  </template>
+    <template is="dom-if" if="{{helpText}}">
+      <mdb-help-text help-text="{{helpText}}"></mdb-help-text>
+    </template>
+  </template>  
 
   <script>
     Polymer({
@@ -86,6 +80,7 @@ Title component
         name: {
           type: String,
           value: 'mdb-title',
+          readOnly: true
         },
 
         level: {

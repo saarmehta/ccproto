@@ -13,12 +13,12 @@
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
   "homepage": "https://github.com/skamble89/mdb-title",
-  "version": "0.0.1",
-  "_release": "0.0.1",
+  "version": "0.0.4",
+  "_release": "0.0.4",
   "_resolution": {
     "type": "version",
-    "tag": "v0.0.1",
-    "commit": "0f6c4f6299ceb2e3f91b7cc35d7cbacfe416c667"
+    "tag": "v0.0.4",
+    "commit": "285d088dfc1da547a780819b5fbbb2b5aad5c31c"
   },
   "_source": "git://github.com/skamble89/mdb-title.git",
   "_target": "*",
