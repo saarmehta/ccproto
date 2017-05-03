@@ -14,7 +14,7 @@ Custom property | Description | Default
 ----------------|-------------|----------
 `--mdb-list-item-font-weight`   | Font weight for list item                                            | `200`
 `--mdb-list-item`               | Mixin applied to list item                                           | `{}`
-`--mdb-list-item-focussed`      | Mixin applied to focussed list item                                  | `{}`
+`--mdb-list-item-focused`      | Mixin applied to focused list item                                  | `{}`
 `--mdb-list-item-selected`      | Mixin applied to selected list item                                  | `{}`
 
 @demo demo/index.html 
@@ -46,10 +46,10 @@ Custom property | Description | Default
           @apply(--mdb-list-item);
         }        
         --paper-item-focused-before: {
-          @apply(--mdb-list-item-focussed);
+          @apply(--mdb-list-item-focused);
         }
         --paper-item-focused: {
-          @apply(--mdb-list-item-focussed);
+          @apply(--mdb-list-item-focused);
         }
         --paper-item-selected-before: {
           color: #fff;
