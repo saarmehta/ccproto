@@ -43,23 +43,20 @@ Example:
                 @apply(--layout-flex);
             }
             
-            @media screen and (min-device-width: 1024px) and (max-device-width: 1367px) {
-                #hamburger {
-                    display: block;
-                }
+             :host .profile-picture {
+                height: 3em;
+                width: 3em;
+                border-radius: 50%;
+                border: 1px solid #ddd;
+                margin-left: 2em;
+                margin-right: 1em;
             }
-            
-            @media screen and (min-device-width: 1367px) {
-                #hamburger {
-                    display: none;
-                }
-            }
-        </style>        
+        </style>
         <paper-icon-button noink icon="[[_computeFullScreenIcon(_fullScreenActive)]]" title="Go full screen" on-tap="toggleFullscreen"></paper-icon-button>
         <paper-icon-button noink icon="my-icons:magnify" title="Search"></paper-icon-button>
         <span class="flex"></span>
         <div class="user-dropdown">
-            <iron-icon icon="my-icons:account-circle"></iron-icon>
+            <img class="profile-picture" src="{{profilePicture}}" alt="">
             <span>Mr. John Smith</span>
             <iron-icon class="arrow" icon="my-icons:chevron-right"></iron-icon>
         </div>
@@ -76,6 +73,11 @@ Example:
                 _fullScreenActive: {
                     type: Boolean,
                     value: false
+                },
+
+                profilePicture: {
+                    type: String,
+                    value: '../images/profile-default.png'
                 }
             },
             //checkIcon of fullscreen

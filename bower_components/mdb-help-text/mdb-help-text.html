@@ -7,6 +7,14 @@
 `mdb-help-text`
 Help text element
 
+The following custom properties and mixins are also available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--mdb-help-text-background` | Background color of the tooltip | `#fff`
+`--mdb-help-text-color` | Color of help text | `#aaa`
+`--mdb-help-text-font-size` | Font size of help text | `1em`
+
 @demo demo/index.html 
 -->
 
@@ -30,7 +38,7 @@ Help text element
         --paper-tooltip-opacity: 1;
         --paper-tooltip: {
           box-shadow: 0 0 15px #bfbfbf;
-          font-size: var(--mdb-help-text-font-size, 15px);
+          font-size: var(--mdb-help-text-font-size, 1em);
           width: 250px;
           line-height: 20px;
           padding: 20px;
@@ -171,18 +179,8 @@ Help text element
       },
 
       ready: function () {
-        this.tooltipAnimation =
-          {
-            "entry": [{
-              "name": "fade-in-animation",
-              "timing": {
-                "delay": 1000
-              }
-            }],
-            "exit": [{
-              "name": "fade-out-animation"
-            }]
-          }
+        //No animation, as it causes the tooltip arrow to behave wierdly
+        this.tooltipAnimation = {};
       },
 
     });
