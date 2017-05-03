@@ -23,34 +23,31 @@
                     padding-top: 20px;
                     padding-bottom: 0px;
                 }
-                --paper-item: {
+                --mdb-list-item: {
                     min-height: 15px;
-                    font-weight: 100;
+                    height: auto;
+                    padding-bottom: 0;
+                    padding-top: 0;
                     margin-top: 0.7em;
                     margin-bottom: 0.7em;
                     margin-left: var(--standard-padding, 20px);
                     margin-right: auto;
                 }
-                --paper-item-focused-before: {
+                --mdb-list-item-focused: {
                     border-radius: 25px;
                 }
-                --paper-item-focused: {
-                    border-radius: 25px;
-                }
-                --paper-item-selected-before: {
-                    border-radius: 25px;
-                }
-                --paper-item-selected: {
+                --mdb-list-item-selected: {
                     border-radius: 25px;
                     color: #fff;
                     background-color: #5caadb;
                 }
             }
             
+            /* Dimension finder */
              :host paper-item iron-icon.arrow {
                 display: none;
-            }
-            
+            }            
+
              :host paper-item .recommendation {
                 display: inline-block;
                 position: absolute;
@@ -78,6 +75,7 @@
                 margin-top: var(--standard-padding, 20px);
             }
             
+            /*Recommended Concepts*/
              :host mdb-concept-recommendation {
                 padding-top: var(--standard-padding, 20px);
                 padding-bottom: var(--standard-padding, 20px);

@@ -6,6 +6,17 @@
 `mdb-simple-list`
 list component
 
+### Styling
+
+The following custom properties and mixins are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--mdb-list-item-font-weight`   | Font weight for list item                                            | `200`
+`--mdb-list-item`               | Mixin applied to list item                                           | `{}`
+`--mdb-list-item-focussed`      | Mixin applied to focussed list item                                  | `{}`
+`--mdb-list-item-selected`      | Mixin applied to selected list item                                  | `{}`
+
 @demo demo/index.html 
 -->
 
@@ -16,24 +27,41 @@ list component
         display: block;
         --paper-item: {
           min-height: auto;
+          font-weight: var(--mdb-list-item-font-weight, 200);
           height: 30px;
           padding-top: 5px;
           padding-bottom: 5px;
           padding-left: var(--standard-padding, 20px);
           padding-right: var(--standard-padding, 20px);
+          @apply(--mdb-list-item);
         }
         --paper-icon-item: {
           min-height: auto;
+          font-weight: var(--mdb-list-item-font-weight, 200);
           height: 30px;
           padding-top: 5px;
           padding-bottom: 5px;
           padding-left: var(--standard-padding, 20px);
           padding-right: var(--standard-padding, 20px);
+          @apply(--mdb-list-item);
+        }        
+        --paper-item-focused-before: {
+          @apply(--mdb-list-item-focussed);
+        }
+        --paper-item-focused: {
+          @apply(--mdb-list-item-focussed);
+        }
+        --paper-item-selected-before: {
+          color: #fff;
+          background-color: #5caadb;
+          @apply(--mdb-list-item-selected);
         }
         --paper-item-selected: {
           color: #fff;
           background-color: #5caadb;
+          @apply(--mdb-list-item-selected);
         }
+        --paper-item-selected-weight:var(--mdb-list-item-font-weight, 200);
       }
       
        :host paper-listbox {
