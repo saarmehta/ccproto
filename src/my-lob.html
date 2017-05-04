@@ -42,12 +42,12 @@
                     background-color: #5caadb;
                 }
             }
-            
             /* Dimension finder */
+            
              :host paper-item iron-icon.arrow {
                 display: none;
-            }            
-
+            }
+            
              :host paper-item .recommendation {
                 display: inline-block;
                 position: absolute;
@@ -74,8 +74,8 @@
              :host mdb-dimension-finder {
                 margin-top: var(--standard-padding, 20px);
             }
-            
             /*Recommended Concepts*/
+            
              :host mdb-concept-recommendation {
                 padding-top: var(--standard-padding, 20px);
                 padding-bottom: var(--standard-padding, 20px);
@@ -176,7 +176,10 @@
                     <div class="concept-identified">
                         <iron-icon class="arrow" icon="icons:done"></iron-icon>
                         <mdb-title>Hurray!</mdb-title>
-                        Thanks for identifying New Age as Date of Birth. You've helped make data better.
+                        <div class="success-message">
+                            <p>Thanks for identifying New Age as Date of Birth.</p>
+                            <p>You've helped make data better.</p>
+                        </div>
                     </div>
                 </template>
                 <template is="dom-if" if="{{!conceptIdentified}}">
