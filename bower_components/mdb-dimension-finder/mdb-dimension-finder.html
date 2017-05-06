@@ -2,15 +2,24 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-item/paper-item.html">
 <link rel="import" href="../paper-item/paper-icon-item.html">
-<link rel="import" href="../mdb-radio-list/mdb-radio-list.html">
-<link rel="import" href="../mdb-title/mdb-title.html">
+<link rel="import" href="../paper-styles/typography.html">
 <link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../mdb-radio-list/mdb-radio-list.html">
+<link rel="import" href="../mdb-title/mdb-title.html">
 <link rel="import" href="../mdb-simple-list/mdb-simple-list.html">
 
 <!--
 `mdb-dimension-finder`
 
+### Styling
+
+The following custom properties and mixins are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--mdb-dimension-finder-list` | Mixin applied to dimension finder list | `{}`
+`--mdb-dimension-finder-list-item` | Mixin applied to dimension finder list item | `{}`
 
 @demo demo/index.html 
 -->
@@ -20,6 +29,7 @@
     <style>
        :host {
         display: inline-block;
+        font-size: 14px;
         --paper-input-container-color: #bbb;
         --paper-input-container-focus-color: #bbb;
         --paper-input-container-underline: {
@@ -37,7 +47,7 @@
           height: 0;
           border: 0;
         }
-        --paper-input-container: {          
+        --paper-input-container: {
           padding-bottom: 0;
           padding-top: var(--standard-padding, 20px);
           padding-left: var(--standard-padding, 20px);
@@ -48,6 +58,7 @@
           border: 1px solid #e8edf1;
           padding: 5px;
           width: 95%;
+          font-size: 1em;
         }
         --paper-font-caption: {
           display: none;
@@ -58,6 +69,13 @@
           font-weight: 400;
           margin-top: 0;
         }
+        --mdb-list-item: {
+          font-size: 1em;
+          @apply(--mdb-dimension-finder-list-item);
+        }
+        --paper-checkbox-label-color:#b9b9b9;
+        --paper-checkbox-checked-color:#b9b9b9;
+        --paper-checkbox-unchecked-color:#b9b9b9;
       }
       
        :host .dimension-finder {
@@ -66,8 +84,7 @@
       }
       
        :host .dimension-finder mdb-simple-list {
-        height: 288px;
-        overflow-y: auto;
+        @apply(--mdb-dimension-finder-list)
       }
       
        :host .header {
@@ -75,11 +92,17 @@
         flex-direction: row;
         justify-content: space-between;
       }
+      
+       :host paper-radio-button {
+        text-align: center;
+      }
     </style>
 
     <div class="header">
       <mdb-title help-text="{{helpText}}" level="3">{{dimension}}</mdb-title>
-      <paper-checkbox>ALL</paper-checkbox>
+      <template is="dom-if" if="{{allDimensionsAllowed}}">
+        <paper-checkbox checked="{{showAllDimensions}}">ALL</paper-checkbox>
+      </template>
     </div>
     <mdb-radio-list size="small" selected="{{sort}}">
       <paper-radio-button name="alphabetically">ALPHABETICALLY</paper-radio-button>
@@ -144,6 +167,18 @@
           type: String,
           value: 'recommendation',
           observer: '_sortDimension'
+        },
+
+        showAllDimensions: {
+          type: Boolean,
+          value: false,
+          reflectToAttribute: true,
+          notify: true
+        },
+
+        allDimensionsAllowed: {
+          type: Boolean,
+          value: false
         }
       },
 

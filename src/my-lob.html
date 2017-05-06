@@ -19,19 +19,21 @@
                     flex-wrap: wrap;
                     border: 1px solid #e1e6ed;
                     background: #fcfdff;
-                    height: 288px;
-                    padding-top: 20px;
-                    padding-bottom: 0px;
+                    height: 182px;
+                    padding-top: var(--standard-padding, 20px);
+                    padding-bottom: var(--standard-padding, 20px);
+                    color: #484848;
                 }
                 --mdb-list-item: {
                     min-height: 15px;
                     height: auto;
                     padding-bottom: 0;
                     padding-top: 0;
-                    margin-top: 0.7em;
-                    margin-bottom: 0.7em;
-                    margin-left: var(--standard-padding, 20px);
+                    padding-left: var(--standard-padding, 20px);
+                    margin-top: 0.4em;
                     margin-right: auto;
+                    font-weight: 400;
+                    font-size: 1.2em;
                 }
                 --mdb-list-item-focused: {
                     border-radius: 25px;
@@ -63,22 +65,39 @@
              :host .db-entities {
                 border: 1px solid #e3eaee;
                 margin-top: var(--standard-padding, 20px);
-                padding-top: var(--standard-padding, 20px);
                 padding-bottom: var(--standard-padding, 20px);
+                overflow: auto;
                 display: flex;
                 flex-direction: row;
+                flex-wrap: nowrap;
                 justify-content: space-around;
-                flex-wrap: wrap;
             }
             
              :host mdb-dimension-finder {
                 margin-top: var(--standard-padding, 20px);
+                font-size: 12px;
+                --mdb-dimension-finder-list: {
+                    height: 168px;
+                    overflow: auto;
+                }
+                --mdb-dimension-finder-list-item: {
+                    height: 25px;
+                    padding-top: 0;
+                    padding-bottom: 0;
+                }
+            }
+            
+             :host mdb-dimension-finder iron-icon {
+                width: 15px;
+                height: 15px;
+            }
+            
+             :host .face {
+                padding-right: 3px;
             }
             /*Recommended Concepts*/
             
              :host mdb-concept-recommendation {
-                padding-top: var(--standard-padding, 20px);
-                padding-bottom: var(--standard-padding, 20px);
                 margin-top: 20px;
                 margin-bottom: var(--standard-padding, 20px);
                 border: 1px solid #e5edee;
@@ -112,10 +131,22 @@
              :host mdb-coverage-table {
                 width: 60%;
                 margin-right: 30px;
+                --mdb-coverage-table: {
+                    height: auto;
+                }
+                --mdb-coverage-table-options: {
+                    color: #aaa;
+                }
+                --mdb-coverage-table-cell: {
+                    padding: 14px;
+                }
+                --mdb-coverage-table-body-cell: {
+                    color: #aaa;
+                }
             }
             
              :host .recommended-concepts {
-                padding-top: 45px;
+                padding-top: 30px;
                 display: inline-block;
                 width: 40%;
             }
@@ -136,17 +167,17 @@
                     </paper-item>
                 </template>
             </mdb-dimension-finder>
-            <mdb-dimension-finder dimension="Database" items='["CUSIP","Instrument-ID","Holding-ID","Published-Price","Agreement-ID","Contract-ID","Organization-ID","Date of Birth","Organization-Name","Activity-ID","Notional-ID","Agent-ID","Agency-Name","Asset-ID","Asset-Type"]'
+            <mdb-dimension-finder all-dimensions-allowed dimension="Database" items='["CUSIP","Instrument-ID","Holding-ID","Published-Price","Agreement-ID","Contract-ID","Organization-ID","Date of Birth","Organization-Name","Activity-ID","Notional-ID","Agent-ID","Agency-Name","Asset-ID","Asset-Type"]'
                 help-text="List of Databases">
                 <template>
                     <paper-item>
-                        <span><iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon><iron-icon icon="icons:face"></iron-icon>{{this}}</span>
+                        <span><iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon><iron-icon class="face" icon="icons:face"></iron-icon>{{this}}</span>
                         <span class="recommendation">23%</span>
                         <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
                     </paper-item>
                 </template>
             </mdb-dimension-finder>
-            <mdb-dimension-finder dimension="Schema" items='["Product-Code","Product-Name","Market-Segment","CUSIP","Instrument-ID","Holding-ID","Agreement-ID"]'
+            <mdb-dimension-finder all-dimensions-allowed dimension="Schema" items='["Product-Code","Product-Name","Market-Segment","CUSIP","Instrument-ID","Holding-ID","Agreement-ID"]'
                 help-text="List of Schemas">
                 <template>
                     <paper-item>
@@ -155,7 +186,7 @@
                     </paper-item>
                 </template>
             </mdb-dimension-finder>
-            <mdb-dimension-finder dimension="Table" items='["FICO-Score","Account-Number","Customer-Code","Customer-Type","Product-Code","Product-Name","Market-Segment","CUSIP","Instrument-ID","Holding-ID","Published-Price","Agreement-ID","Contract-ID","Organization-ID","Date of Birth","Organization-Name","Activity-ID","Notional-ID","Agent-ID","Agency-Name","Asset-ID","Asset-Type"]'
+            <mdb-dimension-finder all-dimensions-allowed dimension="Table" items='["FICO-Score","Account-Number","Customer-Code","Customer-Type","Product-Code","Product-Name","Market-Segment","CUSIP","Instrument-ID","Holding-ID","Published-Price","Agreement-ID","Contract-ID","Organization-ID","Date of Birth","Organization-Name","Activity-ID","Notional-ID","Agent-ID","Agency-Name","Asset-ID","Asset-Type"]'
                 help-text="List of Tables">
                 <template>
                     <paper-item>
