@@ -1,0 +1,17 @@
+[
+    "FICO-Score",
+    "Account-Number",
+    "Customer-Code",
+    "Customer-Type",
+    "Product-Code",
+    "Product-Name",
+    "Market-Segment",
+    "CUSIP",
+    "Instrument-ID",
+    "Holding-ID",
+    "Published-Price",
+    "Agreement-ID",
+    "Contract-ID",    
+    "Asset-ID",
+    "Asset-Type"
+]

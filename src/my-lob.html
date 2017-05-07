@@ -119,7 +119,7 @@
                 text-align: center;
                 font-size: 1.6em;
                 --iron-icon-width: 40px;
-                --iron-icon-height: 40px;                
+                --iron-icon-height: 40px;
             }
             
              :host .concept-identified iron-icon {
@@ -166,7 +166,7 @@
                 width: 40%;
             }
         </style>
-        <mdb-simple-list class="concept-list" items='["FICO-Score","Account-Number","Customer-Code","Customer-Type","Product-Code","Product-Name","Market-Segment","CUSIP","Instrument-ID","Holding-ID","Published-Price","Agreement-ID","Contract-ID","Organization-ID","Date of Birth","Organization-Name","Activity-ID","Notional-ID","Agent-ID","Agency-Name","Asset-ID","Asset-Type"]'>
+        <mdb-simple-list class="concept-list" items={{concepts}} selected-item="{{selectedConcept}}">
             <template>
                 <paper-item>{{this}}</paper-item>
             </template>
@@ -218,7 +218,7 @@
 
             <div class="recommended-concepts">
                 <mdb-concept-recommendation property="Date of Birth" recommendation-factor="0"></mdb-concept-recommendation>
-                <template is="dom-if" if="{{conceptIdentified}}">
+                <template is="dom-if" if="{{isConceptIdentified}}">
                     <div class="concept-identified">
                         <iron-icon class="arrow" icon="icons:done"></iron-icon>
                         <mdb-title>Hurray!</mdb-title>
@@ -228,7 +228,7 @@
                         </div>
                     </div>
                 </template>
-                <template is="dom-if" if="{{!conceptIdentified}}">
+                <template is="dom-if" if="{{!isConceptIdentified}}">
                     <mdb-recommended-concepts recommendations='[{"property":"Person Age", "recommendationFactor":80,"recommended":"maybe"},{"property":"Anniversary", "recommendationFactor":65,"recommended":"maybe"},{"property":"Due Date", "recommendationFactor":0,"recommended":"maybe"},{"property":"Issue Date", "recommendationFactor":0,"recommended":"maybe"},{"property":"Net Credit Service Date", "recommendationFactor":0,"recommended":"maybe"},{"property":"Order Date", "recommendationFactor":0,"recommended":"maybe"},{"property":"Tracking Date", "recommendationFactor":0,"recommended":"maybe"}]'></mdb-recommended-concepts>
                 </template>
             </div>
@@ -240,7 +240,25 @@
             is: 'concept-lob',
 
             properties: {
-                conceptIdentified: {
+                lob: {
+                    type: String,
+                    notify: true,
+                    reflectToAttribute: true,
+                    observer: '_lobChanged'
+                },
+
+                concepts: {
+                    type: Array,
+                    value: []
+                },
+
+                selectedConcept: {
+                    type: String,
+                    value: '',
+                    notify: true
+                },
+
+                isConceptIdentified: {
                     type: Boolean,
                     value: false,
                     notify: true
@@ -251,16 +269,39 @@
 
             attached: function () {
                 var that = this;
+                var concepts = this.querySelector('mdb-simple-list.concept-list');
+                concepts.addEventListener('selected-item-changed', function () {
+                    that.selectedConcept = this.selectedItem;
+                });
+
+                //Recommended Concept selected
                 var concept_recommendation = this.querySelector('mdb-concept-recommendation');
                 concept_recommendation.addEventListener('recommended-changed', function () {
                     if (this.recommended === 'yes') {
-                        that.conceptIdentified = true;
+                        that.isConceptIdentified = true;
                         that.identifiedConcept = this.property;
                     } else {
-                        that.conceptIdentified = false;
+                        that.isConceptIdentified = false;
                         that.identifiedConcept = undefined;
                     }
                 });
+            },
+
+            _lobChanged: function () {
+                var that = this;
+                if (this.lob) {
+                    this._makeRequest({
+                        url: ('/data/concepts/' + this.lob + '.json').toLowerCase()
+                    }).then(function (e) {
+                        that.set('concepts', JSON.parse(e.response));
+                    });
+                }
+            },
+
+            _makeRequest: function (options) {
+                var xhr = document.createElement('iron-request');
+                xhr.send(options);
+                return xhr.completes;
             }
         });
     </script>

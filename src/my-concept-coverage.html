@@ -61,31 +61,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <mdb-metric-display stat-value="25" stat-description="Concepts significantly impacted"></mdb-metric-display>
         </mdb-metric-display-container>
 
-        <paper-tabs selected="{{tab}}">
-          <paper-tab>GLOBAL</paper-tab>
-          <paper-tab>MY LOB</paper-tab>
-          <paper-tab>LOB1</paper-tab>
-          <paper-tab>LOB2</paper-tab>
-          <paper-tab>LOB3</paper-tab>
+        <iron-ajax auto url="/data/lob-list.json" handle-as="json" on-response="handleResponse" debounce-duration="300"></iron-ajax>
+        <paper-tabs selected="{{_selectedTab}}">
+          <template is="dom-repeat" items="{{lobs}}">
+            <paper-tab>{{item}}</paper-tab>
+          </template>
         </paper-tabs>
-
-        <iron-pages selected="{{tab}}">
-          <iron-page>
-            <concept-lob></concept-lob>
-          </iron-page>
-          <iron-page>
-            <concept-lob></concept-lob>
-          </iron-page>
-          <iron-page>
-            <concept-lob></concept-lob>
-          </iron-page>
-          <iron-page>
-            <concept-lob></concept-lob>
-          </iron-page>
-          <iron-page>
-            <concept-lob></concept-lob>
-          </iron-page>
-        </iron-pages>
+        <template is="dom-if" if="{{lobs.length}}">
+          <concept-lob lob="{{selectedLob}}"></concept-lob>
+        </template>
       </div>
     </page-layout>
 
@@ -96,14 +80,38 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'concept-coverage',
 
       properties: {
-        tab: {
+        _selectedTab: {
           type: Number,
           value: 0,
+          notify: true,
+          observer: '_tabChanged'
+        },
+
+        selectedLob: {
+          type: String,
+          value: '',
+          notify: true,
+          reflectToAttribute: true
         },
 
         lobs: {
           type: Array,
           value: []
+        }
+      },
+
+      handleResponse: function (e) {
+        this.set('lobs', e.detail.response.map(function (e) { return e.toUpperCase() }));
+        this._setSelectedLob();
+      },
+
+      _tabChanged: function () {
+        this._setSelectedLob();
+      },
+
+      _setSelectedLob: function () {
+        if (this.lobs) {
+          this.selectedLob = this.lobs[this._selectedTab];
         }
       }
     });

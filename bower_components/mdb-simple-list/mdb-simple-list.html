@@ -44,7 +44,7 @@ Custom property | Description | Default
           padding-left: var(--standard-padding, 20px);
           padding-right: var(--standard-padding, 20px);
           @apply(--mdb-list-item);
-        }        
+        }
         --paper-item-focused-before: {
           @apply(--mdb-list-item-focused);
         }
@@ -95,11 +95,13 @@ Custom property | Description | Default
         },
 
         selectedItem: {
-          type: Object
+          type: Object,
+          notify: true
         },
 
         selectedItems: {
-          type: Array
+          type: Array,
+          notify: true
         },
 
         height: {
