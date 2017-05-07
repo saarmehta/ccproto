@@ -93,11 +93,12 @@ Custom property | Description | Default
         justify-content: space-between;
       }
       
-       :host mdb-radio-list {
-        font-size: 1em;
+       :host paper-radio-button {
+        text-align: center;
       }
       
-       :host paper-radio-button {
+       :host mdb-title.empty-message {
+        margin-top: var(--standard-padding, 20px);
         text-align: center;
       }
     </style>
@@ -113,10 +114,15 @@ Custom property | Description | Default
       <paper-radio-button name="recommendation">BY RECOMMENDATION</paper-radio-button>
     </mdb-radio-list>
     <div class="dimension-finder">
-      <paper-input placeholder="Search for {{_lowercaseDimension}} name" value="{{filter}}"></paper-input>
-      <mdb-simple-list items="{{items}}" height="{{height}}">
+      <paper-input placeholder="Search for [[_toLowerCase(dimension)]] name" value="{{filter}}"></paper-input>
+      <!--<template is="dom-if" if="{{items.length}}">-->
+      <mdb-simple-list height="{{height}}" items="{{items}}">
         <content select="template"></content>
       </mdb-simple-list>
+      <!--</template>
+      <template is="dom-if" if="{{!items.length}}">
+        <mdb-title class="empty-message" level="3">[[emptyMessage]]</mdb-title>
+      </template>-->
     </div>
   </template>
 
@@ -131,13 +137,15 @@ Custom property | Description | Default
           value: 'mdb-dimension-finder',
         },
 
+        //Type of dimension
         dimension: {
           type: String
         },
 
-        _lowercaseDimension: {
+        selectedDimension: {
           type: String,
-          computed: '_lowerCase(dimension)'
+          value: '',
+          notify: true
         },
 
         helpText: {
@@ -150,11 +158,14 @@ Custom property | Description | Default
         },
 
         _items: {
-          type: Array
+          type: Array,
+          value: []
         },
 
         items: {
-          type: Array
+          type: Array,
+          value: [],
+          notify: true
         },
 
         searchProperty: {
@@ -183,25 +194,37 @@ Custom property | Description | Default
         allDimensionsAllowed: {
           type: Boolean,
           value: false
-        }
+        },
+
+        emptyMessage: String
       },
 
       ready: function () {
-        this._items = this.items.slice();
+        this.set('_items', this.items.slice());
         this._isReady = true;
       },
 
-      _lowerCase: function (str) {
+      attached: function () {
+        var that = this;
+        var list = this.querySelector('mdb-simple-list');
+        if (list) {
+          list.addEventListener('selected-item-changed', function () {
+            that.selectedDimension = this.selectedItem;
+          });
+        }
+      },
+
+      _toLowerCase: function (str) {
         return str.toLowerCase();
       },
 
       _searchDimension: function () {
         var that = this;
         if (this._isReady) {
-          this.items = this._items
+          this.set('items', this._items
             .filter(function (e) {
               return (typeof e === typeof {} ? e[that.searchProperty] : e).toLowerCase().indexOf(that.filter.toLowerCase()) > -1;
-            });
+            }));
         }
       },
 

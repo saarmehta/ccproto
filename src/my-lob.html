@@ -51,6 +51,11 @@
             }
             /* Dimension finder */
             
+             :host paper-item .icon {
+                display: inline-block;
+                width: 1.5em;
+            }
+            
              :host paper-item iron-icon.arrow {
                 display: none;
             }
@@ -81,14 +86,17 @@
              :host mdb-dimension-finder {
                 margin-top: var(--standard-padding, 20px);
                 font-size: 1em;
+                width: 257px;
                 --mdb-dimension-finder-list: {
                     height: 168px;
                     overflow: auto;
                 }
                 --mdb-dimension-finder-list-item: {
-                    height: 25px;
+                    min-height: 25px;
+                    height: auto;
                     padding-top: 0;
                     padding-bottom: 0;
+                    line-height: initial;
                 }
             }
             
@@ -168,71 +176,95 @@
         </style>
         <mdb-simple-list class="concept-list" items={{concepts}} selected-item="{{selectedConcept}}">
             <template>
-                <paper-item>{{this}}</paper-item>
+                <paper-item>{{item.name}}</paper-item>
             </template>
         </mdb-simple-list>
 
         <div class="db-entities">
-            <mdb-dimension-finder dimension="Application" items='["FICO-Score","Market-Segment","Agreement-ID","Contract-ID","Organization-ID","Date of Birth","Organization-Name","Activity-ID"]'
-                help-text="List of Applications">
+            <mdb-dimension-finder class="applications" dimension="Application" items="{{applications}}" help-text="List of Applications">
                 <template>
                     <paper-item>
-                        <span>{{this}}</span>
+                        <span>{{item.name}}</span>
                         <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
                     </paper-item>
                 </template>
             </mdb-dimension-finder>
-            <mdb-dimension-finder all-dimensions-allowed dimension="Database" items='["CUSIP","Instrument-ID","Holding-ID","Published-Price","Agreement-ID","Contract-ID","Organization-ID","Date of Birth","Organization-Name","Activity-ID","Notional-ID","Agent-ID","Agency-Name","Asset-ID","Asset-Type"]'
-                help-text="List of Databases">
+            <mdb-dimension-finder class="databases" all-dimensions-allowed dimension="Database" items="{{databases}}" help-text="List of Databases">
                 <template>
                     <paper-item>
-                        <span><iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon><iron-icon class="face" icon="icons:face"></iron-icon>{{this}}</span>
-                        <span class="recommendation">23%</span>
+                        <span class="bulb icon">
+                            <template is="dom-if" if="{{item.bulb}}">
+                                <iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon>
+                            </template>
+                        </span>
+                        <span class="face icon">
+                            <template is="dom-if" if="{{item.face}}">
+                                <iron-icon icon="icons:face"></iron-icon>
+                            </template>
+                        </span>
+                        <span>{{item.name}}</span>
+                        <template is="dom-if" if="{{item.recommendation}}">
+                            <span class="recommendation">{{item.recommendation}}%</span>
+                        </template>
                         <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
                     </paper-item>
                 </template>
             </mdb-dimension-finder>
-            <mdb-dimension-finder all-dimensions-allowed dimension="Schema" items='["Product-Code","Product-Name","Market-Segment","CUSIP","Instrument-ID","Holding-ID","Agreement-ID"]'
-                help-text="List of Schemas">
+            <mdb-dimension-finder class="schemas" all-dimensions-allowed dimension="Schema" items="{{schemas}}" help-text="List of Schemas">
                 <template>
                     <paper-item>
-                        <span><iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon>{{this}}</span>
+                        <span class="bulb icon">
+                            <template is="dom-if" if="{{item.bulb}}">
+                                <iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon>
+                            </template>                            
+                        </span>
+                        <span>{{item.name}}</span>
+                        <template is="dom-if" if="{{item.recommendation}}">
+                            <span class="recommendation">{{item.recommendation}}%</span>
+                        </template>
                         <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
                     </paper-item>
                 </template>
             </mdb-dimension-finder>
-            <mdb-dimension-finder all-dimensions-allowed dimension="Table" items='["FICO-Score","Account-Number","Customer-Code","Customer-Type","Product-Code","Product-Name","Market-Segment","CUSIP","Instrument-ID","Holding-ID","Published-Price","Agreement-ID","Contract-ID","Organization-ID","Date of Birth","Organization-Name","Activity-ID","Notional-ID","Agent-ID","Agency-Name","Asset-ID","Asset-Type"]'
-                help-text="List of Tables">
+            <mdb-dimension-finder class="tables" all-dimensions-allowed dimension="Table" items="{{tables}}" help-text="List of Tables">
                 <template>
                     <paper-item>
-                        <span><iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon>{{this}}</span>
+                        <span class="bulb icon">
+                            <template is="dom-if" if="{{item.bulb}}">
+                                <iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon>
+                            </template>                            
+                        </span>
+                        <span>{{item.name}}</span>
+                        <template is="dom-if" if="{{item.recommendation}}">
+                            <span class="recommendation">{{item.recommendation}}%</span>
+                        </template>
                         <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
                     </paper-item>
                 </template>
             </mdb-dimension-finder>
         </div>
+        <template is="dom-if" if="{{selectedTable}}">
+            <div class="concept-identification">
+                <mdb-coverage-table title-text="{{selectedTable.name}}" help-text="Coverage table" columns="{{tableColumns}}" items="{{tableData}}"></mdb-coverage-table>
 
-        <div class="concept-identification">
-            <mdb-coverage-table title-text="PARTY_SALES" help-text="Coverage table" columns='[{"name":"Name (Job title)","property":"name","width":"300"},{"name":"New Age","property":"age","width":"150"},{"name":"Nickname","property":"nickname","width":"150"},{"name":"Employee","property":"employee","width":"150"},{"name":"Col1","property":"col1","width":"100"},{"name":"Col2","property":"col2","width":"100"},{"name":"Col3","property":"col3","width":"100"},{"name":"Col4","property":"col4","width":"100"},{"name":"Col5","property":"col5","width":"100"},{"name":"Col6","property":"col6","width":"100"}]'
-                items='[{"name": "Lorem ipsum dolor sit amet", "age":25,"nickname":"Rprehenderit"}, {"name": "Consequuentur magni", "age":26,"nickname":"Ipsam"},{"name": "Quis autem vel", "age":28,"nickname":"Tempora"},{"name": "Gignissimos dusimus", "age":28,"nickname":"Voluptate"},{"name": "Cumque nihil impedit", "age":29,"nickname":"Avoids"},{"name": "Capienti delectus", "age":30,"nickname":"Corrupti"},{"name": "Bmnis Voluptas", "age":32,"nickname":"Mollitia"},{"name": "Tfficiis debitis", "age":34,"nickname":"Consequatur"},{"name": "Occaecati Cupiditate", "age":38,"nickname":"Rpudiated"}]'></mdb-coverage-table>
-
-            <div class="recommended-concepts">
-                <mdb-concept-recommendation property="Date of Birth" recommendation-factor="0"></mdb-concept-recommendation>
-                <template is="dom-if" if="{{isConceptIdentified}}">
-                    <div class="concept-identified">
-                        <iron-icon class="arrow" icon="icons:done"></iron-icon>
-                        <mdb-title>Hurray!</mdb-title>
-                        <div class="success-message">
-                            <p>Thanks for identifying New Age as Date of Birth.</p>
-                            <p>You've helped make data better.</p>
+                <div class="recommended-concepts">
+                    <mdb-concept-recommendation property="Date of Birth" recommendation-factor="0"></mdb-concept-recommendation>
+                    <template is="dom-if" if="{{isConceptIdentified}}">
+                        <div class="concept-identified">
+                            <iron-icon class="arrow" icon="icons:done"></iron-icon>
+                            <mdb-title>Hurray!</mdb-title>
+                            <div class="success-message">
+                                <p>Thanks for identifying New Age as Date of Birth.</p>
+                                <p>You've helped make data better.</p>
+                            </div>
                         </div>
-                    </div>
-                </template>
-                <template is="dom-if" if="{{!isConceptIdentified}}">
-                    <mdb-recommended-concepts recommendations='[{"property":"Person Age", "recommendationFactor":80,"recommended":"maybe"},{"property":"Anniversary", "recommendationFactor":65,"recommended":"maybe"},{"property":"Due Date", "recommendationFactor":0,"recommended":"maybe"},{"property":"Issue Date", "recommendationFactor":0,"recommended":"maybe"},{"property":"Net Credit Service Date", "recommendationFactor":0,"recommended":"maybe"},{"property":"Order Date", "recommendationFactor":0,"recommended":"maybe"},{"property":"Tracking Date", "recommendationFactor":0,"recommended":"maybe"}]'></mdb-recommended-concepts>
-                </template>
+                    </template>
+                    <template is="dom-if" if="{{!isConceptIdentified}}">
+                        <mdb-recommended-concepts recommendations="{{recommendedConcepts}}"></mdb-recommended-concepts>
+                    </template>
+                </div>
             </div>
-        </div>
+        </template>
     </template>
 
     <script>
@@ -258,6 +290,72 @@
                     notify: true
                 },
 
+                applications: {
+                    type: Array,
+                    value: [],
+                    notify: true
+                },
+
+                selectedApplication: {
+                    type: String,
+                    value: '',
+                    notify: true
+                },
+
+                databases: {
+                    type: Array,
+                    value: [],
+                    notify: true
+                },
+
+                selectedDatabase: {
+                    type: String,
+                    value: '',
+                    notify: true
+                },
+
+                schemas: {
+                    type: Array,
+                    value: [],
+                    notify: true
+                },
+
+                selectedSchema: {
+                    type: String,
+                    value: '',
+                    notify: true
+                },
+
+                tables: {
+                    type: Array,
+                    value: [],
+                    notify: true
+                },
+
+                selectedTable: {
+                    type: String,
+                    value: '',
+                    notify: true
+                },
+
+                tableColumns: {
+                    type: Array,
+                    value: [],
+                    notify: true
+                },
+
+                tableData: {
+                    type: Array,
+                    value: [],
+                    notify: true
+                },
+
+                recommendedConcepts: {
+                    type: Array,
+                    value: [],
+                    notify: true
+                },
+
                 isConceptIdentified: {
                     type: Boolean,
                     value: false,
@@ -272,6 +370,71 @@
                 var concepts = this.querySelector('mdb-simple-list.concept-list');
                 concepts.addEventListener('selected-item-changed', function () {
                     that.selectedConcept = this.selectedItem;
+                    //Get applications for the selected concept
+                    that._makeRequest({
+                        url: '/data/lobs/' + that.lob + '/' + that.selectedConcept._id + '/applications.json'
+                    }).then(function (e) {
+                        that.set('applications', JSON.parse(e.response));
+                    })
+                });
+
+                var applications = this.querySelector('mdb-dimension-finder.applications');
+                var databases = this.querySelector('mdb-dimension-finder.databases');
+                var schemas = this.querySelector('mdb-dimension-finder.schemas');
+                var tables = this.querySelector('mdb-dimension-finder.tables');
+
+                //Get databases for application
+                applications.addEventListener('selected-dimension-changed', function () {
+                    that.selectedApplication = this.selectedDimension;
+                    that._makeRequest({
+                        url: '/data/lobs/' + that.lob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases.json'
+                    }).then(function (e) {
+                        that.set('databases', JSON.parse(e.response));
+                    })
+                });
+
+                //Get schemas for database
+                databases.addEventListener('selected-dimension-changed', function () {
+                    that.selectedDatabase = this.selectedDimension;
+                    that._makeRequest({
+                        url: '/data/lobs/' + that.lob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases/' + that.selectedDatabase._id + '/schemas.json'
+                    }).then(function (e) {
+                        that.set('schemas', JSON.parse(e.response));
+                    })
+                });
+
+                //Get tables for schema
+                schemas.addEventListener('selected-dimension-changed', function () {
+                    that.selectedSchema = this.selectedDimension;
+                    that._makeRequest({
+                        url: '/data/lobs/' + that.lob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases/' + that.selectedDatabase._id + '/schemas/' + that.selectedSchema._id + '/tables.json'
+                    }).then(function (e) {
+                        that.set('tables', JSON.parse(e.response));
+                    })
+                });
+
+                //Get table data for selected table
+                tables.addEventListener('selected-dimension-changed', function () {
+                    that.selectedTable = this.selectedDimension;
+                    var p1 = that._makeRequest({
+                        url: '/data/lobs/' + that.lob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases/' + that.selectedDatabase._id + '/schemas/' + that.selectedSchema._id + '/tables/' + that.selectedTable._id + '/columns.json'
+                    });
+                    var p2 = that._makeRequest({
+                        url: '/data/lobs/' + that.lob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases/' + that.selectedDatabase._id + '/schemas/' + that.selectedSchema._id + '/tables/' + that.selectedTable._id + '/data.json'
+                    });
+                    var p3 = that._makeRequest({
+                        url: '/data/lobs/' + that.lob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases/' + that.selectedDatabase._id + '/schemas/' + that.selectedSchema._id + '/tables/' + that.selectedTable._id + '/recommended-concepts.json'
+                    });
+
+                    Promise.all([p1, p2, p3]).then(function (values) {
+                        var columns = JSON.parse(values[0].response);
+                        var data = JSON.parse(values[1].response);
+                        var recommendedConcepts = JSON.parse(values[2].response);
+
+                        that.set('tableColumns', columns);
+                        that.set('tableData', data);
+                        that.set('recommendedConcepts', recommendedConcepts);
+                    })
                 });
 
                 //Recommended Concept selected
@@ -288,10 +451,11 @@
             },
 
             _lobChanged: function () {
+                //TODO: Reset everything
                 var that = this;
                 if (this.lob) {
                     this._makeRequest({
-                        url: ('/data/concepts/' + this.lob + '.json').toLowerCase()
+                        url: ('/data/lobs/' + this.lob + '/concepts.json').toLowerCase()
                     }).then(function (e) {
                         that.set('concepts', JSON.parse(e.response));
                     });

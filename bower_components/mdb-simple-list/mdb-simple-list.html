@@ -129,9 +129,7 @@ Custom property | Description | Default
             if (typeof item === typeof '') {
               clone['this'] = item;
             } else {
-              for (var k in item) {
-                clone[k] = item[k];
-              }
+              clone['item'] = item;
             }
 
             list.appendChild(clone.root);
