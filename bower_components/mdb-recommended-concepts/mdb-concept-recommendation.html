@@ -30,27 +30,34 @@
                 text-align: center;
             }
             
-             :host #recommendation-container {
+             :host #recommendationContainer {
                 display: flex;
                 flex-direction: row;
                 flex-wrap: nowrap;
                 justify-content: space-between;
             }
             
-             :host #recommendation-factor {
+             :host #recommendationFactor {
                 display: inline-block;
                 width: 30px;
             }
+            
+             :host #recommendationContainer #property {
+                display: inline-block;
+                width: 30%;
+                word-wrap: break-word;
+                @apply(--mdb-recommended-concepts-property-name)
+            }
         </style>
-        <div id="recommendation-container">
-            <span id="property-name">[[property]]</span>
+        <div id="recommendationContainer">
+            <span id="property">[[property]]</span>
             <div>
                 <mdb-radio-list size="small" selected="{{recommended}}">
                     <paper-radio-button name="yes">YES</paper-radio-button>
                     <paper-radio-button name="no">NO</paper-radio-button>
                     <paper-radio-button name="maybe">MAYBE</paper-radio-button>
                 </mdb-radio-list>
-                <span id="recommendation-factor">[[recommendation-factor]]%</span>
+                <span id="recommendationFactor">[[recommendation-factor]]%</span>
             </div>
         </div>
     </template>
@@ -78,8 +85,9 @@
 
                 recommended: {
                     type: String,
-                    value: 'no',
-                    notify: true
+                    value: 'maybe',
+                    notify: true,
+                    reflectToAttribute: true
                 }
             },
 

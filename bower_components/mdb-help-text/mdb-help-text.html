@@ -50,8 +50,8 @@ Custom property | Description | Default
         }
       }
       
-       :host #help:hover+paper-tooltip:before,
-       :host #help:hover+paper-tooltip:after {
+       :host #help+paper-tooltip .arrow:before,
+       :host #help+paper-tooltip .arrow:after {
         border: solid transparent;
         content: " ";
         height: 0;
@@ -61,20 +61,20 @@ Custom property | Description | Default
       }
       /*When tooltip is on right*/
       
-       :host[position="right"] #help:hover+paper-tooltip:before,
-       :host[position="right"] #help:hover+paper-tooltip:after {
-        right: 99%;
+       :host[position="right"] #help+paper-tooltip .arrow:before,
+       :host[position="right"] #help+paper-tooltip .arrow:after {
+        right: 100%;
         top: 50%;
       }
       
-       :host[position="right"] #help:hover+paper-tooltip:before {
+       :host[position="right"] #help+paper-tooltip .arrow:before {
         border-color: rgba(170, 170, 170, 0);
         border-right-color: #aaa;
         border-width: 11px;
         margin-top: -11px;
       }
       
-       :host[position="right"] #help:hover+paper-tooltip:after {
+       :host[position="right"] #help+paper-tooltip .arrow:after {
         border-color: rgba(255, 255, 255, 0);
         border-right-color: #fff;
         border-width: 10px;
@@ -82,20 +82,20 @@ Custom property | Description | Default
       }
       /*When tooltip is on left*/
       
-       :host[position="left"] #help:hover+paper-tooltip:before,
-       :host[position="left"] #help:hover+paper-tooltip:after {
-        left: 99%;
+       :host[position="left"] #help+paper-tooltip .arrow:before,
+       :host[position="left"] #help+paper-tooltip .arrow:after {
+        left: 100%;
         top: 50%;
       }
       
-       :host[position="left"] #help:hover+paper-tooltip:after {
+       :host[position="left"] #help+paper-tooltip .arrow:after {
         border-color: rgba(255, 255, 255, 0);
         border-left-color: #fff;
         border-width: 10px;
         margin-top: -10px;
       }
       
-       :host[position="left"] #help:hover+paper-tooltip:before {
+       :host[position="left"] #help+paper-tooltip .arrow:before {
         border-color: rgba(170, 170, 170, 0);
         border-left-color: #aaa;
         border-width: 11px;
@@ -103,20 +103,20 @@ Custom property | Description | Default
       }
       /*When tooltip is above*/
       
-       :host[position="top"] #help:hover+paper-tooltip:before,
-       :host[position="top"] #help:hover+paper-tooltip:after {
-        top: 99%;
+       :host[position="top"] #help+paper-tooltip .arrow:before,
+       :host[position="top"] #help+paper-tooltip .arrow:after {
+        top: 100%;
         left: 50%;
       }
       
-       :host[position="top"] #help:hover+paper-tooltip:after {
+       :host[position="top"] #help+paper-tooltip .arrow:after {
         border-color: rgba(255, 255, 255, 0);
         border-top-color: #fff;
         border-width: 10px;
         margin-left: -10px;
       }
       
-       :host[position="top"] #help:hover+paper-tooltip:before {
+       :host[position="top"] #help+paper-tooltip .arrow:before {
         border-color: rgba(170, 170, 170, 0);
         border-top-color: #aaa;
         border-width: 11px;
@@ -124,20 +124,20 @@ Custom property | Description | Default
       }
       /*When tooltip is below*/
       
-       :host[position="bottom"] #help:hover+paper-tooltip:before,
-       :host[position="bottom"] #help:hover+paper-tooltip:after {
-        bottom: 99%;
+       :host[position="bottom"] #help+paper-tooltip .arrow:before,
+       :host[position="bottom"] #help+paper-tooltip .arrow:after {
+        bottom: 100%;
         left: 50%;
       }
       
-       :host[position="bottom"] #help:hover+paper-tooltip:after {
+       :host[position="bottom"] #help+paper-tooltip .arrow:after {
         border-color: rgba(255, 255, 255, 0);
         border-bottom-color: #fff;
         border-width: 10px;
         margin-left: -10px;
       }
       
-       :host[position="bottom"] #help:hover+paper-tooltip:before {
+       :host[position="bottom"] #help+paper-tooltip .arrow:before {
         border-color: rgba(170, 170, 170, 0);
         border-bottom-color: #aaa;
         border-width: 11px;
@@ -146,8 +146,10 @@ Custom property | Description | Default
     </style>
 
     <iron-icon id="help" icon="{{helpIcon}}"></iron-icon>
-    <paper-tooltip for="help" position="{{position}}" animation-config="{{tooltipAnimation}}">
-      [[helpText]]
+    <paper-tooltip for="help" position="{{position}}">
+      <div class="arrow">
+        [[helpText]]
+      </div>
     </paper-tooltip>
   </template>
 
@@ -176,11 +178,6 @@ Custom property | Description | Default
           value: 'right',
           reflectToAttribute: true
         },
-      },
-
-      ready: function () {
-        //No animation, as it causes the tooltip arrow to behave wierdly
-        this.tooltipAnimation = {};
       },
 
     });

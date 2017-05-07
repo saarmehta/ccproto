@@ -10,6 +10,11 @@
     <template>
 
         <style include="shared-styles">
+             :host {
+                --mdb-recommended-concepts-property-name: {
+                    color: #aaa;
+                }
+            }
             /*Styling for concept list*/
             
              :host .concept-list {
@@ -75,7 +80,7 @@
             
              :host mdb-dimension-finder {
                 margin-top: var(--standard-padding, 20px);
-                font-size: 12px;
+                font-size: 1em;
                 --mdb-dimension-finder-list: {
                     height: 168px;
                     overflow: auto;
@@ -97,6 +102,12 @@
             }
             /*Recommended Concepts*/
             
+             :host mdb-recommended-concepts {
+                --mdb-title: {
+                    color: #aaa;
+                }
+            }
+            
              :host mdb-concept-recommendation {
                 margin-top: 20px;
                 margin-bottom: var(--standard-padding, 20px);
@@ -106,16 +117,13 @@
             
              :host .concept-identified {
                 text-align: center;
-                font-size: 16px;
-            }
-            
-             :host .concept-identified {
+                font-size: 1.6em;
                 --iron-icon-width: 40px;
-                --iron-icon-height: 40px;
+                --iron-icon-height: 40px;                
             }
             
              :host .concept-identified iron-icon {
-                font-size: 20px;
+                font-size: 2em;
                 background-color: #5bca52;
                 color: #fff;
                 border-radius: 50%;
@@ -128,9 +136,16 @@
                 justify-content: space-between;
             }
             
+             :host .concept-identified .success-message {
+                color: #aaa;
+            }
+            
              :host mdb-coverage-table {
                 width: 60%;
                 margin-right: 30px;
+                --mdb-title: {
+                    color: #aaa;
+                }
                 --mdb-coverage-table: {
                     height: auto;
                 }

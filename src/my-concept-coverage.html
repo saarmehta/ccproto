@@ -12,9 +12,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="page-layout.html">
 <link rel="import" href="styling-elements/class-elements.html">
-<link rel="import" href="../bower_components/mdb-metric-display/mdb-metric-display.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/mdb-metric-display/mdb-metric-display.html">
 <link rel="import" href="./my-lob.html">
 
 <dom-module id="concept-coverage">
@@ -99,6 +100,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: Number,
           value: 0,
         },
+
+        lobs: {
+          type: Array,
+          value: []
+        }
       }
     });
   </script>
