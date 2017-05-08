@@ -60,8 +60,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <mdb-metric-display stat-value="279 days" stat-description="ETA (based on yesterday)"></mdb-metric-display>
           <mdb-metric-display stat-value="25" stat-description="Concepts significantly impacted"></mdb-metric-display>
         </mdb-metric-display-container>
-
-        <iron-ajax auto url="/data/lobs.json" handle-as="json" on-response="handleResponse" debounce-duration="300"></iron-ajax>
+        
         <paper-tabs selected="{{_selectedTab}}">
           <template is="dom-repeat" items="{{lobs}}">
             <paper-tab>{{item}}</paper-tab>
@@ -99,10 +98,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           value: []
         }
       },
-
-      handleResponse: function (e) {
-        this.set('lobs', e.detail.response.map(function (e) { return e.toUpperCase() }));
-        this._setSelectedLob();
+      
+      attached: function(){
+        this._makeRequest({
+          url: this._getBasePath() + '/data/lob.json'
+        }).then(function(e){
+          this.set('lobs', JSON.parse(e.response.map(function (e) { return e.toUpperCase() })));
+          this._setSelectedLob();
+        })
       },
 
       _tabChanged: function () {
@@ -113,7 +116,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if (this.lobs) {
           this.selectedLob = this.lobs[this._selectedTab];
         }
-      }
+      },
+            _makeRequest: function (options) {
+                var xhr = document.createElement('iron-request');                
+                xhr.send(options);
+                return xhr.completes;
+            },
+            
+            _getBasePath: function(){
+                return window.location.origin + window.location.pathname;
+            }
     });
   </script>
 </dom-module>
