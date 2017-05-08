@@ -100,11 +100,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       
       attached: function(){
+        var that = this;
         this._makeRequest({
           url: this._getBasePath() + 'data/lobs.json'
         }).then(function(e){
-          this.set('lobs', JSON.parse(e.response).map(function (e) { return e.toUpperCase() }));
-          this._setSelectedLob();
+          that.set('lobs', JSON.parse(e.response).map(function (e) { return e.toUpperCase() }));
+          that._setSelectedLob();
         })
       },
 
