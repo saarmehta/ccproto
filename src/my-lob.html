@@ -372,7 +372,7 @@
                     that.selectedConcept = this.selectedItem;
                     //Get applications for the selected concept
                     that._makeRequest({
-                        url: that._getBasePath() +'data/lobs/' + that.lob + '/' + that.selectedConcept._id + '/applications.json'
+                        url: (that._getBasePath() +'data/lobs/' + that.lob + '/' + that.selectedConcept._id + '/applications.json').toLowerCase()
                     }).then(function (e) {
                         that.set('applications', JSON.parse(e.response));
                     })
@@ -387,7 +387,7 @@
                 applications.addEventListener('selected-dimension-changed', function () {
                     that.selectedApplication = this.selectedDimension;
                     that._makeRequest({
-                        url: that._getBasePath() +'data/lobs/' + that.lob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases.json'
+                        url: (that._getBasePath() +'data/lobs/' + that.lob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases.json').toLowerCase()
                     }).then(function (e) {
                         that.set('databases', JSON.parse(e.response));
                     })
@@ -397,7 +397,7 @@
                 databases.addEventListener('selected-dimension-changed', function () {
                     that.selectedDatabase = this.selectedDimension;
                     that._makeRequest({
-                        url: that._getBasePath() +'data/lobs/' + that.lob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases/' + that.selectedDatabase._id + '/schemas.json'
+                        url: (that._getBasePath() +'data/lobs/' + that.lob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases/' + that.selectedDatabase._id + '/schemas.json').toLowerCase()
                     }).then(function (e) {
                         that.set('schemas', JSON.parse(e.response));
                     })
@@ -407,7 +407,7 @@
                 schemas.addEventListener('selected-dimension-changed', function () {
                     that.selectedSchema = this.selectedDimension;
                     that._makeRequest({
-                        url: that._getBasePath() +'data/lobs/' + that.lob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases/' + that.selectedDatabase._id + '/schemas/' + that.selectedSchema._id + '/tables.json'
+                        url: (that._getBasePath() +'data/lobs/' + that.lob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases/' + that.selectedDatabase._id + '/schemas/' + that.selectedSchema._id + '/tables.json').toLowerCase()
                     }).then(function (e) {
                         that.set('tables', JSON.parse(e.response));
                     })
@@ -417,13 +417,13 @@
                 tables.addEventListener('selected-dimension-changed', function () {
                     that.selectedTable = this.selectedDimension;
                     var p1 = that._makeRequest({
-                        url: that._getBasePath() +'data/lobs/' + that.lob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases/' + that.selectedDatabase._id + '/schemas/' + that.selectedSchema._id + '/tables/' + that.selectedTable._id + '/columns.json'
+                        url: (that._getBasePath() +'data/lobs/' + that.lob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases/' + that.selectedDatabase._id + '/schemas/' + that.selectedSchema._id + '/tables/' + that.selectedTable._id + '/columns.json').toLowerCase()
                     });
                     var p2 = that._makeRequest({
-                        url: that._getBasePath() +'data/lobs/' + that.lob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases/' + that.selectedDatabase._id + '/schemas/' + that.selectedSchema._id + '/tables/' + that.selectedTable._id + '/data.json'
+                        url: (that._getBasePath() +'data/lobs/' + that.lob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases/' + that.selectedDatabase._id + '/schemas/' + that.selectedSchema._id + '/tables/' + that.selectedTable._id + '/data.json').toLowerCase()
                     });
                     var p3 = that._makeRequest({
-                        url: that._getBasePath() + 'data/lobs/' + that.lob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases/' + that.selectedDatabase._id + '/schemas/' + that.selectedSchema._id + '/tables/' + that.selectedTable._id + '/recommended-concepts.json'
+                        url: (that._getBasePath() + 'data/lobs/' + that.lob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases/' + that.selectedDatabase._id + '/schemas/' + that.selectedSchema._id + '/tables/' + that.selectedTable._id + '/recommended-concepts.json').toLowerCase()
                     });
 
                     Promise.all([p1, p2, p3]).then(function (values) {
