@@ -244,26 +244,29 @@
             </mdb-dimension-finder>
         </div>
 
-        <div class="concept-identification">
-            <mdb-coverage-table title-text="{{selectedTable.name}}" help-text="Coverage table" columns="{{tableColumns}}" items="{{tableData}}"></mdb-coverage-table>
+        <template is="dom-if" if="{{tableColumns.length}}">
+            <div class="concept-identification">
+                <mdb-coverage-table title-text="{{selectedTable.name}}" help-text="Coverage table" columns="{{tableColumns}}" items="{{tableData}}"></mdb-coverage-table>
 
-            <div class="recommended-concepts">
-                <mdb-concept-recommendation property="Date of Birth" recommendation-factor="0"></mdb-concept-recommendation>
-                <template is="dom-if" if="{{isConceptIdentified}}">
-                    <div class="concept-identified">
-                        <iron-icon class="arrow" icon="icons:done"></iron-icon>
-                        <mdb-title>Hurray!</mdb-title>
-                        <div class="success-message">
-                            <p>Thanks for identifying New Age as Date of Birth.</p>
-                            <p>You've helped make data better.</p>
+                <div class="recommended-concepts">
+                    <mdb-concept-recommendation property="Date of Birth" recommendation-factor="0"></mdb-concept-recommendation>
+                    <template is="dom-if" if="{{isConceptIdentified}}">
+                        <div class="concept-identified">
+                            <iron-icon class="arrow" icon="icons:done"></iron-icon>
+                            <mdb-title>Hurray!</mdb-title>
+                            <div class="success-message">
+                                <p>Thanks for identifying New Age as Date of Birth.</p>
+                                <p>You've helped make data better.</p>
+                            </div>
                         </div>
-                    </div>
-                </template>
-                <template is="dom-if" if="{{!isConceptIdentified}}">
-                    <mdb-recommended-concepts recommendations="{{recommendedConcepts}}"></mdb-recommended-concepts>
-                </template>
+                    </template>
+                    <template is="dom-if" if="{{!isConceptIdentified}}">
+                        <mdb-recommended-concepts recommendations="{{recommendedConcepts}}"></mdb-recommended-concepts>
+                    </template>
+                </div>
             </div>
-        </div>
+        </template>
+
 
     </template>
 
@@ -372,7 +375,7 @@
                     that.selectedConcept = this.selectedItem;
                     //Get applications for the selected concept
                     that._makeRequest({
-                        url: (that._getBasePath() +'data/lobs/' + that.lob + '/' + that.selectedConcept._id + '/applications.json').toLowerCase()
+                        url: (that._getBasePath() + 'data/lobs/' + that.lob + '/' + that.selectedConcept._id + '/applications.json').toLowerCase()
                     }).then(function (e) {
                         that.set('applications', JSON.parse(e.response));
                     })
@@ -387,7 +390,7 @@
                 applications.addEventListener('selected-dimension-changed', function () {
                     that.selectedApplication = this.selectedDimension;
                     that._makeRequest({
-                        url: (that._getBasePath() +'data/lobs/' + that.lob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases.json').toLowerCase()
+                        url: (that._getBasePath() + 'data/lobs/' + that.lob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases.json').toLowerCase()
                     }).then(function (e) {
                         that.set('databases', JSON.parse(e.response));
                     })
@@ -397,7 +400,7 @@
                 databases.addEventListener('selected-dimension-changed', function () {
                     that.selectedDatabase = this.selectedDimension;
                     that._makeRequest({
-                        url: (that._getBasePath() +'data/lobs/' + that.lob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases/' + that.selectedDatabase._id + '/schemas.json').toLowerCase()
+                        url: (that._getBasePath() + 'data/lobs/' + that.lob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases/' + that.selectedDatabase._id + '/schemas.json').toLowerCase()
                     }).then(function (e) {
                         that.set('schemas', JSON.parse(e.response));
                     })
@@ -407,7 +410,7 @@
                 schemas.addEventListener('selected-dimension-changed', function () {
                     that.selectedSchema = this.selectedDimension;
                     that._makeRequest({
-                        url: (that._getBasePath() +'data/lobs/' + that.lob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases/' + that.selectedDatabase._id + '/schemas/' + that.selectedSchema._id + '/tables.json').toLowerCase()
+                        url: (that._getBasePath() + 'data/lobs/' + that.lob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases/' + that.selectedDatabase._id + '/schemas/' + that.selectedSchema._id + '/tables.json').toLowerCase()
                     }).then(function (e) {
                         that.set('tables', JSON.parse(e.response));
                     })
@@ -417,10 +420,10 @@
                 tables.addEventListener('selected-dimension-changed', function () {
                     that.selectedTable = this.selectedDimension;
                     var p1 = that._makeRequest({
-                        url: (that._getBasePath() +'data/lobs/' + that.lob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases/' + that.selectedDatabase._id + '/schemas/' + that.selectedSchema._id + '/tables/' + that.selectedTable._id + '/columns.json').toLowerCase()
+                        url: (that._getBasePath() + 'data/lobs/' + that.lob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases/' + that.selectedDatabase._id + '/schemas/' + that.selectedSchema._id + '/tables/' + that.selectedTable._id + '/columns.json').toLowerCase()
                     });
                     var p2 = that._makeRequest({
-                        url: (that._getBasePath() +'data/lobs/' + that.lob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases/' + that.selectedDatabase._id + '/schemas/' + that.selectedSchema._id + '/tables/' + that.selectedTable._id + '/data.json').toLowerCase()
+                        url: (that._getBasePath() + 'data/lobs/' + that.lob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases/' + that.selectedDatabase._id + '/schemas/' + that.selectedSchema._id + '/tables/' + that.selectedTable._id + '/data.json').toLowerCase()
                     });
                     var p3 = that._makeRequest({
                         url: (that._getBasePath() + 'data/lobs/' + that.lob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases/' + that.selectedDatabase._id + '/schemas/' + that.selectedSchema._id + '/tables/' + that.selectedTable._id + '/recommended-concepts.json').toLowerCase()
@@ -437,17 +440,17 @@
                     })
                 });
 
-                //Recommended Concept selected
-                var concept_recommendation = this.querySelector('mdb-concept-recommendation');
-                concept_recommendation.addEventListener('recommended-changed', function () {
-                    if (this.recommended === 'yes') {
-                        that.isConceptIdentified = true;
-                        that.identifiedConcept = this.property;
-                    } else {
-                        that.isConceptIdentified = false;
-                        that.identifiedConcept = undefined;
-                    }
-                });
+                // //Recommended Concept selected
+                // var concept_recommendation = this.querySelector('mdb-concept-recommendation');
+                // concept_recommendation.addEventListener('recommended-changed', function () {
+                //     if (this.recommended === 'yes') {
+                //         that.isConceptIdentified = true;
+                //         that.identifiedConcept = this.property;
+                //     } else {
+                //         that.isConceptIdentified = false;
+                //         that.identifiedConcept = undefined;
+                //     }
+                // });
             },
 
             _lobChanged: function () {
@@ -463,12 +466,12 @@
             },
 
             _makeRequest: function (options) {
-                var xhr = document.createElement('iron-request');                
+                var xhr = document.createElement('iron-request');
                 xhr.send(options);
                 return xhr.completes;
             },
-            
-            _getBasePath: function(){
+
+            _getBasePath: function () {
                 return window.location.origin + window.location.pathname;
             }
         });
