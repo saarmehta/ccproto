@@ -14,15 +14,13 @@
         <style>
              :host {
                 display: block;
-                padding-left: var(--standard-padding, 20px);
-                padding-right: var(--standard-padding, 20px);
+                padding-left: var(--standard-padding, 20px);                
                 padding-top: 10px;
                 padding-bottom: 10px;
             }
             
              :host mdb-radio-list {
-                display: inline-block;
-                margin-right: var(--standard-padding, 20px);
+                display: inline-block;                
             }
             
              :host paper-radio-button {
@@ -40,25 +38,25 @@
              :host #recommendationFactor {
                 display: inline-block;
                 width: 30px;
+                margin-left: 1.2em;
+                margin-right: 1.2em;
             }
             
              :host #recommendationContainer #property {
                 display: inline-block;
-                width: 30%;
+                width: 25%;
                 word-wrap: break-word;
                 @apply(--mdb-recommended-concepts-property-name)
             }
         </style>
         <div id="recommendationContainer">
             <span id="property">[[property]]</span>
-            <div>
-                <mdb-radio-list size="small" selected="{{recommended}}">
-                    <paper-radio-button name="yes">YES</paper-radio-button>
-                    <paper-radio-button name="no">NO</paper-radio-button>
-                    <paper-radio-button name="maybe">MAYBE</paper-radio-button>
-                </mdb-radio-list>
-                <span id="recommendationFactor">[[recommendation-factor]]%</span>
-            </div>
+            <mdb-radio-list size="small" selected="{{recommended}}">
+                <paper-radio-button name="yes">YES</paper-radio-button>
+                <paper-radio-button name="no">NO</paper-radio-button>
+                <paper-radio-button name="maybe">MAYBE</paper-radio-button>
+            </mdb-radio-list>
+            <span id="recommendationFactor">[[recommendation-factor]]%</span>
         </div>
     </template>
 
