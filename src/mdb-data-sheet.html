@@ -1,0 +1,103 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="mdb-utils.html">
+<dom-module id="mdb-data-sheet">
+    <template>
+        <google-sheets key="[[key]]" tab-id="[[tabId]]" published></google-sheets>
+    </template>
+    <script>
+        Polymer({
+            is: 'mdb-data-sheet',
+
+            behaviors: [Mdb.Utils],
+
+            properties: {
+                key: String,
+
+                data: {
+                    type: Array
+                }
+            },
+
+            attached: function () {
+                var that = this;
+                var sheet = this.querySelector('google-sheets');
+                sheet.addEventListener('google-sheet-data', function (e) {
+                    that.data = that._parseSheet(this.rows);
+                });
+            },
+
+            getLOBs: function () {
+                return this._makeRequest({
+                    url: this._getBasePath() + 'data/lobs.json'
+                }).then(function (e) {
+                    resolve(e.response);
+                });
+            },
+
+            getLOBConcepts: function (lob) {
+                return this._makeRequest({
+                    url: (this._getBasePath() + 'data/lobs/' + lob + '/concepts.json').toLowerCase()
+                }).then(function (e) {
+                    resolve(e.response);
+                });
+            },
+
+            getConceptApplications: function (lob, concept) {
+                return this._makeRequest({
+                    url: (this._getBasePath() + 'data/lobs/' + lob + '/' + concept + '/applications.json').toLowerCase()
+                }).then(function (e) {
+                    resolve(e.response);
+                });
+            },
+
+            getApplicationDBs: function (lob, concept, application) {
+                return this._makeRequest({
+                    url: (this._getBasePath() + 'data/lobs/' + lob + '/' + concept + '/applications/' + application + '/databases.json').toLowerCase()
+                }).then(function (e) {
+                    resolve(e.response);
+                });
+            },
+
+            getDBSchemas: function (lob, concept, application, db) {
+                return this._makeRequest({
+                    url: (this._getBasePath() + 'data/lobs/' + lob + '/' + concept + '/applications/' + application + '/databases/' + db + '/schemas.json').toLowerCase()
+                }).then(function (e) {
+                    resolve(e.response);
+                });
+            },
+
+            getSchemaTables: function (lob, concept, application, db, schema) {
+                return this._makeRequest({
+                    url: (this._getBasePath() + 'data/lobs/' + lob + '/' + concept + '/applications/' + application + '/databases/' + db + '/schemas/' + schema + '/tables.json').toLowerCase()
+                }).then(function (e) {
+                    resolve(e.response);
+                });
+            },
+
+            getTableData: function (lob, concept, application, db, schema, table) {
+                var p1 = this._makeRequest({
+                    url: (this._getBasePath() + 'data/lobs/' + lob + '/' + concept + '/applications/' + application + '/databases/' + db + '/schemas/' + schema + '/tables/' + table + '/columns.json').toLowerCase()
+                });
+                var p2 = this._makeRequest({
+                    url: (this._getBasePath() + 'data/lobs/' + lob + '/' + concept + '/applications/' + application + '/databases/' + db + '/schemas/' + schema + '/tables/' + table + '/data.json').toLowerCase()
+                });
+
+                return Promise.all([p1, p2]).then(function (values) {
+                    resolve(JSON.parse(values[0].response), JSON.parse(values[1].response));
+                });
+            },
+
+            getRecommendedConcepts: function (lob, concept, application, db, schema, table, column) {
+                return this._makeRequest({
+                    url: (this._getBasePath() + 'data/lobs/' + lob + '/' + concept + '/applications/' + application + '/databases/' + db + '/schemas/' + schema + '/tables/' + table + '/recommended-concepts.json').toLowerCase()
+                }).then(function (e) {
+                    resolve(JSON.parse(e.response));
+                });
+            },
+
+            _parseSheet: function () {
+
+            }
+        });
+    </script>
+</dom-module>

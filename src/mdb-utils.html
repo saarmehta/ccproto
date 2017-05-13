@@ -1,0 +1,15 @@
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<script>
+    Mdb.Utils = {
+        _makeRequest: function (options) {
+            var xhr = document.createElement('iron-request');
+            xhr.send(options);
+            return xhr.completes;
+        },
+
+        _getBasePath: function () {
+            return window.location.origin + window.location.pathname;
+        }
+    }
+
+</script>

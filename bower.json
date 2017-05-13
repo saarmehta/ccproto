@@ -27,7 +27,8 @@
     "mdb-dimension-finder": "git://github.com/skamble89/mdb-dimension-finder.git",
     "mdb-coverage-table": "git://github.com/skamble89/mdb-coverage-table.git",
     "mdb-recommended-concepts": "git://github.com/skamble89/mdb-recommended-concepts.git",
-    "iron-ajax": "PolymerElements/iron-ajax#^1.4.4"
+    "iron-ajax": "PolymerElements/iron-ajax#^1.4.4",
+    "google-sheets": "GoogleWebComponents/google-sheets#^1.0.6"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"

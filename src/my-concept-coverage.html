@@ -14,9 +14,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="styling-elements/class-elements.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
-<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../bower_components/mdb-metric-display/mdb-metric-display.html">
-<link rel="import" href="./my-lob.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/mdb-dimension-finder/mdb-dimension-finder.html">
+<link rel="import" href="../bower_components/mdb-simple-list/mdb-simple-list.html">
+<link rel="import" href="../bower_components/mdb-recommended-concepts/mdb-concept-recommendation.html">
+<link rel="import" href="../bower_components/mdb-recommended-concepts/mdb-recommended-concepts.html">
+<link rel="import" href="../bower_components/mdb-coverage-table/mdb-coverage-table.html">
+<link rel="import" href="mdb-utils.html">
+<link rel="import" href="mdb-data-sheet.html">
 
 <dom-module id="concept-coverage">
   <template>
@@ -27,6 +34,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         font-size: 11px;
         height: 100%;
         --standard-padding: 30px;
+        --mdb-recommended-concepts-property-name: {
+          color: #aaa;
+        }
       }
       
       [slot='body'] {
@@ -51,6 +61,164 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       paper-tabs {
         --paper-tabs-selection-bar-color: #5da9dd
       }
+      /*Styling for concept list*/
+      
+       :host .concept-list {
+        --mdb-simple-list: {
+          display: flex;
+          flex-direction: column;
+          flex-wrap: wrap;
+          border: 1px solid #e1e6ed;
+          background: #fcfdff;
+          height: 182px;
+          padding-top: var(--standard-padding, 20px);
+          padding-bottom: var(--standard-padding, 20px);
+          color: #484848;
+        }
+        --mdb-list-item: {
+          min-height: 15px;
+          height: auto;
+          padding-bottom: 0;
+          padding-top: 0;
+          padding-left: var(--standard-padding, 20px);
+          margin-top: 0.4em;
+          margin-right: auto;
+          font-weight: 400;
+          font-size: 1.2em;
+        }
+        --mdb-list-item-focused: {
+          border-radius: 25px;
+        }
+        --mdb-list-item-selected: {
+          border-radius: 25px;
+          color: #fff;
+          background-color: #5caadb;
+        }
+      }
+      /* Dimension finder */
+      
+       :host paper-item .icon {
+        display: inline-block;
+        width: 1.5em;
+      }
+      
+       :host paper-item iron-icon.arrow {
+        display: none;
+      }
+      
+       :host paper-item .recommendation {
+        display: inline-block;
+        position: absolute;
+        right: 30px;
+      }
+      
+       :host paper-item[aria-selected="true"] iron-icon.arrow {
+        display: inline-block;
+        position: absolute;
+        right: 0;
+      }
+      
+       :host .db-entities {
+        border: 1px solid #e3eaee;
+        margin-top: var(--standard-padding, 20px);
+        padding-bottom: var(--standard-padding, 20px);
+        overflow: auto;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+      }
+      
+       :host mdb-dimension-finder {
+        margin-top: var(--standard-padding, 20px);
+        font-size: 1em;
+        width: 257px;
+        --mdb-dimension-finder-list: {
+          height: 168px;
+          overflow: auto;
+        }
+        --mdb-dimension-finder-list-item: {
+          min-height: 25px;
+          height: auto;
+          padding-top: 0;
+          padding-bottom: 0;
+          line-height: initial;
+        }
+      }
+      
+       :host mdb-dimension-finder iron-icon {
+        width: 15px;
+        height: 15px;
+      }
+      
+       :host .face {
+        padding-right: 3px;
+      }
+      /*Recommended Concepts*/
+      
+       :host mdb-recommended-concepts {
+        --mdb-title: {
+          color: #aaa;
+        }
+      }
+      
+       :host mdb-concept-recommendation {
+        margin-top: 20px;
+        margin-bottom: var(--standard-padding, 20px);
+        border: 1px solid #e5edee;
+        background-color: #fcfdff;
+      }
+      
+       :host .concept-identified {
+        text-align: center;
+        font-size: 1.6em;
+        --iron-icon-width: 40px;
+        --iron-icon-height: 40px;
+      }
+      
+       :host .concept-identified iron-icon {
+        font-size: 2em;
+        background-color: #5bca52;
+        color: #fff;
+        border-radius: 50%;
+        --iron-icon-width: 40px;
+        --iron-icon-height: 40px;
+      }
+      
+       :host .concept-identification {
+        display: flex;
+        justify-content: space-between;
+      }
+      
+       :host .concept-identified .success-message {
+        color: #aaa;
+      }
+      
+       :host mdb-coverage-table {
+        width: 60%;
+        margin-right: 30px;
+        --mdb-title: {
+          color: #aaa;
+        }
+        --mdb-coverage-table: {
+          height: auto;
+        }
+        --mdb-coverage-table-options: {
+          color: #aaa;
+        }
+        --mdb-coverage-table-cell: {
+          padding: 14px;
+        }
+        --mdb-coverage-table-body-cell: {
+          color: #aaa;
+        }
+      }
+      
+       :host .recommended-concepts {
+        padding-top: 30px;
+        display: inline-block;
+        width: 40%;
+      }
     </style>
 
     <page-layout heading="Concept Coverage" help-text="Concept Coverage">
@@ -60,23 +228,131 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <mdb-metric-display stat-value="279 days" stat-description="ETA (based on yesterday)"></mdb-metric-display>
           <mdb-metric-display stat-value="25" stat-description="Concepts significantly impacted"></mdb-metric-display>
         </mdb-metric-display-container>
-        
+
+        <!-- LOBs -->
         <paper-tabs selected="{{_selectedTab}}">
           <template is="dom-repeat" items="{{lobs}}">
             <paper-tab>{{item}}</paper-tab>
           </template>
         </paper-tabs>
         <template is="dom-if" if="{{lobs.length}}">
-          <concept-lob lob="{{selectedLob}}"></concept-lob>
+          <!-- List of concetps -->
+          <mdb-simple-list class="concept-list" items={{concepts}} selected-item="{{selectedConcept}}">
+            <template>
+              <paper-item>{{item.name}}</paper-item>
+            </template>
+          </mdb-simple-list>
+
+          <div class="db-entities">
+            <!-- Applications -->
+            <mdb-dimension-finder class="applications" dimension="Application" items="{{applications}}" help-text="List of Applications"
+              selected-dimension="{{selectedApplication}}">
+              <template>
+                <paper-item>
+                  <span>{{item.name}}</span>
+                  <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
+                </paper-item>
+              </template>
+            </mdb-dimension-finder>
+
+            <!-- Databases -->
+            <mdb-dimension-finder class="databases" all-dimensions-allowed dimension="Database" items="{{databases}}" help-text="List of Databases"
+              selected-dimension="{{selectedDatabase}}">
+              <template>
+                <paper-item>
+                  <span class="bulb icon">
+                      <template is="dom-if" if="{{item.bulb}}">
+                          <iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon>
+                      </template>
+                  </span>
+                  <span class="face icon">
+                      <template is="dom-if" if="{{item.face}}">
+                          <iron-icon icon="icons:face"></iron-icon>
+                      </template>
+                  </span>
+                  <span>{{item.name}}</span>
+                  <template is="dom-if" if="{{item.recommendation}}">
+                    <span class="recommendation">{{item.recommendation}}%</span>
+                  </template>
+                  <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
+                </paper-item>
+              </template>
+            </mdb-dimension-finder>
+
+            <!-- Schemas -->
+            <mdb-dimension-finder class="schemas" all-dimensions-allowed dimension="Schema" items="{{schemas}}" help-text="List of Schemas"
+              selected-dimension="{{selectedSchema}}">
+              <template>
+                <paper-item>
+                  <span class="bulb icon">
+                      <template is="dom-if" if="{{item.bulb}}">
+                          <iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon>
+                      </template>                            
+                  </span>
+                  <span>{{item.name}}</span>
+                  <template is="dom-if" if="{{item.recommendation}}">
+                    <span class="recommendation">{{item.recommendation}}%</span>
+                  </template>
+                  <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
+                </paper-item>
+              </template>
+            </mdb-dimension-finder>
+
+            <!-- Tables -->
+            <mdb-dimension-finder class="tables" all-dimensions-allowed dimension="Table" items="{{tables}}" help-text="List of Tables"
+              selected-dimension="{{selectedTable}}">
+              <template>
+                <paper-item>
+                  <span class="bulb icon">
+                      <template is="dom-if" if="{{item.bulb}}">
+                          <iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon>
+                      </template>                            
+                  </span>
+                  <span>{{item.name}}</span>
+                  <template is="dom-if" if="{{item.recommendation}}">
+                    <span class="recommendation">{{item.recommendation}}%</span>
+                  </template>
+                  <iron-icon class="arrow" icon="icons:chevron-right"></iron-icon>
+                </paper-item>
+              </template>
+            </mdb-dimension-finder>
+          </div>
+
+          <!-- Table data -->
+          <template is="dom-if" if="{{tableColumns.length}}">
+            <div class="concept-identification">
+              <mdb-coverage-table title-text="{{selectedTable.name}}" help-text="Coverage table" columns="{{tableColumns}}" items="{{tableData}}"></mdb-coverage-table>
+
+              <!-- Recommended concepts -->
+              <div class="recommended-concepts">
+                <mdb-concept-recommendation property="Date of Birth" recommendation-factor="0" on-paper-radio-group-changed="_recommendationChanged"></mdb-concept-recommendation>
+                <template is="dom-if" if="{{isConceptIdentified}}">
+                  <div class="concept-identified">
+                    <iron-icon class="arrow" icon="icons:done"></iron-icon>
+                    <mdb-title>Hurray!</mdb-title>
+                    <div class="success-message">
+                      <p>Thanks for identifying New Age as Date of Birth.</p>
+                      <p>You've helped make data better.</p>
+                    </div>
+                  </div>
+                </template>
+                <template is="dom-if" if="{{!isConceptIdentified}}">
+                  <mdb-recommended-concepts recommendations="{{recommendedConcepts}}"></mdb-recommended-concepts>
+                </template>
+              </div>
+            </div>
+          </template>
         </template>
+
       </div>
     </page-layout>
-
   </template>
 
   <script>
     Polymer({
       is: 'concept-coverage',
+
+      behaviors: [Mdb.Utils],
 
       properties: {
         _selectedTab: {
@@ -90,27 +366,122 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: String,
           value: '',
           notify: true,
-          reflectToAttribute: true
+          reflectToAttribute: true,
+          observer: '_lobChanged'
         },
 
         lobs: {
           type: Array,
           value: []
-        }
+        },
+
+        concepts: {
+          type: Array,
+          value: []
+        },
+
+        selectedConcept: {
+          type: String,
+          value: '',
+          notify: true,
+          observer: '_conceptChanged'
+        },
+
+        applications: {
+          type: Array,
+          value: [],
+          notify: true
+        },
+
+        selectedApplication: {
+          type: String,
+          value: '',
+          notify: true,
+          observer: '_applicationChanged'
+        },
+
+        databases: {
+          type: Array,
+          value: [],
+          notify: true
+        },
+
+        selectedDatabase: {
+          type: String,
+          value: '',
+          notify: true,
+          observer: '_databaseChanged'
+        },
+
+        schemas: {
+          type: Array,
+          value: [],
+          notify: true
+        },
+
+        selectedSchema: {
+          type: String,
+          value: '',
+          notify: true,
+          observer: '_schemaChanged'
+        },
+
+        tables: {
+          type: Array,
+          value: [],
+          notify: true
+        },
+
+        selectedTable: {
+          type: String,
+          value: '',
+          notify: true,
+          observer: '_tableChanged'
+        },
+
+        tableColumns: {
+          type: Array,
+          value: [],
+          notify: true
+        },
+
+        tableData: {
+          type: Array,
+          value: [],
+          notify: true
+        },
+
+        recommendedConcepts: {
+          type: Array,
+          value: [],
+          notify: true
+        },
+
+        isConceptIdentified: {
+          type: Boolean,
+          value: false,
+          notify: true
+        },
+
+        identifiedConcept: String
       },
-      
-      attached: function(){
+
+      attached: function () {
         var that = this;
         this._makeRequest({
           url: this._getBasePath() + 'data/lobs.json'
-        }).then(function(e){
+        }).then(function (e) {
           that.set('lobs', JSON.parse(e.response).map(function (e) { return e.toUpperCase() }));
           that._setSelectedLob();
-        })
+        });
       },
 
-      _tabChanged: function () {
-        this._setSelectedLob();
+      beforeRegister: function () {
+
+      },
+
+      registered: function () {
+
       },
 
       _setSelectedLob: function () {
@@ -118,15 +489,119 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.selectedLob = this.lobs[this._selectedTab];
         }
       },
-            _makeRequest: function (options) {
-                var xhr = document.createElement('iron-request');                
-                xhr.send(options);
-                return xhr.completes;
-            },
-            
-            _getBasePath: function(){
-                return window.location.origin + window.location.pathname;
-            }
+
+      //OBSERVERS
+      _tabChanged: function () {
+        this._setSelectedLob();
+      },
+
+      _recommendationChanged: function (e) {
+        if (e.currentTarget.recommended === 'yes') {
+          this.isConceptIdentified = true;
+          this.identifiedConcept = this.property;
+        } else {
+          this.isConceptIdentified = false;
+          this.identifiedConcept = undefined;
+        }
+      },
+
+      _lobChanged: function () {
+        var that = this;
+        if (this.selectedLob) {
+          //Reset everything
+          that.set('concepts', []);
+          that.selectedConcept = '';
+          that.set('applications', []);
+          that.selectedApplication = '';
+          that.set('databases', []);
+          that.selectedDatabase = '';
+          that.set('schemas', []);
+          that.selectedSchema = '';
+          that.set('tables', []);
+          that.selectedTable = '';
+          that.set('recommendedConcepts', []);
+          that.set('tableColumns', []);
+          that.set('tableData', []);
+          that.isConceptIdentified = false;
+          that.identifiedConcept = '';
+
+          this._makeRequest({
+            url: (this._getBasePath() + 'data/lobs/' + this.selectedLob + '/concepts.json').toLowerCase()
+          }).then(function (e) {
+            that.set('concepts', JSON.parse(e.response));
+          });
+        }
+      },
+
+      _conceptChanged: function () {
+        if (this.selectedConcept) {
+          var that = this;
+          //Get applications for the selected concept
+          this._makeRequest({
+            url: (this._getBasePath() + 'data/lobs/' + this.selectedLob + '/' + this.selectedConcept._id + '/applications.json').toLowerCase()
+          }).then(function (e) {
+            that.set('applications', JSON.parse(e.response));
+          });
+        }
+      },
+
+      _applicationChanged: function () {
+        if (this.selectedApplication) {
+          var that = this;
+          that._makeRequest({
+            url: (that._getBasePath() + 'data/lobs/' + that.selectedLob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases.json').toLowerCase()
+          }).then(function (e) {
+            that.set('databases', JSON.parse(e.response));
+          });
+        }
+      },
+
+      _databaseChanged: function () {
+        if (this.selectedDatabase) {
+          var that = this;
+          that._makeRequest({
+            url: (that._getBasePath() + 'data/lobs/' + that.selectedLob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases/' + that.selectedDatabase._id + '/schemas.json').toLowerCase()
+          }).then(function (e) {
+            that.set('schemas', JSON.parse(e.response));
+          });
+        }
+      },
+
+      _schemaChanged: function () {
+        if (this.selectedSchema) {
+          var that = this;
+          that._makeRequest({
+            url: (that._getBasePath() + 'data/lobs/' + that.selectedLob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases/' + that.selectedDatabase._id + '/schemas/' + that.selectedSchema._id + '/tables.json').toLowerCase()
+          }).then(function (e) {
+            that.set('tables', JSON.parse(e.response));
+          });
+        }
+      },
+
+      _tableChanged: function () {
+        if (this.selectedTable) {
+          var that = this;
+          var p1 = that._makeRequest({
+            url: (that._getBasePath() + 'data/lobs/' + that.selectedLob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases/' + that.selectedDatabase._id + '/schemas/' + that.selectedSchema._id + '/tables/' + that.selectedTable._id + '/columns.json').toLowerCase()
+          });
+          var p2 = that._makeRequest({
+            url: (that._getBasePath() + 'data/lobs/' + that.selectedLob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases/' + that.selectedDatabase._id + '/schemas/' + that.selectedSchema._id + '/tables/' + that.selectedTable._id + '/data.json').toLowerCase()
+          });
+          var p3 = that._makeRequest({
+            url: (that._getBasePath() + 'data/lobs/' + that.selectedLob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases/' + that.selectedDatabase._id + '/schemas/' + that.selectedSchema._id + '/tables/' + that.selectedTable._id + '/recommended-concepts.json').toLowerCase()
+          });
+
+          Promise.all([p1, p2, p3]).then(function (values) {
+            var columns = JSON.parse(values[0].response);
+            var data = JSON.parse(values[1].response);
+            var recommendedConcepts = JSON.parse(values[2].response);
+
+            that.set('tableColumns', columns);
+            that.set('tableData', data);
+            that.set('recommendedConcepts', recommendedConcepts);
+          });
+        }
+      }
     });
   </script>
 </dom-module>
