@@ -1,12 +1,12 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="mdb-utils.html">
-<dom-module id="mdb-data-sheet">
+<dom-module id="mdb-gsheet-data-adapter">
     <template>
         <google-sheets key="[[key]]" tab-id="[[tabId]]" published></google-sheets>
     </template>
     <script>
         Polymer({
-            is: 'mdb-data-sheet',
+            is: 'mdb-gsheet-data-adapter',
 
             behaviors: [Mdb.Utils],
 

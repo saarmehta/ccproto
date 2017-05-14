@@ -23,7 +23,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/mdb-recommended-concepts/mdb-recommended-concepts.html">
 <link rel="import" href="../bower_components/mdb-coverage-table/mdb-coverage-table.html">
 <link rel="import" href="mdb-utils.html">
-<link rel="import" href="mdb-data-sheet.html">
+<link rel="import" href="mdb-gsheet-data-adapter.html">
 
 <dom-module id="concept-coverage">
   <template>
@@ -362,6 +362,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           observer: '_tabChanged'
         },
 
+        dataSource: String,
+
         selectedLob: {
           type: String,
           value: '',
@@ -474,14 +476,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           that.set('lobs', JSON.parse(e.response).map(function (e) { return e.toUpperCase() }));
           that._setSelectedLob();
         });
-      },
-
-      beforeRegister: function () {
-
-      },
-
-      registered: function () {
-
       },
 
       _setSelectedLob: function () {
