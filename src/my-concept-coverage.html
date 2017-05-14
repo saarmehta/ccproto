@@ -199,7 +199,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           color: #aaa;
         }
         --mdb-coverage-table: {
-          height: auto;
+          height: 511px;
         }
         --mdb-coverage-table-options: {
           color: #aaa;
@@ -237,7 +237,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <!-- List of concetps -->
           <mdb-simple-list class="concept-list" items={{concepts}} selected-item="{{selectedConcept}}">
             <template>
-              <paper-item>{{item.name}}</paper-item>
+              <paper-item>{{this}}</paper-item>
             </template>
           </mdb-simple-list>
 
@@ -259,12 +259,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <template>
                 <paper-item>
                   <span class="bulb icon">
-                      <template is="dom-if" if="{{item.bulb}}">
+                      <template is="dom-if" if="{{item.systemRecommended}}">
                           <iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon>
                       </template>
                   </span>
                   <span class="face icon">
-                      <template is="dom-if" if="{{item.face}}">
+                      <template is="dom-if" if="{{item.humanVerified}}">
                           <iron-icon icon="icons:face"></iron-icon>
                       </template>
                   </span>
@@ -283,9 +283,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <template>
                 <paper-item>
                   <span class="bulb icon">
-                      <template is="dom-if" if="{{item.bulb}}">
+                      <template is="dom-if" if="{{item.systemRecommended}}">
                           <iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon>
                       </template>                            
+                  </span>
+                  <span class="face icon">
+                      <template is="dom-if" if="{{item.humanVerified}}">
+                          <iron-icon icon="icons:face"></iron-icon>
+                      </template>
                   </span>
                   <span>{{item.name}}</span>
                   <template is="dom-if" if="{{item.recommendation}}">
@@ -302,9 +307,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <template>
                 <paper-item>
                   <span class="bulb icon">
-                      <template is="dom-if" if="{{item.bulb}}">
+                      <template is="dom-if" if="{{item.systemRecommended}}">
                           <iron-icon icon="icons:lightbulb-outline" item-icon></iron-icon>
                       </template>                            
+                  </span>
+                  <span class="face icon">
+                      <template is="dom-if" if="{{item.humanVerified}}">
+                          <iron-icon icon="icons:face"></iron-icon>
+                      </template>
                   </span>
                   <span>{{item.name}}</span>
                   <template is="dom-if" if="{{item.recommendation}}">
@@ -352,6 +362,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       properties: {
         dataSource: String,
+
+        dataSourceOptions: Object,
 
         _dataSource: {
           type: Object,
@@ -472,7 +484,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       ready: function () {
-        this._set_dataSource(document.createElement(this.dataSource))
+        var source = document.createElement(this.dataSource);
+        for (var i in this.dataSourceOptions) {
+          source[i] = this.dataSourceOptions[i];
+        }
+        this.appendChild(source);
+
+        //save reference of data adapter so that it can be used later on
+        this._set_dataSource(source);
       },
 
       attached: function () {
