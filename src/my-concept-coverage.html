@@ -22,8 +22,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/mdb-recommended-concepts/mdb-concept-recommendation.html">
 <link rel="import" href="../bower_components/mdb-recommended-concepts/mdb-recommended-concepts.html">
 <link rel="import" href="../bower_components/mdb-coverage-table/mdb-coverage-table.html">
-<link rel="import" href="mdb-utils.html">
-<link rel="import" href="mdb-gsheet-data-adapter.html">
 
 <dom-module id="concept-coverage">
   <template>
@@ -352,9 +350,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'concept-coverage',
 
-      behaviors: [Mdb.Utils],
-
       properties: {
+        dataSource: String,
+
+        _dataSource: {
+          type: Object,
+          readOnly: true
+        },
+
         _selectedTab: {
           type: Number,
           value: 0,
@@ -468,14 +471,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         identifiedConcept: String
       },
 
+      ready: function () {
+        this._set_dataSource(document.createElement(this.dataSource))
+      },
+
       attached: function () {
         var that = this;
-        this._makeRequest({
-          url: this._getBasePath() + 'data/lobs.json'
-        }).then(function (e) {
-          that.set('lobs', JSON.parse(e.response).map(function (e) { return e.toUpperCase() }));
-          that._setSelectedLob();
-        });
+        this._dataSource.getLOBs()
+          .then(function (lobs) {
+            that.set('lobs', lobs.map(function (e) { return e.toUpperCase() }));
+            that._setSelectedLob();
+          });
       },
 
       _setSelectedLob: function () {
@@ -519,11 +525,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           that.isConceptIdentified = false;
           that.identifiedConcept = '';
 
-          this._makeRequest({
-            url: (this._getBasePath() + 'data/lobs/' + this.selectedLob + '/concepts.json').toLowerCase()
-          }).then(function (e) {
-            that.set('concepts', JSON.parse(e.response));
-          });
+          this._dataSource.getLOBConcepts(this.selectedLob)
+            .then(function (concepts) {
+              that.set('concepts', concepts);
+            });
         }
       },
 
@@ -531,69 +536,51 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if (this.selectedConcept) {
           var that = this;
           //Get applications for the selected concept
-          this._makeRequest({
-            url: (this._getBasePath() + 'data/lobs/' + this.selectedLob + '/' + this.selectedConcept._id + '/applications.json').toLowerCase()
-          }).then(function (e) {
-            that.set('applications', JSON.parse(e.response));
-          });
+          this._dataSource.getConceptApplications(this.selectedLob, this.selectedConcept)
+            .then(function (applications) {
+              that.set('applications', applications);
+            });
         }
       },
 
       _applicationChanged: function () {
         if (this.selectedApplication) {
           var that = this;
-          that._makeRequest({
-            url: (that._getBasePath() + 'data/lobs/' + that.selectedLob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases.json').toLowerCase()
-          }).then(function (e) {
-            that.set('databases', JSON.parse(e.response));
-          });
+          this._dataSource.getApplicationDBs(this.selectedLob, this.selectedConcept, this.selectedApplication)
+            .then(function (dbs) {
+              that.set('databases', dbs);
+            });
         }
       },
 
       _databaseChanged: function () {
         if (this.selectedDatabase) {
           var that = this;
-          that._makeRequest({
-            url: (that._getBasePath() + 'data/lobs/' + that.selectedLob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases/' + that.selectedDatabase._id + '/schemas.json').toLowerCase()
-          }).then(function (e) {
-            that.set('schemas', JSON.parse(e.response));
-          });
+          this._dataSource.getDBSchemas(this.selectedLob, this.selectedConcept, this.selectedApplication, this.selectedDatabase)
+            .then(function (schemas) {
+              that.set('schemas', schemas);
+            });
         }
       },
 
       _schemaChanged: function () {
         if (this.selectedSchema) {
           var that = this;
-          that._makeRequest({
-            url: (that._getBasePath() + 'data/lobs/' + that.selectedLob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases/' + that.selectedDatabase._id + '/schemas/' + that.selectedSchema._id + '/tables.json').toLowerCase()
-          }).then(function (e) {
-            that.set('tables', JSON.parse(e.response));
-          });
+          this._dataSource.getSchemaTables(this.selectedLob, this.selectedConcept, this.selectedApplication, this.selectedDatabase, this.selectedSchema)
+            .then(function (tables) {
+              that.set('tables', tables);
+            });
         }
       },
 
       _tableChanged: function () {
         if (this.selectedTable) {
           var that = this;
-          var p1 = that._makeRequest({
-            url: (that._getBasePath() + 'data/lobs/' + that.selectedLob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases/' + that.selectedDatabase._id + '/schemas/' + that.selectedSchema._id + '/tables/' + that.selectedTable._id + '/columns.json').toLowerCase()
-          });
-          var p2 = that._makeRequest({
-            url: (that._getBasePath() + 'data/lobs/' + that.selectedLob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases/' + that.selectedDatabase._id + '/schemas/' + that.selectedSchema._id + '/tables/' + that.selectedTable._id + '/data.json').toLowerCase()
-          });
-          var p3 = that._makeRequest({
-            url: (that._getBasePath() + 'data/lobs/' + that.selectedLob + '/' + that.selectedConcept._id + '/applications/' + that.selectedApplication._id + '/databases/' + that.selectedDatabase._id + '/schemas/' + that.selectedSchema._id + '/tables/' + that.selectedTable._id + '/recommended-concepts.json').toLowerCase()
-          });
-
-          Promise.all([p1, p2, p3]).then(function (values) {
-            var columns = JSON.parse(values[0].response);
-            var data = JSON.parse(values[1].response);
-            var recommendedConcepts = JSON.parse(values[2].response);
-
-            that.set('tableColumns', columns);
-            that.set('tableData', data);
-            that.set('recommendedConcepts', recommendedConcepts);
-          });
+          this._dataSource.getTableData(this.selectedLob, this.selectedConcept, this.selectedApplication, this.selectedDatabase, this.selectedSchema, this.selectedTable)
+            .then(function (tableData) {
+              that.set('tableColumns', tableData.columns);
+              that.set('tableData', tableData.rows);
+            });
         }
       }
     });

@@ -27,71 +27,98 @@
             },
 
             getLOBs: function () {
-                return this._makeRequest({
-                    url: this._getBasePath() + 'data/lobs.json'
-                }).then(function (e) {
-                    resolve(e.response);
+                var that = this;
+                return new Promise(function (resolve, reject) {
+                    that._makeRequest({
+                        url: that._getBasePath() + 'data/lobs.json'
+                    }).then(function (e) {
+                        resolve(JSON.parse(e.response));
+                    });
                 });
             },
 
             getLOBConcepts: function (lob) {
-                return this._makeRequest({
-                    url: (this._getBasePath() + 'data/lobs/' + lob + '/concepts.json').toLowerCase()
-                }).then(function (e) {
-                    resolve(e.response);
+                var that = this;
+                return new Promise(function (resolve, reject) {
+                    that._makeRequest({
+                        url: (that._getBasePath() + 'data/lobs/' + lob + '/concepts.json').toLowerCase()
+                    }).then(function (e) {
+                        resolve(JSON.parse(e.response));
+                    });
                 });
             },
 
             getConceptApplications: function (lob, concept) {
-                return this._makeRequest({
-                    url: (this._getBasePath() + 'data/lobs/' + lob + '/' + concept + '/applications.json').toLowerCase()
-                }).then(function (e) {
-                    resolve(e.response);
+                var that = this;
+                return new Promise(function (resolve, reject) {
+                    that._makeRequest({
+                        url: (that._getBasePath() + 'data/lobs/' + lob + '/' + concept._id + '/applications.json').toLowerCase()
+                    }).then(function (e) {
+                        resolve(JSON.parse(e.response));
+                    });
                 });
             },
 
             getApplicationDBs: function (lob, concept, application) {
-                return this._makeRequest({
-                    url: (this._getBasePath() + 'data/lobs/' + lob + '/' + concept + '/applications/' + application + '/databases.json').toLowerCase()
-                }).then(function (e) {
-                    resolve(e.response);
+                var that = this;
+                return new Promise(function (resolve, reject) {
+                    that._makeRequest({
+                        url: (that._getBasePath() + 'data/lobs/' + lob + '/' + concept._id + '/applications/' + application._id + '/databases.json').toLowerCase()
+                    }).then(function (e) {
+                        resolve(JSON.parse(e.response));
+                    });
                 });
             },
 
             getDBSchemas: function (lob, concept, application, db) {
-                return this._makeRequest({
-                    url: (this._getBasePath() + 'data/lobs/' + lob + '/' + concept + '/applications/' + application + '/databases/' + db + '/schemas.json').toLowerCase()
-                }).then(function (e) {
-                    resolve(e.response);
+                var that = this;
+                return new Promise(function (resolve, reject) {
+                    that._makeRequest({
+                        url: (that._getBasePath() + 'data/lobs/' + lob + '/' + concept._id + '/applications/' + application._id + '/databases/' + db._id + '/schemas.json').toLowerCase()
+                    }).then(function (e) {
+                        resolve(JSON.parse(e.response));
+                    });
                 });
             },
 
             getSchemaTables: function (lob, concept, application, db, schema) {
-                return this._makeRequest({
-                    url: (this._getBasePath() + 'data/lobs/' + lob + '/' + concept + '/applications/' + application + '/databases/' + db + '/schemas/' + schema + '/tables.json').toLowerCase()
-                }).then(function (e) {
-                    resolve(e.response);
+                var that = this;
+                return new Promise(function (resolve, reject) {
+                    that._makeRequest({
+                        url: (that._getBasePath() + 'data/lobs/' + lob + '/' + concept._id + '/applications/' + application._id + '/databases/' + db._id + '/schemas/' + schema._id + '/tables.json').toLowerCase()
+                    }).then(function (e) {
+                        resolve(JSON.parse(e.response));
+                    });
                 });
             },
 
             getTableData: function (lob, concept, application, db, schema, table) {
-                var p1 = this._makeRequest({
-                    url: (this._getBasePath() + 'data/lobs/' + lob + '/' + concept + '/applications/' + application + '/databases/' + db + '/schemas/' + schema + '/tables/' + table + '/columns.json').toLowerCase()
-                });
-                var p2 = this._makeRequest({
-                    url: (this._getBasePath() + 'data/lobs/' + lob + '/' + concept + '/applications/' + application + '/databases/' + db + '/schemas/' + schema + '/tables/' + table + '/data.json').toLowerCase()
-                });
+                var that = this;
+                return new Promise(function (resolve, reject) {
+                    var p1 = that._makeRequest({
+                        url: (that._getBasePath() + 'data/lobs/' + lob + '/' + concept._id + '/applications/' + application._id + '/databases/' + db._id + '/schemas/' + schema._id + '/tables/' + table._id + '/columns.json').toLowerCase()
+                    });
+                    var p2 = that._makeRequest({
+                        url: (that._getBasePath() + 'data/lobs/' + lob + '/' + concept._id + '/applications/' + application._id + '/databases/' + db._id + '/schemas/' + schema._id + '/tables/' + table._id + '/data.json').toLowerCase()
+                    });
 
-                return Promise.all([p1, p2]).then(function (values) {
-                    resolve(JSON.parse(values[0].response), JSON.parse(values[1].response));
+                    Promise.all([p1, p2]).then(function (values) {
+                        resolve({
+                            columns: JSON.parse(values[0].response),
+                            rows: JSON.parse(values[1].response)
+                        });
+                    });
                 });
             },
 
             getRecommendedConcepts: function (lob, concept, application, db, schema, table, column) {
-                return this._makeRequest({
-                    url: (this._getBasePath() + 'data/lobs/' + lob + '/' + concept + '/applications/' + application + '/databases/' + db + '/schemas/' + schema + '/tables/' + table + '/recommended-concepts.json').toLowerCase()
-                }).then(function (e) {
-                    resolve(JSON.parse(e.response));
+                var that = this;
+                return new Promise(function (resolve, reject) {
+                    that._makeRequest({
+                        url: (that._getBasePath() + 'data/lobs/' + lob + '/' + concept + '/applications/' + application + '/databases/' + db + '/schemas/' + schema + '/tables/' + table + '/recommended-concepts.json').toLowerCase()
+                    }).then(function (e) {
+                        resolve(JSON.parse(e.response));
+                    });
                 });
             },
 
