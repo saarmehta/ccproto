@@ -45,7 +45,7 @@
                         .then(function () {
                             var lobLower = lob.toLowerCase(),
                                 concepts = that.data.filter(function (e) {
-                                    return e.lob.toLowerCase() === lobLower;
+                                    return e.concept && e.lob.toLowerCase() === lobLower;
                                 }).map(function (e) {
                                     return e.concept;
                                 })
@@ -62,7 +62,7 @@
                             var lobLower = lob.toLowerCase(),
                                 conceptLower = concept.toLowerCase(),
                                 applications = that.data.filter(function (e) {
-                                    return e.lob.toLowerCase() === lobLower && e.concept.toLowerCase() === conceptLower;
+                                    return e.application.name && e.lob.toLowerCase() === lobLower && e.concept.toLowerCase() === conceptLower;
                                 }).map(function (e) {
                                     return e.application;
                                 });
@@ -81,7 +81,7 @@
                                 conceptLower = concept.toLowerCase(),
                                 appLower = application.name.toLowerCase(),
                                 dbs = that.data.filter(function (e) {
-                                    return e.lob.toLowerCase() === lobLower && e.concept.toLowerCase() === conceptLower && e.application.name.toLowerCase() === appLower;
+                                    return e.database.name && e.lob.toLowerCase() === lobLower && e.concept.toLowerCase() === conceptLower && e.application.name.toLowerCase() === appLower;
                                 }).map(function (e) {
                                     return e.database;
                                 });
@@ -101,7 +101,7 @@
                                 appLower = application.name.toLowerCase(),
                                 dbLower = db.name.toLowerCase(),
                                 schemas = that.data.filter(function (e) {
-                                    return e.lob.toLowerCase() === lobLower && e.concept.toLowerCase() === conceptLower && e.application.name.toLowerCase() === appLower && e.database.name.toLowerCase() === dbLower;
+                                    return e.schema.name && e.lob.toLowerCase() === lobLower && e.concept.toLowerCase() === conceptLower && e.application.name.toLowerCase() === appLower && e.database.name.toLowerCase() === dbLower;
                                 }).map(function (e) {
                                     return e.schema;
                                 });
@@ -122,7 +122,7 @@
                                 dbLower = db.name.toLowerCase(),
                                 schemaLower = schema.name.toLowerCase(),
                                 tables = that.data.filter(function (e) {
-                                    return e.lob.toLowerCase() === lobLower && e.concept.toLowerCase() === conceptLower && e.application.name.toLowerCase() === appLower && e.database.name.toLowerCase() === dbLower && e.schema.name.toLowerCase() === schemaLower;
+                                    return e.table.name && e.lob.toLowerCase() === lobLower && e.concept.toLowerCase() === conceptLower && e.application.name.toLowerCase() === appLower && e.database.name.toLowerCase() === dbLower && e.schema.name.toLowerCase() === schemaLower;
                                 }).map(function (e) {
                                     return e.table;
                                 });
@@ -134,7 +134,7 @@
 
             getTableData: function (lob, concept, application, db, schema, table) {
                 var that = this;
-                return new Promise(function (resolve, reject) {                    
+                return new Promise(function (resolve, reject) {
                     that._loadSheetTab(table.mapping, function (e) {
                         resolve(that._parseTable(this.rows));
                     });
@@ -232,11 +232,11 @@
                 for (var i = 0; i < rowData.length; i++) {
                     var o = {};
                     var item = rowData[i];
-                    
-                    for (var j in item) {                        
+
+                    for (var j in item) {
                         if (j.indexOf('gsx$') === 0) {
                             o[j.replace('gsx$', '')] = item[j]['$t'];
-                        }                        
+                        }
                     }
                     rows.push(o);
                 }
