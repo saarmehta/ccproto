@@ -16,6 +16,8 @@ Custom property | Description | Default
 `--mdb-list-item`               | Mixin applied to list item                                           | `{}`
 `--mdb-list-item-focused`      | Mixin applied to focused list item                                  | `{}`
 `--mdb-list-item-selected`      | Mixin applied to selected list item                                  | `{}`
+`--mdb-simple-list`      | Mixin applied to list container                                  | `{}`
+`--mdb-simple-list-empty`      | Mixin applied to list empty message                                  | `{}`
 
 @demo demo/index.html 
 -->
@@ -24,6 +26,7 @@ Custom property | Description | Default
   <template>
     <style>
        :host {
+        position: relative;
         display: block;
         --paper-item: {
           min-height: auto;
@@ -70,9 +73,18 @@ Custom property | Description | Default
         color: #a1a2a4;
         @apply(--mdb-simple-list)
       }
+      
+       :host .empty-message {
+        @apply(--mdb-simple-list-empty)
+      }
     </style>
-    <paper-listbox>
-    </paper-listbox>
+    <template is="dom-if" if="{{items.length}}" on-dom-change="_renderList">
+      <paper-listbox selected="{{selected}}">
+      </paper-listbox>
+    </template>
+    <template is="dom-if" if="{{!items.length}}">
+      <p class="empty-message">[[emptyMessage]]</p>
+    </template>
   </template>
 
   <script>
@@ -94,6 +106,11 @@ Custom property | Description | Default
           observer: '_renderList'
         },
 
+        selected: {
+          type: Number,
+          observer: '_selectedChanged'
+        },
+
         selectedItem: {
           type: Object,
           notify: true
@@ -103,6 +120,8 @@ Custom property | Description | Default
           type: Array,
           notify: true
         },
+
+        emptyMessage: String,
 
         height: {
           type: String,
@@ -115,24 +134,27 @@ Custom property | Description | Default
       _renderList: function () {
         var template = this.queryEffectiveChildren('template');
         if (template) {
-          var list = Polymer.dom(this.$$('paper-listbox'));
+          var list = this.$$('paper-listbox');
 
-          this.dataHost = this;
-          this.templatize(template);
-          this._emptyList();
+          if (list) {
+            list = Polymer.dom(list);
+            this.dataHost = this;
+            this.templatize(template);
+            this._emptyList();
 
-          var items = this.items;
-          for (var i = 0; i < items.length; i++) {
-            var item = items[i];
-            var clone = this.stamp({});
+            var items = this.items;
+            for (var i = 0; i < items.length; i++) {
+              var item = items[i];
+              var clone = this.stamp({});
 
-            if (typeof item === typeof '') {
-              clone['this'] = item;
-            } else {
-              clone['item'] = item;
+              if (typeof item === typeof '') {
+                clone['this'] = item;
+              } else {
+                clone['item'] = item;
+              }
+
+              list.appendChild(clone.root);
             }
-
-            list.appendChild(clone.root);
           }
         }
       },
@@ -144,26 +166,10 @@ Custom property | Description | Default
         for (var i = 0; i < children.length; i++) {
           list.removeChild(children[i]);
         }
-        list.flush();
       },
 
-      attached: function () {
-        this._bindListboxEvents();
-      },
-
-      _bindListboxEvents: function () {
-        var that = this;
-        var listbox = this.querySelector('paper-listbox');
-        if (listbox) {
-          listbox.addEventListener('selected-item-changed', function () {
-            that.selectedItem = that.items[this.selected];
-          });
-          listbox.addEventListener('selected-items-changed', function () {
-            that.selectedItems = this.selectedValues && this.selectedValues.map(function (e) {
-              return that.items[e];
-            });
-          });
-        }
+      _selectedChanged: function (value) {
+        this.selectedItem = this.items[value];
       }
     });
   </script>

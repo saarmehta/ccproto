@@ -62,6 +62,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       /*Styling for concept list*/
       
        :host .concept-list {
+        --mdb-simple-list-empty: {
+          border: 1px solid #ddd;
+          padding: var(--standard-padding, 20px);
+          margin-top: 0;
+        }
         --mdb-simple-list: {
           display: flex;
           flex-direction: column;
@@ -235,7 +240,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </paper-tabs>
         <template is="dom-if" if="{{lobs.length}}">
           <!-- List of concetps -->
-          <mdb-simple-list class="concept-list" items={{concepts}} selected-item="{{selectedConcept}}">
+          <mdb-simple-list class="concept-list" items={{concepts}} selected-item="{{selectedConcept}}" empty-message="No concepts found for selected LOB.">
             <template>
               <paper-item>{{this}}</paper-item>
             </template>

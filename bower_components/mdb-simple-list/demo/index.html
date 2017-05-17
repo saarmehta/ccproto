@@ -22,13 +22,27 @@
 
 <body>
   <div class="vertical-section-container centered">
+    <h3>Basic mdb-simple-list with no items demo</h3>
+    <demo-snippet>
+      <template>        
+        <mdb-simple-list empty-message="No Items">
+          <template>
+            <paper-item>
+              {{item.name}}
+            </paper-item>
+          </template>
+        </mdb-simple-list>
+      </template>
+    </demo-snippet>
+  </div>
+  <div class="vertical-section-container centered">
     <h3>Basic mdb-simple-list demo</h3>
     <demo-snippet>
       <template>        
-        <mdb-simple-list items='[{"name":"One"},{"name":"Two"},{"name":"Three"},{"name":"Four"},{"name":"Five"},{"name":"Six"},{"name":"Seven"},{"name":"Eight"},{"name":"Nine"},{"name":"Ten"},{"name":"Eleven"}]'>
+        <mdb-simple-list empty-message="No Items" items='[{"name":"One"},{"name":"Two"},{"name":"Three"},{"name":"Four"},{"name":"Five"},{"name":"Six"},{"name":"Seven"},{"name":"Eight"},{"name":"Nine"},{"name":"Ten"},{"name":"Eleven"}]'>
           <template>
             <paper-item>
-              {{name}}
+              {{item.name}}
             </paper-item>
           </template>
         </mdb-simple-list>
@@ -69,10 +83,10 @@
             }            
           }
         </style>
-        <mdb-simple-list class="custom-styled" items='[{"name":"One"},{"name":"Two"},{"name":"Three"},{"name":"Four"},{"name":"Five"},{"name":"Six"},{"name":"Seven"},{"name":"Eight"},{"name":"Nine"},{"name":"Ten"},{"name":"Eleven"}]'>
+        <mdb-simple-list class="custom-styled"  empty-message="No Items" items='[{"name":"One"},{"name":"Two"},{"name":"Three"},{"name":"Four"},{"name":"Five"},{"name":"Six"},{"name":"Seven"},{"name":"Eight"},{"name":"Nine"},{"name":"Ten"},{"name":"Eleven"}]'>
           <template>
             <paper-item>
-              {{name}}
+              {{item.name}}
             </paper-item>
           </template>
         </mdb-simple-list>
