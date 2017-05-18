@@ -266,7 +266,8 @@
                         recommendedConcepts[j.replace('gsx$', '')] = val.split(',').map(function (e) {
                             return {
                                 property: e.replace(regex, ''),
-                                recommendationFactor: parseFloat((e.match(regex) || [])[1] || 0)
+                                recommendationFactor: parseFloat((e.match(regex) || [])[1] || 0),
+                                recommended: 'maybe'
                             }
                         });
                     }
