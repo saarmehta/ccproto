@@ -144,10 +144,8 @@
             getRecommendedConcepts: function (lob, concept, application, db, schema, table, column) {
                 var that = this;
                 return new Promise(function (resolve, reject) {
-                    that._makeRequest({
-                        url: (that._getBasePath() + 'data/lobs/' + lob + '/' + concept + '/applications/' + application + '/databases/' + db + '/schemas/' + schema + '/tables/' + table + '/recommended-concepts.json').toLowerCase()
-                    }).then(function (e) {
-                        resolve(JSON.parse(e.response));
+                    that._loadSheetTab(table.mapping, function (e) {
+                        resolve(that._parseTable(this.rows).recommendedConcepts[column]);
                     });
                 });
             },
@@ -167,6 +165,26 @@
                 });
             },
 
+            _loadData: function () {
+                var that = this,
+                    index = 1;
+                function _loadSheet(i) {
+                    return new Promise(function (resolve, reject) {
+                        that._loadSheetTab(i, function () {
+                            if (this.tab.title === 'mdb-data') {
+                                that.coverage = that._parseSheet(this.rows);
+                            } else {
+
+                            }
+                        });
+                    });
+                }
+
+                return new Promise(function (resolve, reject) {
+
+                });
+            },
+
             _loadSheetTab: function (tabId, callback) {
                 var sheet = this.querySelector('google-sheets');
                 sheet.addEventListener('google-sheet-data', _dataLoaded);
@@ -175,6 +193,11 @@
                 function _dataLoaded(e) {
                     callback.apply(this, arguments);
                     this.removeEventListener('google-sheet-data', _dataLoaded);
+                }
+
+                function _error(e) {
+                    callback.apply(this, arguments);
+                    this.removeEventListener('google-sheet-data', _error);
                 }
             },
 
@@ -217,7 +240,7 @@
 
             _parseTable: function (rowData) {
                 //Parse columns                
-                var cols = rowData[0].content.$t.match(/[a-zA-Z]+:/g)
+                var cols = rowData[1].content.$t.match(/[a-zA-Z]+:/g)
                     .map(function (e) {
                         var col = e.replace(':', '')
                         return {
@@ -227,9 +250,25 @@
                         };
                     });
 
+                //parse column recommendations
+                var recommendedConcepts = {};
+                var row = rowData[0];
+                var regex = /\(([^)]+)\)/;
+                for (var j in row) {
+                    var val = row[j]['$t'];
+                    if (j.indexOf('gsx$') === 0 && val) {
+                        recommendedConcepts[j.replace('gsx$', '')] = val.split(',').map(function (e) {
+                            return {
+                                property: e.replace(regex, ''),
+                                recommendationFactor: parseFloat((e.match(regex) || [])[1] || 0)
+                            }
+                        });
+                    }
+                }
+
                 //Parse rows
                 var rows = [];
-                for (var i = 0; i < rowData.length; i++) {
+                for (var i = 1; i < rowData.length; i++) {
                     var o = {};
                     var item = rowData[i];
 
@@ -243,7 +282,8 @@
 
                 return {
                     columns: cols,
-                    rows: rows
+                    rows: rows,
+                    recommendedConcepts: recommendedConcepts
                 };
             },
 
