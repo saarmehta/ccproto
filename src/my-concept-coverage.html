@@ -339,7 +339,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
               <!-- Recommended concepts -->
               <div class="recommended-concepts">
-                <mdb-concept-recommendation property="Date of Birth" recommendation-factor="0" on-paper-radio-group-changed="_recommendationChanged"></mdb-concept-recommendation>
+                <mdb-concept-recommendation property="{{selectedConcept}}" recommendation-factor="0" on-paper-radio-group-changed="_recommendationChanged"></mdb-concept-recommendation>
                 <template is="dom-if" if="{{isConceptIdentified}}">
                   <div class="concept-identified">
                     <iron-icon class="arrow" icon="icons:done"></iron-icon>

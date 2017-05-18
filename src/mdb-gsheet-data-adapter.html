@@ -135,18 +135,24 @@
             getTableData: function (lob, concept, application, db, schema, table) {
                 var that = this;
                 return new Promise(function (resolve, reject) {
-                    that._loadSheetTab(table.mapping, function (e) {
-                        resolve(that._parseTable(this.rows));
-                    });
+                    if (that.selectedTable !== table.mapping) {
+                        that._loadSheetTab(table.mapping, function (e) {
+                            var data = that._parseTable(this.rows);
+
+                            that.selectedTable = table.mapping;
+                            that.selectedTableData = data;
+                            resolve(data);
+                        });
+                    } else {
+                        resolve(that.selectedTableData);
+                    }
                 });
             },
 
             getRecommendedConcepts: function (lob, concept, application, db, schema, table, column) {
                 var that = this;
                 return new Promise(function (resolve, reject) {
-                    that._loadSheetTab(table.mapping, function (e) {
-                        resolve(that._parseTable(this.rows).recommendedConcepts[column]);
-                    });
+                    resolve(that.selectedTableData.recommendedConcepts[column]);
                 });
             },
 
@@ -165,25 +171,25 @@
                 });
             },
 
-            _loadData: function () {
-                var that = this,
-                    index = 1;
-                function _loadSheet(i) {
-                    return new Promise(function (resolve, reject) {
-                        that._loadSheetTab(i, function () {
-                            if (this.tab.title === 'mdb-data') {
-                                that.coverage = that._parseSheet(this.rows);
-                            } else {
+            // _loadData: function () {
+            //     var that = this,
+            //         index = 1;
+            //     function _loadSheet(i) {
+            //         return new Promise(function (resolve, reject) {
+            //             that._loadSheetTab(i, function () {
+            //                 if (this.tab.title === 'mdb-data') {
+            //                     that.coverage = that._parseSheet(this.rows);
+            //                 } else {
 
-                            }
-                        });
-                    });
-                }
+            //                 }
+            //             });
+            //         });
+            //     }
 
-                return new Promise(function (resolve, reject) {
+            //     return new Promise(function (resolve, reject) {
 
-                });
-            },
+            //     });
+            // },
 
             _loadSheetTab: function (tabId, callback) {
                 var sheet = this.querySelector('google-sheets');
