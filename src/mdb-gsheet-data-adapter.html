@@ -3,20 +3,15 @@
 <link rel="import" href="mdb-utils.html">
 <dom-module id="mdb-gsheet-data-adapter">
     <template>
-        <google-sheets key="[[key]]" tab-id="[[tabId]]" published></google-sheets>
-        <google-sheets key="[[key]]" tab-id="[[tabId]]" published></google-sheets>
+        <google-sheets client-id="84773481573-cc5achi226n9hsj5kvt74ksbvimjufip.apps.googleusercontent.com" key="1mLfCDb_O2edc-QO8ptgYqxyh1Lxz8DjCfS_Epmf_FsU" tab-id="[[tabId]]"></google-sheets>        
     </template>
     <script>
         Polymer({
             is: 'mdb-gsheet-data-adapter',
 
-            behaviors: [Mdb.Utils],
+            //behaviors: [Mdb.Utils],
 
             properties: {
-                key: {
-                    type: String
-                },
-
                 tabId: {
                     type: Number,
                     value: 1

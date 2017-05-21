@@ -369,7 +369,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       properties: {
         dataSource: String,
 
-        dataSourceOptions: Object,
+        dataSourceOptions: {
+          type: Object
+        },
 
         _dataSource: {
           type: Object,
@@ -497,14 +499,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       ready: function () {
-        var source = document.createElement(this.dataSource);
-        for (var i in this.dataSourceOptions) {
-          source[i] = this.dataSourceOptions[i];
-        }
-        this.appendChild(source);
+        var source = document.createElement(this.dataSource);        
 
         //save reference of data adapter so that it can be used later on
         this._set_dataSource(source);
+        this.appendChild(source);
       },
 
       attached: function () {
