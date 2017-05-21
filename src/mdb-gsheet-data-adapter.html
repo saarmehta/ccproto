@@ -2,8 +2,7 @@
 <link rel="import" href="../bower_components/google-sheets/google-sheets.html">
 <link rel="import" href="mdb-utils.html">
 <dom-module id="mdb-gsheet-data-adapter">
-    <template>
-        <google-sheets key="[[key]]" tab-id="[[tabId]]" published></google-sheets>
+    <template>        
         <google-sheets key="[[key]]" tab-id="[[tabId]]" published></google-sheets>
     </template>
     <script>
@@ -136,13 +135,22 @@
                 var that = this;
                 return new Promise(function (resolve, reject) {
                     if (that.selectedTable !== table.mapping) {
-                        that._loadSheetTab(table.mapping, function (e) {
-                            var data = that._parseTable(this.rows);
+                        var tabIndex = that.tabMapping
+                            .find(function (e) {
+                                return e.name.toLowerCase() === table.mapping.toString().toLowerCase();
+                            }).index;
 
-                            that.selectedTable = table.mapping;
-                            that.selectedTableData = data;
-                            resolve(data);
-                        });
+                        if (tabIndex !== null && tabIndex !== undefined) {
+                            that._loadSheetTab(tabIndex, function (e) {
+                                var data = that._parseTable(this.rows);
+
+                                that.selectedTable = table.mapping;
+                                that.selectedTableData = data;
+                                resolve(data);
+                            });
+                        } else {
+                            reject('Table not found.');
+                        }
                     } else {
                         resolve(that.selectedTableData);
                     }
@@ -157,39 +165,42 @@
             },
 
             _ensureCoverageLoaded: function () {
-                var that = this;
-                return new Promise(function (resolve, reject) {
-                    if (!that._coverageLoaded) {
-                        that._loadSheetTab(1, function (e) {
-                            that.data = that._parseSheet(this.rows);
-                            that._coverageLoaded = true;
+                var that = this,
+                    p1 = this._getSpreadsheetMetadata(),
+                    p2 = new Promise(function (resolve, reject) {
+                        if (!that._coverageLoaded) {
+                            that._loadSheetTab(1, function (e) {
+                                that.data = that._parseSheet(this.rows);
+                                that._coverageLoaded = true;
+                                resolve();
+                            });
+                        } else {
                             resolve();
-                        });
-                    } else {
-                        resolve();
-                    }
-                });
+                        }
+                    });
+
+                return Promise.all([p1, p2]);
             },
 
-            // _loadData: function () {
-            //     var that = this,
-            //         index = 1;
-            //     function _loadSheet(i) {
-            //         return new Promise(function (resolve, reject) {
-            //             that._loadSheetTab(i, function () {
-            //                 if (this.tab.title === 'mdb-data') {
-            //                     that.coverage = that._parseSheet(this.rows);
-            //                 } else {
-
-            //                 }
-            //             });
-            //         });
-            //     }
-
-            //     return new Promise(function (resolve, reject) {
-
-            //     });
-            // },
+            _getSpreadsheetMetadata: function () {
+                var that = this;
+                return new Promise(function (resolve, reject) {
+                    that._makeRequest({
+                        url: 'https://spreadsheets.google.com/feeds/worksheets/' + that.key + '/public/full?alt=json'
+                    }).then(function (e) {
+                        that.tabMapping = JSON.parse(e.response).feed.entry
+                            .map(function (e, i) {
+                                return {
+                                    index: i + 1,
+                                    name: e.title.$t
+                                };
+                            });
+                        resolve();
+                    }).catch(function (error) {
+                        reject(error);
+                    });
+                });
+            },
 
             _loadSheetTab: function (tabId, callback) {
                 var sheet = this.querySelector('google-sheets');
@@ -237,7 +248,7 @@
                             systemRecommended: item['gsx$sr_4']["$t"].toLowerCase() === 'y',
                             humanVerified: item['gsx$hv_4']["$t"].toLowerCase() === 'y',
                             recommendation: parseFloat(item['gsx$pc_4']["$t"]),
-                            mapping: parseInt(item['gsx$tablemapping']['$t'])
+                            mapping: item['gsx$tablemapping']['$t']
                         },
                     })
                 }
