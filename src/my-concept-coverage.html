@@ -83,7 +83,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           height: auto;
           padding-bottom: 0;
           padding-top: 0;
-          padding-left: var(--standard-padding, 20px);
+          margin-left: var(--standard-padding, 20px);
           margin-top: 0.4em;
           margin-right: auto;
           font-weight: 400;
@@ -113,19 +113,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: inline-block;
         position: absolute;
         right: 30px;
+        top: 50%;
+        transform: translate(0, -50%);
       }
       
        :host paper-item[aria-selected="true"] iron-icon.arrow {
         display: inline-block;
         position: absolute;
         right: 0;
+        top: 50%;
+        transform: translate(0, -50%);
       }
       
        :host .db-entities {
         border: 1px solid #e3eaee;
         margin-top: var(--standard-padding, 20px);
         padding-bottom: var(--standard-padding, 20px);
-        overflow: auto;
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
@@ -135,10 +138,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        :host mdb-dimension-finder {
         margin-top: var(--standard-padding, 20px);
         font-size: 1em;
-        width: 257px;
         --mdb-dimension-finder-list: {
           height: 168px;
           overflow: auto;
+          width: 255px;
         }
         --mdb-dimension-finder-list-item: {
           min-height: 25px;
