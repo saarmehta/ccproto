@@ -33,7 +33,7 @@ Custom property | Description | Default
           font-weight: var(--mdb-list-item-font-weight, 200);
           height: 30px;
           padding-top: 5px;
-          padding-bottom: 5px;          
+          padding-bottom: 5px;
           @apply(--mdb-list-item);
         }
         --paper-icon-item: {
@@ -41,7 +41,7 @@ Custom property | Description | Default
           font-weight: var(--mdb-list-item-font-weight, 200);
           height: 30px;
           padding-top: 5px;
-          padding-bottom: 5px;          
+          padding-bottom: 5px;
           @apply(--mdb-list-item);
         }
         --paper-item-focused-before: {
@@ -128,6 +128,7 @@ Custom property | Description | Default
       behaviors: [Polymer.Templatizer],
 
       _renderList: function () {
+        this.selected = undefined;
         var template = this.queryEffectiveChildren('template');
         if (template) {
           var list = this.$$('paper-listbox');
@@ -165,7 +166,7 @@ Custom property | Description | Default
       },
 
       _selectedChanged: function (value) {
-        this.selectedItem = this.items[value];
+        this.selectedItem = typeof value === typeof 0 ? this.items[value] : undefined;
       }
     });
   </script>

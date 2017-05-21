@@ -14,12 +14,12 @@
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
   "homepage": "https://github.com/skamble89/mdb-recommended-concepts",
-  "version": "0.0.8",
-  "_release": "0.0.8",
+  "version": "0.0.9",
+  "_release": "0.0.9",
   "_resolution": {
     "type": "version",
-    "tag": "v0.0.8",
-    "commit": "74df5773d21e1638e9103143c92ac996849bd6b6"
+    "tag": "v0.0.9",
+    "commit": "4074411a8d6f01fa3be54a4e4aa3d99b3ad75f2f"
   },
   "_source": "git://github.com/skamble89/mdb-recommended-concepts.git",
   "_target": "*",

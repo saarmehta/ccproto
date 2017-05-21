@@ -48,7 +48,7 @@ Custom property | Description | Default
     </style>
     <div id="recommendation-list">
       <mdb-title help-text="Recommended Concepts" level="2">Recommended Concepts</mdb-title>
-      <template is="dom-repeat" items="{{recommendations}}">
+      <template is="dom-repeat" items="{{_getSortedRecommendations(recommendations)}}">
         <mdb-concept-recommendation property="{{item.property}}" recommendation-factor="{{item.recommendationFactor}}" recommended="{{item.recommended}}"></mdb-concept-recommendation>
       </template>
     </div>
@@ -73,6 +73,13 @@ Custom property | Description | Default
           value: 0
         }
       },
+
+
+      _getSortedRecommendations: function (recommendations) {
+        return recommendations.sort(function (a, b) {
+          return b.recommendationFactor - a.recommendationFactor;
+        });
+      }
 
     });
   </script>

@@ -542,23 +542,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _lobChanged: function () {
         var that = this;
+        that.set('concepts', []);
+
         if (this.selectedLob) {
           //Reset everything
-          that.set('concepts', []);
-          that.selectedConcept = '';
-          that.set('applications', []);
-          that.selectedApplication = '';
-          that.set('databases', []);
-          that.selectedDatabase = '';
-          that.set('schemas', []);
-          that.selectedSchema = '';
-          that.set('tables', []);
-          that.selectedTable = '';
-          that.set('recommendedConcepts', []);
-          that.set('tableColumns', []);
-          that.set('tableData', []);
-          that.isConceptIdentified = false;
-          that.identifiedConcept = '';
+          this.set('concepts', []);
+          this.set('applications', []);
+          this.set('databases', []);
+          this.set('schemas', []);
+          this.set('tables', []);
+          this.set('tableColumns', []);
+          this.set('tableData', []);
+          this.selectedColumn = undefined;
+          this.set('recommendedConcepts', []);
+
+          this.isConceptIdentified = false;
+          this.identifiedConcept = '';
 
           this._dataSource.getLOBConcepts(this.selectedLob)
             .then(function (concepts) {
@@ -568,58 +567,76 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _conceptChanged: function () {
+        this.set('applications', []);
+
         if (this.selectedConcept) {
           var that = this;
           //Get applications for the selected concept
           this._dataSource.getConceptApplications(this.selectedLob, this.selectedConcept)
             .then(function (applications) {
               that.set('applications', applications);
+              that.querySelector('mdb-dimension-finder.applications').emptyMessage = applications.length === 0 ? 'No applications found for the selected concept.' : '';
             });
         }
       },
 
       _applicationChanged: function () {
+        this.set('databases', []);
+
         if (this.selectedApplication) {
           var that = this;
           this._dataSource.getApplicationDBs(this.selectedLob, this.selectedConcept, this.selectedApplication)
             .then(function (dbs) {
               that.set('databases', dbs);
+              that.querySelector('mdb-dimension-finder.databases').emptyMessage = dbs.length === 0 ? 'No databases found for the selected application.' : '';
             });
         }
       },
 
       _databaseChanged: function () {
+        this.set('schemas', []);
+
         if (this.selectedDatabase) {
           var that = this;
           this._dataSource.getDBSchemas(this.selectedLob, this.selectedConcept, this.selectedApplication, this.selectedDatabase)
             .then(function (schemas) {
               that.set('schemas', schemas);
+              that.querySelector('mdb-dimension-finder.schemas').emptyMessage = schemas.length === 0 ? 'No schemas found for the selected database.' : '';
             });
         }
       },
 
       _schemaChanged: function () {
+        this.set('tables', []);
+
         if (this.selectedSchema) {
           var that = this;
           this._dataSource.getSchemaTables(this.selectedLob, this.selectedConcept, this.selectedApplication, this.selectedDatabase, this.selectedSchema)
             .then(function (tables) {
               that.set('tables', tables);
+              that.querySelector('mdb-dimension-finder.tables').emptyMessage = tables.length === 0 ? 'No tables found for the selected schema.' : '';
             });
         }
       },
 
       _tableChanged: function () {
+        this.set('tableColumns', []);
+        this.set('tableData', []);
+
         if (this.selectedTable) {
           var that = this;
           this._dataSource.getTableData(this.selectedLob, this.selectedConcept, this.selectedApplication, this.selectedDatabase, this.selectedSchema, this.selectedTable)
             .then(function (tableData) {
               that.set('tableColumns', tableData.columns);
               that.set('tableData', tableData.rows);
+              that.selectedColumn = tableData.columns[0].name
             });
         }
       },
 
       _selectedColumnChanged: function () {
+        this.set('recommendedConcepts', []);
+
         if (this.selectedColumn) {
           var that = this;
           this._dataSource.getRecommendedConcepts(this.selectedLob, this.selectedConcept, this.selectedApplication, this.selectedDatabase, this.selectedSchema, this.selectedTable, this.selectedColumn)
