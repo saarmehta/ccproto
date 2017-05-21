@@ -14,13 +14,13 @@
         <style>
              :host {
                 display: block;
-                padding-left: var(--standard-padding, 20px);                
+                padding-left: var(--standard-padding, 20px);
                 padding-top: 10px;
                 padding-bottom: 10px;
             }
             
              :host mdb-radio-list {
-                display: inline-block;                
+                display: inline-block;
             }
             
              :host paper-radio-button {
@@ -51,7 +51,7 @@
         </style>
         <div id="recommendationContainer">
             <span id="property">[[property]]</span>
-            <mdb-radio-list size="small" selected="{{recommended}}">
+            <mdb-radio-list size="small" selected="{{recommended}}" on-paper-radio-group-changed="_checkConceptIdentified">
                 <paper-radio-button name="yes">YES</paper-radio-button>
                 <paper-radio-button name="no">NO</paper-radio-button>
                 <paper-radio-button name="maybe">MAYBE</paper-radio-button>
@@ -88,6 +88,12 @@
                     reflectToAttribute: true
                 }
             },
+
+            _checkConceptIdentified: function () {
+                if (this.recommended === 'yes') {
+                    this.fire('concept-identified', this.property.trim());
+                }
+            }
 
         });
     </script>

@@ -342,13 +342,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
               <!-- Recommended concepts -->
               <div class="recommended-concepts">
-                <mdb-concept-recommendation property="{{selectedConcept}}" recommendation-factor="0" on-paper-radio-group-changed="_recommendationChanged"></mdb-concept-recommendation>
+                <mdb-concept-recommendation property="{{selectedConcept}}" recommendation-factor="0"></mdb-concept-recommendation>
                 <template is="dom-if" if="{{isConceptIdentified}}">
                   <div class="concept-identified">
                     <iron-icon class="arrow" icon="icons:done"></iron-icon>
                     <mdb-title>Hurray!</mdb-title>
                     <div class="success-message">
-                      <p>Thanks for identifying New Age as Date of Birth.</p>
+                      <p>Thanks for identifying {{selectedColumn}} as {{identifiedConcept}}.</p>
                       <p>You've helped make data better.</p>
                     </div>
                   </div>
@@ -517,6 +517,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             that.set('lobs', lobs.map(function (e) { return e.toUpperCase() }));
             that._setSelectedLob();
           });
+
+        this.addEventListener('concept-identified', function (e) {
+          that.isConceptIdentified = true;
+          that.identifiedConcept = e.detail;
+        });
       },
 
       _setSelectedLob: function () {
@@ -528,16 +533,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       //OBSERVERS
       _tabChanged: function () {
         this._setSelectedLob();
-      },
-
-      _recommendationChanged: function (e) {
-        if (e.currentTarget.recommended === 'yes') {
-          this.isConceptIdentified = true;
-          this.identifiedConcept = this.property;
-        } else {
-          this.isConceptIdentified = false;
-          this.identifiedConcept = undefined;
-        }
       },
 
       _lobChanged: function () {
@@ -622,6 +617,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _tableChanged: function () {
         this.set('tableColumns', []);
         this.set('tableData', []);
+        this.isConceptIdentified = false;
+        this.identifiedConcept = undefined;
 
         if (this.selectedTable) {
           var that = this;
@@ -636,6 +633,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _selectedColumnChanged: function () {
         this.set('recommendedConcepts', []);
+        this.isConceptIdentified = false;
+        this.identifiedConcept = undefined;
 
         if (this.selectedColumn) {
           var that = this;
